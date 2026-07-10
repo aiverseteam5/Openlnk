@@ -202,7 +202,7 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 - OL-120 ✅ The system shall obtain recorded, verifiable guardian consent before processing any
   child-linked data (name, schedule, attendance-adjacent, fee-adjacent), per DPDP Act 2023.
-- OL-120a The system SHALL implement a `health_data:<patient_ref>` consent scope in
+- OL-120a ✅ The system SHALL implement a `health_data:<patient_ref>` consent scope in
   consent_events for clinic contexts. Consent records SHALL include: stated processing
   purpose, data fiduciary name (OpenLnk / TynkAI), and explicit withdrawal mechanism.
   Legal review of this scope is REQUIRED before first clinic patient is onboarded (Gate 3

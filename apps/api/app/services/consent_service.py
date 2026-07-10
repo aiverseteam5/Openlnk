@@ -28,10 +28,14 @@ class ConsentService:
         scope: str,
         action: str,
         method: str,
+        processing_purpose: str | None = None,
+        data_fiduciary: str | None = None,
     ) -> dict:
-        """Record a consent grant or withdrawal (OL-120, OL-123).
+        """Record a consent grant or withdrawal (OL-120, OL-120a, OL-123).
 
         Creates an audit log entry for every consent event.
+        For health_data scopes (OL-120a), includes processing purpose
+        and data fiduciary name.
         """
         key = f"{principal_id}:{scope}"
 
@@ -42,6 +46,8 @@ class ConsentService:
             scope=scope,
             action=action,
             method=method,
+            processing_purpose=processing_purpose,
+            data_fiduciary=data_fiduciary,
         )
 
         self._consents[key] = {
@@ -49,6 +55,8 @@ class ConsentService:
             "scope": scope,
             "action": action,
             "method": method,
+            "processing_purpose": processing_purpose,
+            "data_fiduciary": data_fiduciary,
         }
 
         return {"recorded": True, "action": action}
