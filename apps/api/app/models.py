@@ -323,6 +323,29 @@ class IdempotencyKey(Base):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
 
+class InviteToken(Base):
+    """Invite tokens for non-OpenLnk counterparties (OL-008).
+
+    Generated when a commitment targets someone not yet on the platform.
+    The commitment stays in proposed until the invite is accepted.
+    """
+
+    __tablename__ = "invite_tokens"
+
+    id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
+    commitment_id: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True), ForeignKey("commitments.id"), nullable=False
+    )
+    inviter_id: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True), ForeignKey("principals.id"), nullable=False
+    )
+    token: Mapped[str] = mapped_column(Text, unique=True, nullable=False)
+    phone_e164: Mapped[str | None] = mapped_column(Text)
+    accepted: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    expires_at: Mapped[datetime] = mapped_column(nullable=False)
+
+
 class ThreadToken(Base):
     """Multi-use, TTL-based tokens for web-thread guests (ADR-005).
 

@@ -33,14 +33,14 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
   shall reject it with 409 and the current object.
 - OL-007 ✅ The system shall honor an `Idempotency-Key` header on all mutation endpoints,
   returning the original result for a repeated key within 24 h.
-- OL-007a The system shall run an arq worker that purges idempotency keys older than 24 h
+- OL-007a ✅ The system shall run an arq worker that purges idempotency keys older than 24 h
   on a scheduled cadence (≥ once per hour); key accumulation without purge is a Gate 1
   exit blocker.
-- OL-008 WHEN a commitment is assigned to a person not yet on OpenLnk, the system shall
+- OL-008 ✅ WHEN a commitment is assigned to a person not yet on OpenLnk, the system shall
   generate an invite link and hold the commitment in `proposed` until acceptance.
 - OL-009 ✅ The system shall support commitment classes `fee`, `schedule`, `task`, `payment`,
   `custom`, with class-specific validation (e.g., `fee` requires amount and currency).
-- OL-010 WHERE a commitment carries class `fee` or `payment`, the system shall attach a UPI
+- OL-010 ✅ WHERE a commitment carries class `fee` or `payment`, the system shall attach a UPI
   intent deep-link per ADR-006.
 - OL-011 ✅ The system shall never delete commitments; terminal states are `done`, `broken`,
   `cancelled`, all retained and auditable.
