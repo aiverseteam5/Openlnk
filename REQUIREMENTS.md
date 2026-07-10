@@ -108,27 +108,27 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 - OL-052 ✅ WHILE at rung Observe, the system shall extract and display but send nothing.
 - OL-053 ✅ WHILE at rung Propose, the system shall draft messages/actions requiring explicit
   one-tap approval before send.
-- OL-054 WHILE at rung Bounded-auto, the system shall auto-send only whitelisted deterministic
+- OL-054 ✅ WHILE at rung Bounded-auto, the system shall auto-send only whitelisted deterministic
   classes (reminder, confirmation) within configured quiet hours.
-- OL-055 The system shall graduate a (contact × class) pair one rung only after N clean
+- OL-055 ✅ The system shall graduate a (contact × class) pair one rung only after N clean
   actions over ≥ 14 days (N configurable, default 20), and shall show the user the track
   record at the moment of graduation. Clean actions accumulate on a sliding window: the
   14-day check evaluates whether ≥ N actions occurred within the most recent 14-day period,
   not since window_started; window_started resets on each graduation or demotion.
-- OL-056 IF any agent action is corrected or reverted by the user, THEN the system shall
+- OL-056 ✅ IF any agent action is corrected or reverted by the user, THEN the system shall
   demote that (contact × class) pair one rung and log the cause.
-- OL-057 The system shall provide a per-context kill switch reverting all pairs to Observe.
+- OL-057 ✅ The system shall provide a per-context kill switch reverting all pairs to Observe.
 
 ## 5. Notifications & silence (OL-060 – OL-066)
 
-- OL-060 The system shall notify a user only when they are the blocker: a commitment
+- OL-060 ✅ The system shall notify a user only when they are the blocker: a commitment
   assigned to them is `at_risk`, awaiting their acceptance, or awaiting their approval.
-- OL-061 The system shall batch all non-blocking information into the daily brief.
-- OL-062 The system shall record notifications-avoided (suppressed candidate notifications)
+- OL-061 ✅ The system shall batch all non-blocking information into the daily brief.
+- OL-062 ✅ The system shall record notifications-avoided (suppressed candidate notifications)
   as a first-class metric per user per day.
-- OL-063 The system shall respect per-user quiet hours; Bounded-auto sends outside quiet
+- OL-063 ✅ The system shall respect per-user quiet hours; Bounded-auto sends outside quiet
   hours queue to the next window.
-- OL-064 The daily brief shall include today's commitments, conflicts, and at-risk items,
+- OL-064 ✅ The daily brief shall include today's commitments, conflicts, and at-risk items,
   and shall exclude everything else.
 
 ## 6. Calendar fusion (OL-070 – OL-075)

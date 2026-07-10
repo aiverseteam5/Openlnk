@@ -5,7 +5,7 @@ never stored. upi_intent_url is computed at render from businesses.upi_vpa.
 """
 
 import enum
-from datetime import datetime
+from datetime import datetime, time
 from uuid import UUID, uuid4
 
 from sqlalchemy import (
@@ -17,6 +17,7 @@ from sqlalchemy import (
     Numeric,
     String,
     Text,
+    Time,
     UniqueConstraint,
     text,
 )
@@ -82,6 +83,8 @@ class Principal(Base):
     phone_e164: Mapped[str | None] = mapped_column(Text, unique=True)
     display_name: Mapped[str] = mapped_column(Text, nullable=False)
     kind: Mapped[PrincipalKind] = mapped_column(String(10), nullable=False)
+    quiet_hours_start: Mapped[time | None] = mapped_column()  # OL-054, OL-063
+    quiet_hours_end: Mapped[time | None] = mapped_column()
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
 
