@@ -16,10 +16,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import AuditLog, Commitment, CommitmentState, IdempotencyKey
 from app.schemas import (
+    CommitmentAmend,
     CommitmentCreate,
     CommitmentResponse,
     CommitmentStateTransition,
+    DeltaEvent,
 )
+from app.services.sync import manager as sync_manager
 
 logger = structlog.get_logger()
 
@@ -66,6 +69,18 @@ def _to_response(commitment: Commitment) -> CommitmentResponse:
             "updated_at": commitment.updated_at,
         }
     )
+
+
+async def _broadcast_sync(commitment: Commitment, event: str, detail: dict) -> None:
+    """Broadcast a sync delta event for a commitment change (OL-003)."""
+    delta = DeltaEvent(
+        event=event,
+        context_id=str(commitment.context_id),
+        subject_id=str(commitment.id),
+        seq=commitment.version,
+        data=detail,
+    )
+    await sync_manager.broadcast_to_context(commitment.context_id, delta)
 
 
 class CommitmentService:
@@ -154,6 +169,13 @@ class CommitmentService:
         )
 
         await self._session.commit()
+
+        # Sync broadcast (OL-003)
+        await _broadcast_sync(commitment, "commitment.created", {
+            "title": data.title,
+            "class": data.class_,
+            "state": "proposed",
+        })
 
         logger.info(
             "commitment_created",
@@ -253,11 +275,128 @@ class CommitmentService:
 
         await self._session.commit()
 
+        # Sync broadcast (OL-003)
+        await _broadcast_sync(commitment, "commitment.state_changed", {
+            "old_state": old_state,
+            "new_state": data.new_state,
+        })
+
         logger.info(
             "commitment_state_changed",
             commitment_id=str(commitment_id),
             old_state=old_state,
             new_state=data.new_state,
+            version=commitment.version,
+        )
+        return _to_response(commitment)
+
+    async def amend(
+        self,
+        commitment_id: UUID,
+        data: CommitmentAmend,
+        *,
+        idempotency_key: str,
+    ) -> CommitmentResponse:
+        """Amend a commitment's title, due_at, or amount (OL-002a).
+
+        - Checks idempotency key
+        - Checks version for optimistic concurrency (stale → 409)
+        - If state is post-accepted and class is fee/payment,
+          resets to proposed (counterparty re-acceptance required)
+        - Writes audit log with old/new values
+        """
+        # Idempotency check
+        existing = await self._check_idempotency(idempotency_key)
+        if existing is not None:
+            commitment = await self._session.get(Commitment, UUID(existing.response_hash))
+            if commitment is not None:
+                return _to_response(commitment)
+
+        commitment = await self._session.get(Commitment, commitment_id)
+        if commitment is None:
+            from fastapi import HTTPException
+
+            raise HTTPException(status_code=404, detail="Commitment not found")
+
+        # Version check — optimistic concurrency (sacred rule #6)
+        if commitment.version != data.version:
+            from fastapi import HTTPException
+
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "type": "stale_version",
+                    "title": "Version conflict",
+                    "detail": f"Expected version {data.version}, found {commitment.version}",
+                    "current_version": commitment.version,
+                },
+            )
+
+        # Track changes for audit
+        changes: dict[str, dict[str, object]] = {}
+        if data.title is not None and data.title != commitment.title:
+            changes["title"] = {"old": commitment.title, "new": data.title}
+            commitment.title = data.title
+        if data.due_at is not None and data.due_at != commitment.due_at:
+            changes["due_at"] = {
+                "old": commitment.due_at.isoformat() if commitment.due_at else None,
+                "new": data.due_at.isoformat(),
+            }
+            commitment.due_at = data.due_at
+        if data.amount_paise is not None and data.amount_paise != commitment.amount_paise:
+            changes["amount_paise"] = {"old": commitment.amount_paise, "new": data.amount_paise}
+            commitment.amount_paise = data.amount_paise
+
+        if not changes:
+            return _to_response(commitment)
+
+        # Re-acceptance: fee/payment amended after accepted → reset to proposed
+        post_accepted = {CommitmentState.ACCEPTED, CommitmentState.IN_PROGRESS}
+        requires_reaccept = (
+            commitment.state in post_accepted
+            and commitment.class_ in {"fee", "payment"}
+        )
+
+        old_state = str(commitment.state)
+        if requires_reaccept:
+            commitment.state = CommitmentState.PROPOSED
+            changes["state"] = {"old": old_state, "new": "proposed", "reason": "re_acceptance_required"}
+
+        commitment.version += 1
+        commitment.updated_at = datetime.utcnow()
+
+        # Record idempotency
+        await self._record_idempotency(idempotency_key, str(commitment.id))
+
+        # Audit log
+        self._session.add(
+            AuditLog(
+                actor_id=self._principal_id,
+                actor_kind="user",
+                context_id=commitment.context_id,
+                event="commitment.amended",
+                subject_id=commitment.id,
+                detail={
+                    "changes": changes,
+                    "requires_reaccept": requires_reaccept,
+                    "version": commitment.version,
+                },
+            )
+        )
+
+        await self._session.commit()
+
+        # Sync broadcast (OL-003)
+        await _broadcast_sync(commitment, "commitment.amended", {
+            "changes": list(changes.keys()),
+            "requires_reaccept": requires_reaccept,
+        })
+
+        logger.info(
+            "commitment_amended",
+            commitment_id=str(commitment_id),
+            changes=list(changes.keys()),
+            requires_reaccept=requires_reaccept,
             version=commitment.version,
         )
         return _to_response(commitment)

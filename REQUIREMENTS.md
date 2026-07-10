@@ -8,43 +8,43 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 1. Commitment core (OL-001 – OL-019)
 
-- OL-001 The system shall represent every obligation as a Commitment with owner,
+- OL-001 ✅ The system shall represent every obligation as a Commitment with owner,
   counterparty, title, due timestamp (optional), class, state, version, context_id, and
   provenance pointer.
-- OL-001a The system shall support 0..N counterparties per commitment via the
+- OL-001a ✅ The system shall support 0..N counterparties per commitment via the
   `commitment_participants` table; `counterparty_id` is retained for 1:1 backward compat
   and shall be deprecated at Gate 4 exit.
-- OL-002 The system shall implement the commitment state machine
+- OL-002 ✅ The system shall implement the commitment state machine
   `proposed → accepted → in_progress → done | broken | cancelled`, rejecting invalid
   transitions with a 409 problem+json.
-- OL-002a WHEN a commitment's title, due date, or amount is amended after `accepted` state,
+- OL-002a ✅ WHEN a commitment's title, due date, or amount is amended after `accepted` state,
   the system shall notify the counterparty; WHERE commitment class is `fee` or `payment`,
   amendment SHALL require counterparty re-acceptance before the commitment progresses.
-- OL-003 WHEN both parties are OpenLnk principals, the system shall render the identical
+- OL-003 ✅ WHEN both parties are OpenLnk principals, the system shall render the identical
   commitment state to both within 5 s of any change (online conditions).
-- OL-003a The delta-stream replay window SHALL be bounded: ≤ 200 events or ≤ 30 days,
+- OL-003a ✅ The delta-stream replay window SHALL be bounded: ≤ 200 events or ≤ 30 days,
   whichever is smaller; clients beyond this bound shall use the checkpoint API to fetch
   current state rather than replaying the full delta log.
-- OL-004 The system shall record every commitment state change in the immutable audit log
+- OL-004 ✅ The system shall record every commitment state change in the immutable audit log
   with actor, timestamp, prior state, new state, and (if agent-initiated) prompt hash.
-- OL-005 The system shall link every extracted commitment to its provenance source
+- OL-005 ✅ The system shall link every extracted commitment to its provenance source
   (message id, media id, or capture id).
-- OL-006 IF a client submits a commitment write with a stale `version`, THEN the system
+- OL-006 ✅ IF a client submits a commitment write with a stale `version`, THEN the system
   shall reject it with 409 and the current object.
-- OL-007 The system shall honor an `Idempotency-Key` header on all mutation endpoints,
+- OL-007 ✅ The system shall honor an `Idempotency-Key` header on all mutation endpoints,
   returning the original result for a repeated key within 24 h.
 - OL-007a The system shall run an arq worker that purges idempotency keys older than 24 h
   on a scheduled cadence (≥ once per hour); key accumulation without purge is a Gate 1
   exit blocker.
 - OL-008 WHEN a commitment is assigned to a person not yet on OpenLnk, the system shall
   generate an invite link and hold the commitment in `proposed` until acceptance.
-- OL-009 The system shall support commitment classes `fee`, `schedule`, `task`, `payment`,
+- OL-009 ✅ The system shall support commitment classes `fee`, `schedule`, `task`, `payment`,
   `custom`, with class-specific validation (e.g., `fee` requires amount and currency).
 - OL-010 WHERE a commitment carries class `fee` or `payment`, the system shall attach a UPI
   intent deep-link per ADR-006.
-- OL-011 The system shall never delete commitments; terminal states are `done`, `broken`,
+- OL-011 ✅ The system shall never delete commitments; terminal states are `done`, `broken`,
   `cancelled`, all retained and auditable.
-- OL-012 WHEN a due timestamp passes with state not terminal, the system shall mark the
+- OL-012 ✅ WHEN a due timestamp passes with state not terminal, the system shall mark the
   commitment `at_risk` (flag, not state) and evaluate notification policy per OL-060.
 
 ## 2. Extraction engine (OL-020 – OL-034)
@@ -56,57 +56,57 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
   (circulars, notices, receipts) — exactly this camera flow, nothing broader.
 - OL-023 The extraction pipeline shall achieve precision ≥ 0.97 and recall ≥ 0.85 on the
   frozen eval set (EVAL-HARNESS.md) as a CI merge gate.
-- OL-024 The system shall not persist raw message text, audio, or images server-side beyond
+- OL-024 ✅ The system shall not persist raw message text, audio, or images server-side beyond
   the ephemeral extraction window (≤ 60 s in-memory), per ADR-002.
 - OL-025 WHEN extraction confidence is below the propose threshold, the system shall discard
   the candidate silently rather than surface a low-confidence commitment.
 - OL-026 The system shall allow the user to correct or reject any extracted commitment in
   ≤ 2 taps; corrections shall be appended to the eval-candidate queue (OL-090).
-- OL-027 The system shall attribute every extraction to a versioned prompt hash and model
+- OL-027 ✅ The system shall attribute every extraction to a versioned prompt hash and model
   identifier in the audit log.
-- OL-028 IF the LLM provider is unreachable, THEN the system shall queue extraction jobs in
+- OL-028 ✅ IF the LLM provider is unreachable, THEN the system shall queue extraction jobs in
   arq with exponential backoff and shall not lose source pointers.
-- OL-029 The system shall run all extraction through a single provider adapter with
+- OL-029 ✅ The system shall run all extraction through a single provider adapter with
   structured (Pydantic-validated) outputs; free-text LLM output shall not enter services.
-- OL-029a The extraction confidence threshold (propose threshold for OL-025) shall be a
+- OL-029a ✅ The extraction confidence threshold (propose threshold for OL-025) shall be a
   versioned configuration value, not a hardcoded constant; changes to the threshold are
   logged in the audit log with the old and new values.
-- OL-029b The extraction Pydantic output model SHALL include `counterparties: list[ExtractedPrincipal]`
+- OL-029b ✅ The extraction Pydantic output model SHALL include `counterparties: list[ExtractedPrincipal]`
   (length ≥ 1); extraction of group commitments with multiple named counterparties shall
   populate the list accordingly. Single-counterparty results use a list of length 1.
 
 ## 3. Contexts & isolation (OL-040 – OL-049)
 
-- OL-040 The system shall scope every row of user-linked data by exactly one of
+- OL-040 ✅ The system shall scope every row of user-linked data by exactly one of
   `household_id` or `business_id`, enforced by Postgres RLS.
-- OL-041 The system shall prevent any query from returning rows across household/business
+- OL-041 ✅ The system shall prevent any query from returning rows across household/business
   boundaries; cross-context leakage is a sev-1 defect and a Gate 1 exit blocker.
-- OL-041a A principal in household A SHALL NOT be able to read commitments, messages, or
+- OL-041a ✅ A principal in household A SHALL NOT be able to read commitments, messages, or
   threads belonging to household B under any authenticated session.
-- OL-041b A principal in business X SHALL NOT be able to read commitments, messages, or
+- OL-041b ✅ A principal in business X SHALL NOT be able to read commitments, messages, or
   threads belonging to business Y under any authenticated session.
-- OL-041c A web-thread guest token for thread T SHALL NOT grant read access to any
+- OL-041c ✅ A web-thread guest token for thread T SHALL NOT grant read access to any
   commitment, message, or thread outside of thread T's context, even if the guest is added
   as a participant on a second thread in the same context.
-- OL-041d The above isolation properties (OL-041a..c) shall be verified by dedicated
+- OL-041d ✅ The above isolation properties (OL-041a..c) shall be verified by dedicated
   negative-path integration tests using testcontainers-Postgres; these tests shall run in
   CI and gate every merge to main.
-- OL-041e WHEN a new RLS policy is added or modified, the change SHALL include a test
+- OL-041e ✅ WHEN a new RLS policy is added or modified, the change SHALL include a test
   asserting that the prior leakage scenario is now blocked.
-- OL-042 The system shall auto-cluster threads into typed contexts (`household`,
+- OL-042 ✅ The system shall auto-cluster threads into typed contexts (`household`,
   `business_batch`) from participant and content signal, with user override.
-- OL-043 WHILE a user belongs to multiple contexts, the system shall render a unified ledger
+- OL-043 ✅ WHILE a user belongs to multiple contexts, the system shall render a unified ledger
   view without merging underlying context data.
-- OL-044 The system shall support RBAC roles within a business context: `owner`, `staff`.
+- OL-044 ✅ The system shall support RBAC roles within a business context: `owner`, `staff`.
 
 ## 4. Autonomy ladder & policy engine (OL-050 – OL-059)
 
-- OL-050 The system shall implement rungs Observe, Propose, Bounded-auto, Trusted-auto,
+- OL-050 ✅ The system shall implement rungs Observe, Propose, Bounded-auto, Trusted-auto,
   configured per (contact × commitment-class).
-- OL-051 The policy engine shall be deterministic; the LLM shall only produce proposals,
+- OL-051 ✅ The policy engine shall be deterministic; the LLM shall only produce proposals,
   never execute sends or state changes.
-- OL-052 WHILE at rung Observe, the system shall extract and display but send nothing.
-- OL-053 WHILE at rung Propose, the system shall draft messages/actions requiring explicit
+- OL-052 ✅ WHILE at rung Observe, the system shall extract and display but send nothing.
+- OL-053 ✅ WHILE at rung Propose, the system shall draft messages/actions requiring explicit
   one-tap approval before send.
 - OL-054 WHILE at rung Bounded-auto, the system shall auto-send only whitelisted deterministic
   classes (reminder, confirmation) within configured quiet hours.
@@ -139,7 +139,7 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
   commitment of the assignee, the system shall surface the conflict before acceptance.
 - OL-072 The system shall render a household calendar overlay combining member calendars
   and commitments, scoped by OL-040.
-- OL-073 Calendar ingestion shall live behind the connector interface (ADR-001 §Interfaces)
+- OL-073 ✅ Calendar ingestion shall live behind the connector interface (ADR-001 §Interfaces)
   so future MCP-based connectors are additive, not a rewrite. The connector interface SHALL
   include a `propose_event(commitment) -> PendingCalendarEvent | None` method stub (E5);
   read-only ships at Gate 4, write-capable ships at Gate 5 with explicit user consent for
@@ -229,7 +229,7 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 ## 11. Non-functional (OL-140 – OL-148)
 
 - OL-140 API p95 latency < 400 ms for reads, < 800 ms for writes (excluding LLM paths).
-- OL-141 All services containerized; single `just dev` brings up the full stack locally.
+- OL-141 ✅ All services containerized; single `just dev` brings up the full stack locally.
 - OL-142 Nightly Postgres PITR verified restore drill monthly.
 - OL-142a Postgres PITR to S3 (ap-south-1) SHALL be configured and a successful restore
   verified BEFORE Gate 2 pilot go-live; this is a Gate 2 entry blocker. The monthly drill

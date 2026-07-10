@@ -52,6 +52,19 @@ class CommitmentResponse(BaseModel):
     model_config = {"populate_by_name": True, "from_attributes": True}
 
 
+class CommitmentAmend(BaseModel):
+    """Amend a commitment's title, due date, or amount (OL-002a).
+
+    All fields optional (partial update). Version is required for
+    optimistic concurrency.
+    """
+
+    title: str | None = Field(default=None, min_length=1, max_length=500)
+    due_at: datetime | None = None
+    amount_paise: int | None = None
+    version: int = Field(description="Expected current version for optimistic concurrency")
+
+
 class CommitmentStateTransition(BaseModel):
     """Request to transition commitment state."""
 
@@ -94,6 +107,19 @@ class ExtractionResult(BaseModel):
     commitments: list[ExtractedCommitment]
     prompt_hash: str
     model_id: str
+
+
+# ─── Sync / delta schemas (OL-003) ───
+
+
+class DeltaEvent(BaseModel):
+    """A sync delta event broadcast over WebSocket (OL-003)."""
+
+    event: str
+    context_id: str
+    subject_id: str
+    seq: int
+    data: dict
 
 
 class ExtractionRequest(BaseModel):

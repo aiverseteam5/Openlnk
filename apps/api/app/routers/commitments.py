@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db, get_principal_id
 from app.schemas import (
+    CommitmentAmend,
     CommitmentCreate,
     CommitmentResponse,
     CommitmentStateTransition,
@@ -63,3 +64,17 @@ async def transition_state(
     Stale version → 409 (RFC 9457 problem+json).
     """
     return await service.transition_state(commitment_id, body, idempotency_key=idempotency_key)
+
+
+@router.patch("/{commitment_id}/amend", response_model=CommitmentResponse)
+async def amend_commitment(
+    commitment_id: UUID,
+    body: CommitmentAmend,
+    idempotency_key: str = Header(..., alias="Idempotency-Key"),
+    service: CommitmentService = Depends(get_commitment_service),  # noqa: B008
+) -> CommitmentResponse:
+    """Amend commitment fields (OL-002a).
+
+    For fee/payment after accepted: resets to proposed (re-acceptance required).
+    """
+    return await service.amend(commitment_id, body, idempotency_key=idempotency_key)
