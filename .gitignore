@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+__pycache__/
+*.pyc
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Build output
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+credentials.json
+*.pem
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Turborepo
+.turbo/
+
+# Coverage
+htmlcov/
+.coverage
+coverage/
+
+# Expo / React Native
+apps/mobile/.expo/
+apps/mobile/android/
+apps/mobile/ios/
+
+# Alembic
+apps/api/alembic/versions/__pycache__/
+
+# Design audit (generated artifacts, not source)
+design-audit-*/
+
+# gstack local state
+.gstack/
+
+# Claude Code local state
+.claude/
+
+# Root-level ADR duplicates (canonical copies in adr/)
+/ADR-*.md

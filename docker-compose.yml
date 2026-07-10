@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: openlnk_dev
+      POSTGRES_USER: openlnk_app
+      POSTGRES_PASSWORD: dev_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U openlnk_app -d openlnk_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Durable Redis for arq job queues (workers, scheduled sends, reminders).
+  # AOF enabled — jobs survive Redis restart.
+  redis-jobs:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-jobs-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Ephemeral Redis for extraction queues (ADR-002).
+  # NO persistence — raw conversation content must never be written to disk.
+  redis-extraction:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    command: redis-server --save "" --appendonly no
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  redis-jobs-data:

@@ -1,0 +1,5 @@
+packages:
+  - "apps/web-owner"
+  - "apps/web-thread"
+  - "apps/mobile"
+  - "packages/*"

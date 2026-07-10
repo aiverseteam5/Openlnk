@@ -1,0 +1,19 @@
+{
+  "name": "@openlnk/api-client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "generate": "openapi-typescript ../../openapi.yaml -o src/generated.ts"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.13"
+  },
+  "devDependencies": {
+    "typescript": "^5.7",
+    "openapi-typescript": "^7.4"
+  }
+}

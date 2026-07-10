@@ -1,0 +1,77 @@
+[project]
+name = "openlnk-api"
+version = "0.1.0"
+description = "OpenLnk API — commitment-native communication"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "pydantic>=2.10",
+    "asyncpg>=0.30",
+    "sqlalchemy[asyncio]>=2.0",
+    "alembic>=1.14",
+    "arq>=0.26",
+    "redis>=5.2",
+    "structlog>=24.4",
+    "opentelemetry-api>=1.28",
+    "opentelemetry-sdk>=1.28",
+    "opentelemetry-instrumentation-fastapi>=0.49b",
+    "httpx>=0.28",
+    "cryptography>=44.0",
+    "PyJWT>=2.10",
+    "pydantic-settings>=2.14.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "testcontainers[postgres]>=4.9",
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "import-linter>=2.1",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 99
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "S", "T20", "RUF"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = [
+    "req(requirement): Links test to a REQUIREMENTS.md requirement (e.g. OL-041)",
+]
+
+[tool.importlinter]
+root_packages = ["app"]
+
+[[tool.importlinter.contracts]]
+name = "Connectors must not import from services or routers"
+type = "forbidden"
+source_modules = ["app.connectors"]
+forbidden_modules = ["app.services", "app.routers"]
+
+[[tool.importlinter.contracts]]
+name = "Routers must not contain business logic (no direct DB/model imports)"
+type = "forbidden"
+source_modules = ["app.routers"]
+forbidden_modules = ["app.connectors"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

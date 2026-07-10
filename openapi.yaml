@@ -1,0 +1,348 @@
+openapi: 3.1.0
+info:
+  title: OpenLnk API
+  version: 1.0.0-gate0
+  description: >
+    Contract-first v1 surface. TS client in packages/api-client is generated from this
+    file; CI drift gate fails if the committed spec differs from the FastAPI export.
+    All mutations require Idempotency-Key. Commitment writes require version.
+servers:
+  - url: https://api.openlnk.in/v1
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/otp/request:
+    post:
+      summary: Request phone OTP (MSG91)
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/OtpRequest' }
+      responses:
+        '202': { description: OTP dispatched }
+
+  /auth/otp/verify:
+    post:
+      summary: Verify OTP, issue session token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/OtpVerify' }
+      responses:
+        '200':
+          description: Session
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Session' }
+
+  /threads/{threadId}/deltas:
+    get:
+      summary: Delta stream replay (ADR-001). Long-poll fallback via wait param.
+      parameters:
+        - { name: threadId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: after_seq, in: query, required: true, schema: { type: integer, format: int64 } }
+        - { name: wait, in: query, schema: { type: integer, maximum: 25 } }
+      responses:
+        '200':
+          description: Ordered deltas (messages + commitment events)
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Delta' }
+
+  /threads/{threadId}/messages:
+    post:
+      summary: Send message (triggers ephemeral extraction, ADR-002)
+      parameters:
+        - { name: threadId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MessageCreate' }
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Message' }
+
+  /captures:
+    post:
+      summary: Submit voice/camera capture for extraction (content ephemeral, OL-024)
+      parameters:
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema: { $ref: '#/components/schemas/CaptureCreate' }
+      responses:
+        '202':
+          description: Extraction queued; proposals arrive on the delta stream
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CaptureAccepted' }
+
+  /commitments:
+    get:
+      summary: Unified ledger (cursor pagination, RLS-scoped)
+      parameters:
+        - { name: state, in: query, schema: { type: string } }
+        - { name: context_id, in: query, schema: { type: string, format: uuid } }
+        - { name: cursor, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 50, maximum: 100 } }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CommitmentPage' }
+    post:
+      summary: Create commitment manually
+      parameters: [ { $ref: '#/components/parameters/IdempotencyKey' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CommitmentCreate' }
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Commitment' }
+
+  /commitments/{id}:
+    patch:
+      summary: State transition / edit (optimistic concurrency, OL-002/006)
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CommitmentPatch' }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Commitment' }
+        '409':
+          description: Stale version or invalid transition
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+
+  /commitments/{id}/assign:
+    post:
+      summary: Assign to a person; generates invite if not on OpenLnk (OL-008)
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AssignRequest' }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AssignResult' }
+
+  /proposals/{id}/approve:
+    post:
+      summary: One-tap approval at Propose rung (ADR-003)
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      responses:
+        '200': { description: Executed by policy engine }
+
+  /brief/today:
+    get:
+      summary: Daily brief (OL-061/064) — commitments, conflicts, at-risk. Nothing else.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DailyBrief' }
+
+  /business/{businessId}/roster/import:
+    post:
+      summary: Excel/CSV roster import (OL-100)
+      parameters:
+        - { name: businessId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties: { file: { type: string, format: binary } }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RosterImportResult' }
+
+  /thread-links/{token}:
+    get:
+      summary: Resolve a web-thread link token (ADR-005). Rotates token.
+      security: []
+      parameters:
+        - { name: token, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ThreadSession' }
+
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: { type: string, maxLength: 64 }
+  schemas:
+    OtpRequest:
+      type: object
+      required: [phone_e164]
+      properties: { phone_e164: { type: string } }
+    OtpVerify:
+      type: object
+      required: [phone_e164, code]
+      properties:
+        phone_e164: { type: string }
+        code: { type: string }
+    Session:
+      type: object
+      properties:
+        access_token: { type: string }
+        principal_id: { type: string, format: uuid }
+    MessageCreate:
+      type: object
+      required: [client_msg_id, body]
+      properties:
+        client_msg_id: { type: string }
+        body: { type: string }
+    Message:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        thread_id: { type: string, format: uuid }
+        seq: { type: integer, format: int64 }
+        sender_id: { type: string, format: uuid }
+        body: { type: string }
+        sent_at: { type: string, format: date-time }
+    CaptureCreate:
+      type: object
+      required: [kind, file]
+      properties:
+        kind: { type: string, enum: [voice, camera] }
+        thread_id: { type: string, format: uuid }
+        file: { type: string, format: binary }
+    CaptureAccepted:
+      type: object
+      properties: { capture_id: { type: string, format: uuid } }
+    Commitment:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        context_id: { type: string, format: uuid }
+        owner_id: { type: string, format: uuid }
+        counterparty_id: { type: string, format: uuid, nullable: true }
+        title: { type: string }
+        class: { type: string, enum: [fee, schedule, task, payment, custom] }
+        amount_paise: { type: integer, nullable: true }
+        due_at: { type: string, format: date-time, nullable: true }
+        state: { type: string, enum: [proposed, accepted, in_progress, done, broken, cancelled] }
+        at_risk: { type: boolean }
+        version: { type: integer }
+        provenance_kind: { type: string, enum: [message, voice, camera, manual], nullable: true }
+        upi_intent_url: { type: string, nullable: true }
+    CommitmentCreate:
+      type: object
+      required: [context_id, owner_id, title, class]
+      properties:
+        context_id: { type: string, format: uuid }
+        owner_id: { type: string, format: uuid }
+        counterparty_id: { type: string, format: uuid }
+        title: { type: string }
+        class: { type: string }
+        amount_paise: { type: integer }
+        due_at: { type: string, format: date-time }
+    CommitmentPatch:
+      type: object
+      required: [version]
+      properties:
+        version: { type: integer }
+        state: { type: string }
+        title: { type: string }
+        due_at: { type: string, format: date-time }
+    CommitmentPage:
+      type: object
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/Commitment' } }
+        next_cursor: { type: string, nullable: true }
+    AssignRequest:
+      type: object
+      required: [assignee]
+      properties:
+        assignee:
+          type: object
+          properties:
+            principal_id: { type: string, format: uuid }
+            phone_e164: { type: string }
+    AssignResult:
+      type: object
+      properties:
+        commitment: { $ref: '#/components/schemas/Commitment' }
+        invite_url: { type: string, nullable: true }
+    DailyBrief:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        today: { type: array, items: { $ref: '#/components/schemas/Commitment' } }
+        at_risk: { type: array, items: { $ref: '#/components/schemas/Commitment' } }
+        conflicts:
+          type: array
+          items:
+            type: object
+            properties:
+              commitment_id: { type: string, format: uuid }
+              clashes_with: { type: string }
+    RosterImportResult:
+      type: object
+      properties:
+        students_imported: { type: integer }
+        parents_linked: { type: integer }
+        warnings: { type: array, items: { type: string } }
+    ThreadSession:
+      type: object
+      properties:
+        thread_id: { type: string, format: uuid }
+        access_token: { type: string }
+        rotated_token: { type: string }
+    Delta:
+      type: object
+      properties:
+        seq: { type: integer, format: int64 }
+        kind: { type: string, enum: [message, commitment_event, proposal] }
+        payload: { type: object }
+    Problem:
+      type: object
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }

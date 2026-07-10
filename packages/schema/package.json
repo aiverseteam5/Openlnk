@@ -1,0 +1,16 @@
+{
+  "name": "@openlnk/schema",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "generate": "openapi-typescript ../openapi.yaml -o src/generated.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.7",
+    "openapi-typescript": "^7.4"
+  }
+}
