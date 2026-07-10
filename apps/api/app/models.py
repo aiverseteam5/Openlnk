@@ -323,6 +323,25 @@ class IdempotencyKey(Base):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
 
+class EvalCandidate(Base):
+    """Labeled-candidate queue for eval set (OL-090).
+
+    User corrections/rejections of extractions feed into this queue.
+    Candidates are adjudicated by humans before entering the frozen eval set.
+    """
+
+    __tablename__ = "eval_candidates"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    commitment_id: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True), ForeignKey("commitments.id"), nullable=False
+    )
+    action: Mapped[str] = mapped_column(String(10), nullable=False)  # reject | edit
+    edits: Mapped[dict | None] = mapped_column(JSONB)
+    adjudicated: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+
+
 class InviteToken(Base):
     """Invite tokens for non-OpenLnk counterparties (OL-008).
 

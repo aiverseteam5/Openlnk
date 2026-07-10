@@ -49,18 +49,18 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 2. Extraction engine (OL-020 – OL-034)
 
-- OL-020 The system shall extract candidate commitments from thread text messages in English.
-- OL-021 The system shall extract candidate commitments from English voice notes via ASR
+- OL-020 ✅ The system shall extract candidate commitments from thread text messages in English.
+- OL-021 ✅ The system shall extract candidate commitments from English voice notes via ASR
   followed by the same extraction pipeline.
-- OL-022 The system shall extract candidate commitments from photographed documents
+- OL-022 ✅ The system shall extract candidate commitments from photographed documents
   (circulars, notices, receipts) — exactly this camera flow, nothing broader.
-- OL-023 The extraction pipeline shall achieve precision ≥ 0.97 and recall ≥ 0.85 on the
+- OL-023 ✅ The extraction pipeline shall achieve precision ≥ 0.97 and recall ≥ 0.85 on the
   frozen eval set (EVAL-HARNESS.md) as a CI merge gate.
 - OL-024 ✅ The system shall not persist raw message text, audio, or images server-side beyond
   the ephemeral extraction window (≤ 60 s in-memory), per ADR-002.
-- OL-025 WHEN extraction confidence is below the propose threshold, the system shall discard
+- OL-025 ✅ WHEN extraction confidence is below the propose threshold, the system shall discard
   the candidate silently rather than surface a low-confidence commitment.
-- OL-026 The system shall allow the user to correct or reject any extracted commitment in
+- OL-026 ✅ The system shall allow the user to correct or reject any extracted commitment in
   ≤ 2 taps; corrections shall be appended to the eval-candidate queue (OL-090).
 - OL-027 ✅ The system shall attribute every extraction to a versioned prompt hash and model
   identifier in the audit log.
@@ -218,10 +218,10 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 10. Eval & learning loop (OL-090 – OL-094)
 
-- OL-090 User corrections/rejections of extractions shall enter a labeled-candidate queue
+- OL-090 ✅ User corrections/rejections of extractions shall enter a labeled-candidate queue
   for human adjudication into the eval set.
-- OL-091 The eval set shall be frozen per milestone; changes to it require reviewer sign-off.
-- OL-092 CI shall block any merge touching prompts, models, or the extraction pipeline
+- OL-091 ✅ The eval set shall be frozen per milestone; changes to it require reviewer sign-off.
+- OL-092 ✅ CI shall block any merge touching prompts, models, or the extraction pipeline
   unless `just eval` meets OL-023 thresholds.
 - OL-093 The system shall learn per-user nudge timing and quiet-hour patterns only through
   features that create, protect, or close commitments (PRD §8 test).

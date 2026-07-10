@@ -122,6 +122,18 @@ class DeltaEvent(BaseModel):
     data: dict
 
 
+class CorrectionAction(BaseModel):
+    """User correction/rejection of an extracted commitment (OL-026).
+
+    Users can reject or edit any extraction in <= 2 taps.
+    Corrections feed into the eval-candidate queue (OL-090).
+    """
+
+    commitment_id: str
+    action: str = Field(pattern="^(reject|edit)$")
+    edits: dict | None = None
+
+
 class ExtractionRequest(BaseModel):
     """Request to extract commitments from a message."""
 
