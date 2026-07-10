@@ -230,8 +230,8 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 - OL-140 ✅ API p95 latency < 400 ms for reads, < 800 ms for writes (excluding LLM paths).
 - OL-141 ✅ All services containerized; single `just dev` brings up the full stack locally.
-- OL-142 Nightly Postgres PITR verified restore drill monthly.
-- OL-142a Postgres PITR to S3 (ap-south-1) SHALL be configured and a successful restore
+- OL-142 ✅ Nightly Postgres PITR verified restore drill monthly.
+- OL-142a ✅ Postgres PITR to S3 (ap-south-1) SHALL be configured and a successful restore
   verified BEFORE Gate 2 pilot go-live; this is a Gate 2 entry blocker. The monthly drill
   (OL-142) does not satisfy this requirement — a pre-Gate-2 restore drill is required.
 - OL-143 ✅ Sentry wired in all four apps before Gate 2 field deployment.
