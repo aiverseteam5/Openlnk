@@ -212,7 +212,7 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 - OL-122 ✅ All personal data shall reside in the ap-south-1 (Mumbai) region.
 - OL-123 ✅ The system shall log every consent grant/withdrawal as an audit event and honor
   withdrawal by ceasing processing within 72 h.
-- OL-124 The system shall provide data export and account deletion (commitment graph
+- OL-124 ✅ The system shall provide data export and account deletion (commitment graph
   anonymized, not destroyed, to preserve counterparty ledgers) — deletion semantics per
   ADR-002 §Erasure.
 
@@ -228,18 +228,18 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 11. Non-functional (OL-140 – OL-148)
 
-- OL-140 API p95 latency < 400 ms for reads, < 800 ms for writes (excluding LLM paths).
+- OL-140 ✅ API p95 latency < 400 ms for reads, < 800 ms for writes (excluding LLM paths).
 - OL-141 ✅ All services containerized; single `just dev` brings up the full stack locally.
 - OL-142 Nightly Postgres PITR verified restore drill monthly.
 - OL-142a Postgres PITR to S3 (ap-south-1) SHALL be configured and a successful restore
   verified BEFORE Gate 2 pilot go-live; this is a Gate 2 entry blocker. The monthly drill
   (OL-142) does not satisfy this requirement — a pre-Gate-2 restore drill is required.
-- OL-143 Sentry wired in all four apps before Gate 2 field deployment.
-- OL-144 Rate limiting: Caddy per-IP and FastAPI per-token; web-thread tokens additionally
+- OL-143 ✅ Sentry wired in all four apps before Gate 2 field deployment.
+- OL-144 ✅ Rate limiting: Caddy per-IP and FastAPI per-token; web-thread tokens additionally
   per-thread throttled.
-- OL-145 Secrets never in repo (gitleaks pre-commit); shared secrets in Infisical.
-- OL-146 OTP auth via MSG91 with cost telemetry feeding the unit-economics sheet.
-- OL-146a Session tokens: access token 15-min TTL; refresh token 90-day TTL rotated on use;
+- OL-145 ✅ Secrets never in repo (gitleaks pre-commit); shared secrets in Infisical.
+- OL-146 ✅ OTP auth via MSG91 with cost telemetry feeding the unit-economics sheet.
+- OL-146a ✅ Session tokens: access token 15-min TTL; refresh token 90-day TTL rotated on use;
   stored in httpOnly cookie (web) / Keychain (mobile). WHERE MSG91 is unreachable for OTP
   delivery, the system SHALL fall back to a secondary provider (e.g., Kaleyra or Twilio)
   configured in Infisical; fallback SHALL be tested in staging before Gate 2 deployment.
