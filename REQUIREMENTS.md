@@ -133,11 +133,11 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 6. Calendar fusion (OL-070 – OL-075)
 
-- OL-070 The system shall sync read-only with Google Calendar per household member who
+- OL-070 ✅ The system shall sync read-only with Google Calendar per household member who
   grants consent.
-- OL-071 WHEN a new commitment with a due time conflicts with an existing calendar event or
+- OL-071 ✅ WHEN a new commitment with a due time conflicts with an existing calendar event or
   commitment of the assignee, the system shall surface the conflict before acceptance.
-- OL-072 The system shall render a household calendar overlay combining member calendars
+- OL-072 ✅ The system shall render a household calendar overlay combining member calendars
   and commitments, scoped by OL-040.
 - OL-073 ✅ Calendar ingestion shall live behind the connector interface (ADR-001 §Interfaces)
   so future MCP-based connectors are additive, not a rewrite. The connector interface SHALL
@@ -223,7 +223,7 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 - OL-091 ✅ The eval set shall be frozen per milestone; changes to it require reviewer sign-off.
 - OL-092 ✅ CI shall block any merge touching prompts, models, or the extraction pipeline
   unless `just eval` meets OL-023 thresholds.
-- OL-093 The system shall learn per-user nudge timing and quiet-hour patterns only through
+- OL-093 ✅ The system shall learn per-user nudge timing and quiet-hour patterns only through
   features that create, protect, or close commitments (PRD §8 test).
 
 ## 11. Non-functional (OL-140 – OL-148)
