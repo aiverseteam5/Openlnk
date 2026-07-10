@@ -5,7 +5,7 @@ Funds never transit an OpenLnk account — link resolves to center's VPA.
 """
 
 import re
-from urllib.parse import quote, urlencode
+from urllib.parse import urlencode
 
 import structlog
 
@@ -50,13 +50,15 @@ class UpiService:
 
         amount_inr = f"{amount_paise / 100:.2f}"
 
-        params = urlencode({
-            "pa": vpa,
-            "pn": payee_name,
-            "am": amount_inr,
-            "cu": "INR",
-            "tn": note,
-        })
+        params = urlencode(
+            {
+                "pa": vpa,
+                "pn": payee_name,
+                "am": amount_inr,
+                "cu": "INR",
+                "tn": note,
+            }
+        )
 
         url = f"upi://pay?{params}"
 

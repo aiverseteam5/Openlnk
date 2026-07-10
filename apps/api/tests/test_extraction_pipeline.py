@@ -40,7 +40,7 @@ class TestTextExtraction:
 
     def test_extraction_result_validates_confidence(self):
         """Confidence must be between 0 and 1."""
-        with pytest.raises(Exception):
+        with pytest.raises(ValueError):
             ExtractedCommitment(
                 title="Bad",
                 confidence=1.5,

@@ -64,7 +64,8 @@ class TestSyncProtocol:
         assert "broadcast" in create_src or "sync" in create_src or "notify" in create_src
 
         transition_src = inspect.getsource(CommitmentService.transition_state)
-        assert "broadcast" in transition_src or "sync" in transition_src or "notify" in transition_src
+        has_sync = "broadcast" in transition_src or "sync" in transition_src
+        assert has_sync or "notify" in transition_src
 
 
 @pytest.mark.req("OL-003a")
@@ -73,7 +74,7 @@ class TestDeltaReplayWindow:
 
     def test_replay_window_constants(self):
         """Replay bounds are defined as configuration."""
-        from app.services.sync import REPLAY_MAX_EVENTS, REPLAY_MAX_DAYS
+        from app.services.sync import REPLAY_MAX_DAYS, REPLAY_MAX_EVENTS
 
         assert REPLAY_MAX_EVENTS == 200
         assert REPLAY_MAX_DAYS == 30

@@ -171,11 +171,15 @@ class CommitmentService:
         await self._session.commit()
 
         # Sync broadcast (OL-003)
-        await _broadcast_sync(commitment, "commitment.created", {
-            "title": data.title,
-            "class": data.class_,
-            "state": "proposed",
-        })
+        await _broadcast_sync(
+            commitment,
+            "commitment.created",
+            {
+                "title": data.title,
+                "class": data.class_,
+                "state": "proposed",
+            },
+        )
 
         logger.info(
             "commitment_created",
@@ -276,10 +280,14 @@ class CommitmentService:
         await self._session.commit()
 
         # Sync broadcast (OL-003)
-        await _broadcast_sync(commitment, "commitment.state_changed", {
-            "old_state": old_state,
-            "new_state": data.new_state,
-        })
+        await _broadcast_sync(
+            commitment,
+            "commitment.state_changed",
+            {
+                "old_state": old_state,
+                "new_state": data.new_state,
+            },
+        )
 
         logger.info(
             "commitment_state_changed",
@@ -352,15 +360,19 @@ class CommitmentService:
 
         # Re-acceptance: fee/payment amended after accepted → reset to proposed
         post_accepted = {CommitmentState.ACCEPTED, CommitmentState.IN_PROGRESS}
-        requires_reaccept = (
-            commitment.state in post_accepted
-            and commitment.class_ in {"fee", "payment"}
-        )
+        requires_reaccept = commitment.state in post_accepted and commitment.class_ in {
+            "fee",
+            "payment",
+        }
 
         old_state = str(commitment.state)
         if requires_reaccept:
             commitment.state = CommitmentState.PROPOSED
-            changes["state"] = {"old": old_state, "new": "proposed", "reason": "re_acceptance_required"}
+            changes["state"] = {
+                "old": old_state,
+                "new": "proposed",
+                "reason": "re_acceptance_required",
+            }
 
         commitment.version += 1
         commitment.updated_at = datetime.utcnow()
@@ -387,10 +399,14 @@ class CommitmentService:
         await self._session.commit()
 
         # Sync broadcast (OL-003)
-        await _broadcast_sync(commitment, "commitment.amended", {
-            "changes": list(changes.keys()),
-            "requires_reaccept": requires_reaccept,
-        })
+        await _broadcast_sync(
+            commitment,
+            "commitment.amended",
+            {
+                "changes": list(changes.keys()),
+                "requires_reaccept": requires_reaccept,
+            },
+        )
 
         logger.info(
             "commitment_amended",

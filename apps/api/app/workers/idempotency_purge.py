@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 import structlog
 from arq.cron import cron
-from sqlalchemy import delete, text
+from sqlalchemy import delete
 
 from app.models import IdempotencyKey
 

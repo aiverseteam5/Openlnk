@@ -4,8 +4,6 @@ WHERE a commitment carries class fee or payment, the system shall attach
 a UPI intent deep-link per ADR-006.
 """
 
-from uuid import uuid4
-
 import pytest
 
 

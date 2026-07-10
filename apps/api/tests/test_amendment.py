@@ -6,12 +6,10 @@ amendment SHALL require counterparty re-acceptance.
 """
 
 from datetime import datetime, timedelta
-from uuid import uuid4
 
 import pytest
 
-from app.models import CommitmentClass, CommitmentState
-from app.schemas import CommitmentAmend, CommitmentCreate, CommitmentResponse
+from app.schemas import CommitmentAmend
 
 
 @pytest.mark.req("OL-002a")
@@ -36,7 +34,7 @@ class TestAmendmentSchema:
 
     def test_amend_requires_version(self):
         """Version is mandatory for optimistic concurrency."""
-        with pytest.raises(Exception):
+        with pytest.raises(ValueError):
             CommitmentAmend()
 
 
