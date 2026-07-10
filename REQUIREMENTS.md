@@ -147,16 +147,16 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 7. Link mechanic / web-thread (OL-080 – OL-088)
 
-- OL-080 The system shall open a functional thread from an openlnk.in link with no signup,
+- OL-080 ✅ The system shall open a functional thread from an openlnk.in link with no signup,
   first meaningful render < 3 s on the reference low-end Android profile.
-- OL-081 Thread links shall embed signed, thread-scoped, expiring tokens that rotate on use
+- OL-081 ✅ Thread links shall embed signed, thread-scoped, expiring tokens that rotate on use
   (ADR-005); a token shall grant access to exactly one thread.
-- OL-082 The web-thread client shall persist session across visits inside the WhatsApp
+- OL-082 ✅ The web-thread client shall persist session across visits inside the WhatsApp
   in-app webview (localStorage primary, cookie fallback).
-- OL-083 The system shall present the app-install offer only when a web principal has ≥ 2
+- OL-083 ✅ The system shall present the app-install offer only when a web principal has ≥ 2
   active threads, and never before.
-- OL-084 The web-thread bundle shall not exceed 120 KB gzipped (CI-enforced).
-- OL-085 The system shall instrument the funnel (open, return, install) per center and per
+- OL-084 ✅ The web-thread bundle shall not exceed 120 KB gzipped (CI-enforced).
+- OL-085 ✅ The system shall instrument the funnel (open, return, install) per center and per
   message class from first deployment.
 
 ## 8. Business console & payments (OL-100 – OL-112)
