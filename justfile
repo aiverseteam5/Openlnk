@@ -42,11 +42,11 @@ db-verify table:
 
 # Run all Python tests
 test:
-    cd apps/api && uv run pytest -v
+    cd apps/api && PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest -v -p asyncio
 
 # Run tests with requirement marker
 test-req req:
-    cd apps/api && uv run pytest -v -m "req('{{req}}')"
+    cd apps/api && PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest -v -p asyncio -m "req('{{req}}')"
 
 # Run RLS isolation tests (OL-041 — Gate 1 exit blocker)
 test-rls:
