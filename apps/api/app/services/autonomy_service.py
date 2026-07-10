@@ -6,7 +6,7 @@ Demotion drops one rung on user correction. Kill switch resets all.
 """
 
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from app.models import AutonomyRung
 

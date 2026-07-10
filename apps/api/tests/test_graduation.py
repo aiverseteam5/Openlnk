@@ -5,12 +5,11 @@ N clean actions over >= 14 days (N configurable, default 20).
 """
 
 from datetime import datetime, timedelta
-from uuid import uuid4
 
 import pytest
 
 from app.models import AutonomyRung
-from app.services.autonomy_service import AutonomyService, GraduationResult
+from app.services.autonomy_service import AutonomyService
 
 
 @pytest.mark.req("OL-055")

@@ -17,7 +17,6 @@ from sqlalchemy import (
     Numeric,
     String,
     Text,
-    Time,
     UniqueConstraint,
     text,
 )
@@ -302,6 +301,26 @@ class AuditLog(Base):
     detail: Mapped[dict] = mapped_column(JSONB, default=dict)  # type: ignore[assignment]
     prompt_hash: Mapped[str | None] = mapped_column(Text)
     model_id: Mapped[str | None] = mapped_column(Text)
+
+
+class StagingRecord(Base):
+    """Pre-consent staging records for roster imports (OL-100a).
+
+    Child-linked data is held here until guardian OTP consent.
+    """
+
+    __tablename__ = "staging_records"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    business_id: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True), ForeignKey("businesses.id"), nullable=False
+    )
+    student_name: Mapped[str] = mapped_column(Text, nullable=False)
+    parent_phone: Mapped[str] = mapped_column(Text, nullable=False)
+    batch: Mapped[str | None] = mapped_column(Text)
+    data: Mapped[dict] = mapped_column(JSONB, default=dict)  # type: ignore[assignment]
+    consent_received: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
 
 class ConsentEvent(Base):

@@ -16,11 +16,13 @@ import structlog
 logger = structlog.get_logger()
 
 # Reasons that make a user the blocker
-_BLOCKER_REASONS = frozenset({
-    "at_risk",
-    "awaiting_acceptance",
-    "awaiting_approval",
-})
+_BLOCKER_REASONS = frozenset(
+    {
+        "at_risk",
+        "awaiting_acceptance",
+        "awaiting_approval",
+    }
+)
 
 
 class NotificationService:
@@ -92,11 +94,13 @@ class DailyBriefService:
         data: dict,
     ) -> None:
         """OL-061: Queue a non-blocking item for the daily brief."""
-        self.pending_items.append({
-            "principal_id": str(principal_id),
-            "item_type": item_type,
-            "data": data,
-        })
+        self.pending_items.append(
+            {
+                "principal_id": str(principal_id),
+                "item_type": item_type,
+                "data": data,
+            }
+        )
 
     def get_brief_sections(self) -> dict:
         """OL-064: Return the sections included in the daily brief.

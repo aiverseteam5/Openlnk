@@ -9,7 +9,7 @@ from datetime import time
 import pytest
 
 from app.models import AutonomyRung
-from app.services.policy_engine import PolicyDecision, PolicyEngine
+from app.services.policy_engine import PolicyEngine
 
 
 @pytest.mark.req("OL-054")

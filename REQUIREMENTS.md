@@ -161,37 +161,37 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 8. Business console & payments (OL-100 – OL-112)
 
-- OL-100 The system shall import a center's student/parent roster from an Excel/CSV upload,
+- OL-100 ✅ The system shall import a center's student/parent roster from an Excel/CSV upload,
   onboarding a center to first proposed reminder in ≤ 30 minutes.
-- OL-100a WHEN a center imports child-linked data (student name, schedule, fee), the system
+- OL-100a ✅ WHEN a center imports child-linked data (student name, schedule, fee), the system
   SHALL hold that data in a staging state pending each parent's first OTP-confirmed login
   as the consent event; child-linked commitments SHALL NOT be created until consent is
   recorded in consent_events.
-- OL-100b WHEN a clinic imports patient data, the system SHALL require
+- OL-100b ✅ WHEN a clinic imports patient data, the system SHALL require
   `health_data:<patient_ref>` consent (recorded in consent_events) before creating any
   appointment commitment. Clinic onboarding SHALL fail-safe: a patient without consent
   SHALL receive no commitment until OTP-confirmed opt-in.
-- OL-101 The console shall show batches, schedule, fee cycle, and a commitments dashboard
+- OL-101 ✅ The console shall show batches, schedule, fee cycle, and a commitments dashboard
   (pending / at-risk / closed).
-- OL-102 WHEN a fee cycle date arrives, the system shall generate fee commitments for each
+- OL-102 ✅ WHEN a fee cycle date arrives, the system shall generate fee commitments for each
   enrolled student and (per rung) propose or send reminders.
-- OL-103 Fee reminders shall include a UPI intent deep-link resolving to the center's VPA;
+- OL-103 ✅ Fee reminders shall include a UPI intent deep-link resolving to the center's VPA;
   funds shall never transit an OpenLnk account (ADR-006).
-- OL-103a WHEN a commitment transitions to state `done`, the system SHALL surface a
+- OL-103a ✅ WHEN a commitment transitions to state `done`, the system SHALL surface a
   one-tap "Share confirmation to WhatsApp" CTA in the commitment detail view, generating a
   `wa.me/{whatsapp_number}?text=...` deep-link pre-composed with the commitment title and
   date. This action is user-triggered only and is NOT eligible for Bounded-auto execution.
-- OL-103b WHEN a fee commitment is created for a business, the system SHALL validate that
+- OL-103b ✅ WHEN a fee commitment is created for a business, the system SHALL validate that
   `businesses.upi_vpa` is non-null and matches the format `{name}@{bank}`; WHERE the VPA
   is absent or malformed, the system SHALL surface an owner warning before the commitment
   is proposed to the counterparty.
-- OL-104 WHEN a parent reports payment (or a confirmation is received), the system shall
+- OL-104 ✅ WHEN a parent reports payment (or a confirmation is received), the system shall
   move the fee commitment toward `done` per rung policy, keeping owner confirmation at
   Propose rung.
-- OL-105 The owner home screen shall display fees-recovered-this-period against
+- OL-105 ✅ The owner home screen shall display fees-recovered-this-period against
   subscription cost (ROI framing).
-- OL-106 The system shall bill centers via Razorpay subscriptions with GST-compliant invoices.
-- OL-107 IF a center's subscription lapses, THEN the system shall degrade to read-only for
+- OL-106 ✅ The system shall bill centers via Razorpay subscriptions with GST-compliant invoices.
+- OL-107 ✅ IF a center's subscription lapses, THEN the system shall degrade to read-only for
   the owner while preserving parent access to existing commitments for 90 days. Household
   commitments that originated from a lapsed business context SHALL persist with an
   anonymized business reference; they SHALL NOT be deleted. The business entity data MAY
@@ -200,17 +200,17 @@ Every requirement must be covered by ≥1 passing test carrying `@pytest.mark.re
 
 ## 9. Consent, privacy, DPDP (OL-120 – OL-129)
 
-- OL-120 The system shall obtain recorded, verifiable guardian consent before processing any
+- OL-120 ✅ The system shall obtain recorded, verifiable guardian consent before processing any
   child-linked data (name, schedule, attendance-adjacent, fee-adjacent), per DPDP Act 2023.
 - OL-120a The system SHALL implement a `health_data:<patient_ref>` consent scope in
   consent_events for clinic contexts. Consent records SHALL include: stated processing
   purpose, data fiduciary name (OpenLnk / TynkAI), and explicit withdrawal mechanism.
   Legal review of this scope is REQUIRED before first clinic patient is onboarded (Gate 3
   pre-flight blocker). See also OL-100b.
-- OL-121 The system shall not perform behavioral tracking or targeted advertising of any
+- OL-121 ✅ The system shall not perform behavioral tracking or targeted advertising of any
   principal; child-linked data shall carry a stricter minimization schema (ADR-002).
-- OL-122 All personal data shall reside in the ap-south-1 (Mumbai) region.
-- OL-123 The system shall log every consent grant/withdrawal as an audit event and honor
+- OL-122 ✅ All personal data shall reside in the ap-south-1 (Mumbai) region.
+- OL-123 ✅ The system shall log every consent grant/withdrawal as an audit event and honor
   withdrawal by ceasing processing within 72 h.
 - OL-124 The system shall provide data export and account deletion (commitment graph
   anonymized, not destroyed, to preserve counterparty ledgers) — deletion semantics per
