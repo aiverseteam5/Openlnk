@@ -8,6 +8,7 @@
 import { View, Text } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCommitments } from "@/api/client";
+import { useAppStore } from "@/store/app";
 
 function StatBox({ label, value }: { label: string; value: string }) {
   return (
@@ -37,9 +38,10 @@ function StatBox({ label, value }: { label: string; value: string }) {
 }
 
 export function DailyBrief() {
+  const { principalId } = useAppStore();
   const { data, isLoading } = useQuery({
-    queryKey: ["commitments", "all"],
-    queryFn: () => fetchCommitments({}),
+    queryKey: ["commitments", "brief"],
+    queryFn: () => fetchCommitments({ principalId, limit: 100 }),
   });
 
   const items = data?.items ?? [];
