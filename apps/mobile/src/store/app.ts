@@ -1,0 +1,29 @@
+/**
+ * App store — Zustand (CLAUDE.md: Zustand for local state).
+ *
+ * Server state lives in TanStack Query. This store holds
+ * client-only UI state: filters, selected context, principal.
+ */
+
+import { create } from "zustand";
+import type { CommitmentState } from "@openlnk/ui";
+
+interface AppState {
+  principalId: string | null;
+  selectedContextId: string | null;
+  stateFilter: CommitmentState | null;
+
+  setPrincipalId: (id: string | null) => void;
+  setSelectedContextId: (id: string | null) => void;
+  setStateFilter: (state: CommitmentState | null) => void;
+}
+
+export const useAppStore = create<AppState>((set) => ({
+  principalId: null,
+  selectedContextId: null,
+  stateFilter: null,
+
+  setPrincipalId: (id) => set({ principalId: id }),
+  setSelectedContextId: (id) => set({ selectedContextId: id }),
+  setStateFilter: (state) => set({ stateFilter: state }),
+}));

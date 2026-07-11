@@ -1,0 +1,52 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}"],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {
+      colors: {
+        bg: "#F5F2EC",
+        surface: "#FFFFFF",
+        "surface-raised": "#FAFAF8",
+        border: "#D6D0C4",
+        "mono-rule": "#E8E3DA",
+        "text-primary": "#1A1814",
+        "text-muted": "#6B6456",
+        "text-disabled": "#AAA49A",
+        accent: "#1A4FBF",
+        "accent-subtle": "#EDF1FB",
+        "accent-hover": "#153FA0",
+        "state-proposed": "#374151",
+        "state-proposed-bg": "#F3F4F6",
+        "state-accepted": "#1A6B3C",
+        "state-accepted-bg": "#EAF4EE",
+        "state-overdue": "#92600A",
+        "state-overdue-bg": "#FDF4E3",
+        "state-broken": "#B91C1C",
+        "state-broken-bg": "#FEF2F2",
+        "state-cancelled": "#6B6456",
+        "state-cancelled-bg": "#F5F2EC",
+      },
+      fontFamily: {
+        sans: ["DM Sans"],
+        mono: ["JetBrains Mono"],
+      },
+      borderRadius: {
+        card: "2px",
+        btn: "4px",
+        badge: "9999px",
+      },
+      spacing: {
+        "2xs": "2px",
+        xs: "4px",
+        sm: "8px",
+        md: "12px",
+        lg: "16px",
+        xl: "24px",
+        "2xl": "32px",
+        "3xl": "48px",
+      },
+    },
+  },
+  plugins: [],
+};

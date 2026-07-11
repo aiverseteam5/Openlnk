@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "OpenLnk",
+    "slug": "openlnk",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "scheme": "openlnk",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#F5F2EC",
+    "ios": {
+      "bundleIdentifier": "in.openlnk.app",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "in.openlnk.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#F5F2EC"
+      }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
+  }
+}

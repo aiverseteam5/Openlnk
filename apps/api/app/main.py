@@ -7,7 +7,7 @@ import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import commitments, contexts, extraction, health, sync
+from app.routers import commitments, contexts, extraction, health, sync, threads
 
 logger = structlog.get_logger()
 
@@ -40,3 +40,4 @@ app.include_router(commitments.router, prefix="/v1")
 app.include_router(contexts.router, prefix="/v1")
 app.include_router(extraction.router, prefix="/v1")
 app.include_router(sync.router, prefix="/v1")
+app.include_router(threads.router, prefix="/v1")
