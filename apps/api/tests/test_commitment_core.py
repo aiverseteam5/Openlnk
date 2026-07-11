@@ -11,7 +11,13 @@ import pytest
 from pydantic import ValidationError
 
 from app.models import Commitment, CommitmentClass, CommitmentState
-from app.schemas import CommitmentCreate, CommitmentResponse, CommitmentStateTransition
+from app.schemas import (
+    CommitmentCreate,
+    CommitmentResponse,
+    CommitmentStateTransition,
+    CorrectionAction,
+    CursorPage,
+)
 from app.services.commitment_service import VALID_TRANSITIONS, _is_at_risk
 
 # ── OL-001: Commitment data model ──
@@ -304,3 +310,68 @@ class TestAtRisk:
             datetime.utcnow() - timedelta(days=1),
         )
         assert _is_at_risk(c) is True
+
+
+# ── OL-026: Correction action schema ──
+
+
+@pytest.mark.req("OL-026")
+class TestCorrectionSchema:
+    """The system shall allow the user to correct or reject any extracted
+    commitment in <= 2 taps."""
+
+    def test_reject_action(self):
+        ca = CorrectionAction(action="reject")
+        assert ca.action == "reject"
+        assert ca.edits is None
+
+    def test_edit_action_with_edits(self):
+        ca = CorrectionAction(action="edit", edits={"title": "New title"})
+        assert ca.action == "edit"
+        assert ca.edits == {"title": "New title"}
+
+    def test_invalid_action_rejected(self):
+        with pytest.raises(ValidationError):
+            CorrectionAction(action="invalid")
+
+
+# ── Cursor pagination schema ──
+
+
+@pytest.mark.req("OL-003")
+class TestCursorPageSchema:
+    """Cursor pagination response wrapper."""
+
+    def test_empty_page(self):
+        page = CursorPage(items=[], next_cursor=None, has_more=False)
+        assert page.items == []
+        assert page.has_more is False
+
+    def test_page_with_items_and_cursor(self):
+        now = datetime.utcnow()
+        item = CommitmentResponse(
+            id=uuid4(),
+            context_id=uuid4(),
+            owner_id=uuid4(),
+            counterparty_id=None,
+            title="Test",
+            at_risk=False,
+            state="proposed",
+            version=1,
+            provenance_kind=None,
+            extraction_confidence=None,
+            created_at=now,
+            updated_at=now,
+            amount_paise=None,
+            currency="INR",
+            due_at=None,
+            **{"class": "task"},
+        )
+        page = CursorPage(
+            items=[item],
+            next_cursor="abc-123",
+            has_more=True,
+        )
+        assert len(page.items) == 1
+        assert page.next_cursor == "abc-123"
+        assert page.has_more is True

@@ -52,6 +52,14 @@ class CommitmentResponse(BaseModel):
     model_config = {"populate_by_name": True, "from_attributes": True}
 
 
+class CursorPage(BaseModel):
+    """Cursor-paginated response wrapper (CLAUDE.md: cursor pagination only)."""
+
+    items: list[CommitmentResponse]
+    next_cursor: str | None = None
+    has_more: bool = False
+
+
 class CommitmentAmend(BaseModel):
     """Amend a commitment's title, due date, or amount (OL-002a).
 
@@ -129,7 +137,6 @@ class CorrectionAction(BaseModel):
     Corrections feed into the eval-candidate queue (OL-090).
     """
 
-    commitment_id: str
     action: str = Field(pattern="^(reject|edit)$")
     edits: dict | None = None
 

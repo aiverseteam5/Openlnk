@@ -8,7 +8,7 @@ Every commitment write checks version (sacred rule #6).
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db, get_principal_id
@@ -17,6 +17,8 @@ from app.schemas import (
     CommitmentCreate,
     CommitmentResponse,
     CommitmentStateTransition,
+    CorrectionAction,
+    CursorPage,
 )
 from app.services.commitment_service import CommitmentService
 
@@ -38,6 +40,20 @@ async def create_commitment(
 ) -> CommitmentResponse:
     """Create a new commitment. State defaults to PROPOSED."""
     return await service.create(body, idempotency_key=idempotency_key)
+
+
+@router.get("", response_model=CursorPage)
+async def list_commitments(
+    context_id: UUID | None = Query(default=None),
+    state: str | None = Query(default=None, pattern="^(proposed|accepted|in_progress|done|broken|cancelled)$"),
+    cursor: str | None = Query(default=None),
+    limit: int = Query(default=50, ge=1, le=200),
+    service: CommitmentService = Depends(get_commitment_service),  # noqa: B008
+) -> CursorPage:
+    """List commitments with cursor pagination. RLS-filtered."""
+    return await service.list(
+        context_id=context_id, state=state, cursor=cursor, limit=limit,
+    )
 
 
 @router.get("/{commitment_id}", response_model=CommitmentResponse)
@@ -78,3 +94,16 @@ async def amend_commitment(
     For fee/payment after accepted: resets to proposed (re-acceptance required).
     """
     return await service.amend(commitment_id, body, idempotency_key=idempotency_key)
+
+
+@router.post("/{commitment_id}/correct", response_model=CommitmentResponse)
+async def correct_commitment(
+    commitment_id: UUID,
+    body: CorrectionAction,
+    service: CommitmentService = Depends(get_commitment_service),  # noqa: B008
+) -> CommitmentResponse:
+    """Correct or reject an extracted commitment (OL-026).
+
+    Corrections enter the eval-candidate queue (OL-090).
+    """
+    return await service.correct(commitment_id, body.action, body.edits)

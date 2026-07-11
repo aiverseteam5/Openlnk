@@ -14,12 +14,13 @@ import structlog
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import AuditLog, Commitment, CommitmentState, IdempotencyKey
+from app.models import AuditLog, Commitment, CommitmentState, EvalCandidate, IdempotencyKey
 from app.schemas import (
     CommitmentAmend,
     CommitmentCreate,
     CommitmentResponse,
     CommitmentStateTransition,
+    CursorPage,
     DeltaEvent,
 )
 from app.services.sync import manager as sync_manager
@@ -188,6 +189,55 @@ class CommitmentService:
             class_=data.class_,
         )
         return _to_response(commitment)
+
+    async def list(
+        self,
+        *,
+        context_id: UUID | None = None,
+        state: str | None = None,
+        cursor: str | None = None,
+        limit: int = 50,
+    ) -> CursorPage:
+        """List commitments with cursor pagination, optional context/state filter.
+
+        Cursor is the commitment ID of the last item from the previous page.
+        Results ordered by created_at DESC, id DESC (deterministic).
+        RLS filters by principal automatically via Postgres GUC.
+        """
+        stmt = select(Commitment).order_by(
+            Commitment.created_at.desc(), Commitment.id.desc()
+        )
+        if context_id is not None:
+            stmt = stmt.where(Commitment.context_id == context_id)
+        if state is not None:
+            stmt = stmt.where(Commitment.state == CommitmentState(state))
+
+        # Cursor: fetch item at cursor to get its created_at for keyset pagination
+        if cursor is not None:
+            cursor_uuid = UUID(cursor)
+            cursor_row = await self._session.get(Commitment, cursor_uuid)
+            if cursor_row is not None:
+                stmt = stmt.where(
+                    (Commitment.created_at < cursor_row.created_at)
+                    | (
+                        (Commitment.created_at == cursor_row.created_at)
+                        & (Commitment.id < cursor_row.id)
+                    )
+                )
+
+        # Fetch limit+1 to detect has_more
+        stmt = stmt.limit(limit + 1)
+        result = await self._session.execute(stmt)
+        rows = list(result.scalars().all())
+
+        has_more = len(rows) > limit
+        items = rows[:limit]
+
+        return CursorPage(
+            items=[_to_response(c) for c in items],
+            next_cursor=str(items[-1].id) if has_more and items else None,
+            has_more=has_more,
+        )
 
     async def get(self, commitment_id: UUID) -> CommitmentResponse | None:
         """Get a commitment by ID (RLS-filtered)."""
@@ -414,5 +464,95 @@ class CommitmentService:
             changes=list(changes.keys()),
             requires_reaccept=requires_reaccept,
             version=commitment.version,
+        )
+        return _to_response(commitment)
+
+    async def correct(
+        self,
+        commitment_id: UUID,
+        action: str,
+        edits: dict | None = None,
+    ) -> CommitmentResponse:
+        """Apply user correction/rejection to an extracted commitment (OL-026).
+
+        - Reject: cancels the commitment
+        - Edit: amends fields and queues for eval review
+        Corrections feed the eval-candidate queue (OL-090).
+        """
+        commitment = await self._session.get(Commitment, commitment_id)
+        if commitment is None:
+            from fastapi import HTTPException
+
+            raise HTTPException(status_code=404, detail="Commitment not found")
+
+        # Queue for eval adjudication (OL-090)
+        self._session.add(
+            EvalCandidate(
+                commitment_id=commitment.id,
+                action=action,
+                edits=edits,
+            )
+        )
+
+        if action == "reject":
+            old_state = str(commitment.state)
+            commitment.state = CommitmentState.CANCELLED
+            commitment.version += 1
+            commitment.updated_at = datetime.utcnow()
+
+            self._session.add(
+                AuditLog(
+                    actor_id=self._principal_id,
+                    actor_kind="user",
+                    context_id=commitment.context_id,
+                    event="commitment.rejected",
+                    subject_id=commitment.id,
+                    detail={"old_state": old_state, "version": commitment.version},
+                )
+            )
+        elif action == "edit" and edits:
+            changes = {}
+            if "title" in edits:
+                changes["title"] = {"old": commitment.title, "new": edits["title"]}
+                commitment.title = edits["title"]
+            if "due_at" in edits:
+                changes["due_at"] = {
+                    "old": commitment.due_at.isoformat() if commitment.due_at else None,
+                    "new": edits["due_at"],
+                }
+                commitment.due_at = datetime.fromisoformat(edits["due_at"])
+            if "amount_paise" in edits:
+                changes["amount_paise"] = {
+                    "old": commitment.amount_paise,
+                    "new": edits["amount_paise"],
+                }
+                commitment.amount_paise = edits["amount_paise"]
+
+            commitment.version += 1
+            commitment.updated_at = datetime.utcnow()
+
+            self._session.add(
+                AuditLog(
+                    actor_id=self._principal_id,
+                    actor_kind="user",
+                    context_id=commitment.context_id,
+                    event="commitment.corrected",
+                    subject_id=commitment.id,
+                    detail={"changes": changes, "version": commitment.version},
+                )
+            )
+
+        await self._session.commit()
+
+        await _broadcast_sync(
+            commitment,
+            f"commitment.{action}ed",
+            {"action": action},
+        )
+
+        logger.info(
+            "commitment_corrected",
+            commitment_id=str(commitment_id),
+            action=action,
         )
         return _to_response(commitment)
