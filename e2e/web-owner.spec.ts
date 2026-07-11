@@ -15,12 +15,16 @@ test.describe("web-owner smoke tests", () => {
   });
 
   test("renders commitment list page with create button", async ({ page }) => {
-    await page.goto("/commitments");
-    await expect(page.getByText("Commitments").first()).toBeVisible();
+    await page.goto("/");
+    // Navigate via sidebar/app link
+    await page.getByText("Commitments").first().click();
+    await expect(page.getByText("Create").first()).toBeVisible();
   });
 
   test("renders create commitment page with form", async ({ page }) => {
-    await page.goto("/commitments/new");
+    await page.goto("/");
+    await page.getByText("Commitments").first().click();
+    await page.getByText("Create").first().click();
     // Form fields render
     await expect(page.locator("input").first()).toBeVisible();
   });
@@ -35,8 +39,8 @@ test.describe("web-owner smoke tests", () => {
   });
 
   test("no shadows on commitment cards (DESIGN.md)", async ({ page }) => {
-    await page.goto("/commitments");
-    // Wait for content to render
+    await page.goto("/");
+    await page.getByText("Commitments").first().click();
     await page.waitForTimeout(500);
     const shadows = await page.evaluate(() => {
       const cards = document.querySelectorAll("[class*='MuiBox']");
@@ -48,9 +52,10 @@ test.describe("web-owner smoke tests", () => {
   });
 
   test("state filter shows all states", async ({ page }) => {
-    await page.goto("/commitments");
-    await expect(page.locator("text=ALL")).toBeVisible();
-    await expect(page.locator("text=PROPOSED")).toBeVisible();
-    await expect(page.locator("text=ACCEPTED")).toBeVisible();
+    await page.goto("/");
+    await page.getByText("Commitments").first().click();
+    await expect(page.getByText("ALL")).toBeVisible();
+    await expect(page.getByText("PROPOSED")).toBeVisible();
+    await expect(page.getByText("ACCEPTED")).toBeVisible();
   });
 });
