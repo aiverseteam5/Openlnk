@@ -1,0 +1,1010 @@
+{
+  "dataset_version": "v0",
+  "run_at": "2026-07-11T16:14:58.172459",
+  "model_id": "claude-sonnet-4-6",
+  "prompt_hash": "97e5c7c3aecf755c",
+  "overall_precision": 0.9680511182108626,
+  "overall_recall": 0.9154078549848943,
+  "overall_trust_score": 0.9099099099099099,
+  "per_route": [
+    {
+      "route": "message",
+      "precision": 0.9680511182108626,
+      "recall": 0.9154078549848943,
+      "trust_score": 0.9099099099099099,
+      "tp_count": 303,
+      "fp_count": 10,
+      "fn_count": 28,
+      "case_count": 551
+    }
+  ],
+  "total_cases": 551,
+  "total_tp": 303,
+  "total_fp": 10,
+  "total_fn": 28,
+  "latency_p50_ms": 2085.0469931028783,
+  "latency_p95_ms": 4429.5344250276685,
+  "cost_per_1k_msgs": null,
+  "confusion_samples": [
+    {
+      "case_id": "seed-006",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Payment received Rs 1500 July fees",
+          "class_": "payment",
+          "amount_paise": 150000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1975.9322090540081
+    },
+    {
+      "case_id": "seed-057",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Share quarterly assessment marks by next week",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1650.0927780289203
+    },
+    {
+      "case_id": "seed-096",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "10% fee discount for students scoring above 95% in quarterly exam",
+          "class_": "fee",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 2211.8075909093022
+    },
+    {
+      "case_id": "aug-0024",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Payment received Rs 1500 July fees",
+          "class_": "payment",
+          "amount_paise": 150000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1949.1716348566115
+    },
+    {
+      "case_id": "aug-0025",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Payment received Rs 1500 July fees",
+          "class_": "payment",
+          "amount_paise": 150000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1452.0660541020334
+    },
+    {
+      "case_id": "aug-0026",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Payment received Rs 1500 July fees",
+          "class_": "payment",
+          "amount_paise": 150000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1507.4421640019864
+    },
+    {
+      "case_id": "aug-0102",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Bring textbook to class tomorrow",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Priya",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 1361.8509259540588
+    },
+    {
+      "case_id": "aug-0103",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Bring textbook to class tomorrow",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Priya",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 1248.5899259336293
+    },
+    {
+      "case_id": "aug-0104",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Bring textbook to class tomorrow",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Priya",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 2330.366534879431
+    },
+    {
+      "case_id": "aug-0126",
+      "provenance_kind": "message",
+      "true_positives": [
+        {
+          "gold": {
+            "title": "Board exam batch fee Rs 4000/month",
+            "class_": "fee",
+            "amount_paise": 400000,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": []
+          },
+          "extracted": {
+            "title": "Monthly fee for board exam preparation batch",
+            "class_": "fee",
+            "amount_paise": 400000,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [],
+            "confidence": 0.9
+          },
+          "title_match": true,
+          "due_match": true,
+          "class_match": true,
+          "amount_match": true
+        }
+      ],
+      "false_positives": [
+        {
+          "title": "Special board exam preparation batch commences",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2025-08-01T18:00:00",
+          "counterparties": [],
+          "confidence": 0.88
+        }
+      ],
+      "false_negatives": [
+        {
+          "title": "Board exam batch starts August 1st Mon/Wed/Fri 6pm-8pm",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2026-08-01T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 3240.2723559644073
+    },
+    {
+      "case_id": "aug-0127",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Board exam batch starts August 1st Mon/Wed/Fri 6pm-8pm",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2026-08-01T00:00:00",
+          "counterparties": []
+        },
+        {
+          "title": "Board exam batch fee Rs 4000/month",
+          "class_": "fee",
+          "amount_paise": 400000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1698.0336969718337
+    },
+    {
+      "case_id": "aug-0166",
+      "provenance_kind": "message",
+      "true_positives": [
+        {
+          "gold": {
+            "title": "Buy chart paper and colour pens, send with Kavitha on Monday",
+            "class_": "task",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Kavitha",
+                "role": "counterparty"
+              }
+            ]
+          },
+          "extracted": {
+            "title": "Buy chart paper and colour pens and send them with Kavitha on Monday",
+            "class_": "task",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Kavitha",
+                "phone_e164": null,
+                "role": "counterparty"
+              }
+            ],
+            "confidence": 0.9
+          },
+          "title_match": true,
+          "due_match": true,
+          "class_match": true,
+          "amount_match": true
+        }
+      ],
+      "false_positives": [
+        {
+          "title": "Confirm receipt of project materials (chart paper and colour pens) delivered by Kavitha on Monday",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Kavitha",
+              "phone_e164": null,
+              "role": "counterparty"
+            }
+          ],
+          "confidence": 0.87
+        }
+      ],
+      "false_negatives": [],
+      "latency_ms": 3656.0690910555422
+    },
+    {
+      "case_id": "aug-0182",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Stay back after class Wednesday for extra practice",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Rithika",
+              "role": "counterparty"
+            },
+            {
+              "name": "Aditya",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 2502.693498041481
+    },
+    {
+      "case_id": "aug-0194",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [
+        {
+          "title": "Model exam scheduled",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2025-08-15",
+          "counterparties": [],
+          "confidence": 0.9
+        }
+      ],
+      "false_negatives": [
+        {
+          "title": "Model exam on August 15th, chapters 1-8",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2026-08-15T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 2335.4317841585726
+    },
+    {
+      "case_id": "aug-0217",
+      "provenance_kind": "message",
+      "true_positives": [
+        {
+          "gold": {
+            "title": "Late fee Rs 200 if payment not received by 10th",
+            "class_": "fee",
+            "amount_paise": 20000,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": []
+          },
+          "extracted": {
+            "title": "Late fee of ₹200 charged for pending accounts after the 10th",
+            "class_": "fee",
+            "amount_paise": 20000,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [],
+            "confidence": 0.88
+          },
+          "title_match": true,
+          "due_match": true,
+          "class_match": true,
+          "amount_match": true
+        }
+      ],
+      "false_positives": [
+        {
+          "title": "Clear payment before the 10th",
+          "class_": "fee",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [],
+          "confidence": 0.85
+        }
+      ],
+      "false_negatives": [],
+      "latency_ms": 3867.8396509494632
+    },
+    {
+      "case_id": "aug-0247",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Share quarterly assessment marks by next week",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1367.4333859235048
+    },
+    {
+      "case_id": "aug-0249",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Share quarterly assessment marks by next week",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1537.588784005493
+    },
+    {
+      "case_id": "aug-0250",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Share quarterly assessment marks by next week",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1395.975676830858
+    },
+    {
+      "case_id": "aug-0257",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [
+        {
+          "title": "Scholarship exam for top 3 students",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2024-08-20T10:00:00",
+          "counterparties": [],
+          "confidence": 0.88
+        }
+      ],
+      "false_negatives": [
+        {
+          "title": "Scholarship test August 20th at 10am",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2026-08-20T10:00:00",
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 2725.3937260247767
+    },
+    {
+      "case_id": "aug-0283",
+      "provenance_kind": "message",
+      "true_positives": [
+        {
+          "gold": {
+            "title": "Competition entry fee Rs 300 for team Anu and Ravi",
+            "class_": "fee",
+            "amount_paise": 30000,
+            "currency": "INR",
+            "due_at": "2026-07-25T00:00:00",
+            "counterparties": [
+              {
+                "name": "Anu",
+                "role": "counterparty"
+              },
+              {
+                "name": "Ravi",
+                "role": "counterparty"
+              }
+            ]
+          },
+          "extracted": {
+            "title": "Competition entry fee for team Anu & Ravi",
+            "class_": "fee",
+            "amount_paise": 30000,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Anu",
+                "phone_e164": null,
+                "role": "counterparty"
+              },
+              {
+                "name": "Ravi",
+                "phone_e164": null,
+                "role": "counterparty"
+              }
+            ],
+            "confidence": 0.92
+          },
+          "title_match": true,
+          "due_match": false,
+          "class_match": true,
+          "amount_match": true
+        },
+        {
+          "gold": {
+            "title": "Competition entry fee Rs 300 for team Deepika and Kiran",
+            "class_": "fee",
+            "amount_paise": 30000,
+            "currency": "INR",
+            "due_at": "2026-07-25T00:00:00",
+            "counterparties": [
+              {
+                "name": "Deepika",
+                "role": "counterparty"
+              },
+              {
+                "name": "Kiran",
+                "role": "counterparty"
+              }
+            ]
+          },
+          "extracted": {
+            "title": "Competition entry fee for team Deepika & Kiran",
+            "class_": "fee",
+            "amount_paise": 30000,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Deepika",
+                "phone_e164": null,
+                "role": "counterparty"
+              },
+              {
+                "name": "Kiran",
+                "phone_e164": null,
+                "role": "counterparty"
+              }
+            ],
+            "confidence": 0.92
+          },
+          "title_match": true,
+          "due_match": false,
+          "class_match": true,
+          "amount_match": true
+        },
+        {
+          "gold": {
+            "title": "Competition entry fee Rs 300 for team Meena and Sunil",
+            "class_": "fee",
+            "amount_paise": 30000,
+            "currency": "INR",
+            "due_at": "2026-07-25T00:00:00",
+            "counterparties": [
+              {
+                "name": "Meena",
+                "role": "counterparty"
+              },
+              {
+                "name": "Sunil",
+                "role": "counterparty"
+              }
+            ]
+          },
+          "extracted": {
+            "title": "Competition entry fee for team Meena & Sunil",
+            "class_": "fee",
+            "amount_paise": 30000,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Meena",
+                "phone_e164": null,
+                "role": "counterparty"
+              },
+              {
+                "name": "Sunil",
+                "phone_e164": null,
+                "role": "counterparty"
+              }
+            ],
+            "confidence": 0.92
+          },
+          "title_match": true,
+          "due_match": false,
+          "class_match": true,
+          "amount_match": true
+        }
+      ],
+      "false_positives": [
+        {
+          "title": "Submit competition entries for all 3 teams by July 25th",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2025-07-25T23:59:59",
+          "counterparties": [
+            {
+              "name": "Anu",
+              "phone_e164": null,
+              "role": "counterparty"
+            },
+            {
+              "name": "Ravi",
+              "phone_e164": null,
+              "role": "counterparty"
+            },
+            {
+              "name": "Deepika",
+              "phone_e164": null,
+              "role": "counterparty"
+            },
+            {
+              "name": "Kiran",
+              "phone_e164": null,
+              "role": "counterparty"
+            },
+            {
+              "name": "Meena",
+              "phone_e164": null,
+              "role": "counterparty"
+            },
+            {
+              "name": "Sunil",
+              "phone_e164": null,
+              "role": "counterparty"
+            }
+          ],
+          "confidence": 0.95
+        }
+      ],
+      "false_negatives": [],
+      "latency_ms": 6914.788139984012
+    },
+    {
+      "case_id": "aug-0298",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [
+        {
+          "title": "Submit holiday homework (Tamil essay and English grammar exercises)",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2025-01-20T23:59:59",
+          "counterparties": [],
+          "confidence": 0.9
+        }
+      ],
+      "false_negatives": [
+        {
+          "title": "Complete Tamil essay and English grammar exercises by January 20th",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 2974.8629939276725
+    },
+    {
+      "case_id": "aug-0299",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [
+        {
+          "title": "Submit Pongal holiday homework (Tamil essay & English grammar exercises)",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2025-01-20T23:59:59",
+          "counterparties": [],
+          "confidence": 0.92
+        }
+      ],
+      "false_negatives": [
+        {
+          "title": "Complete Tamil essay and English grammar exercises by January 20th",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 3422.160648042336
+    },
+    {
+      "case_id": "aug-0328",
+      "provenance_kind": "message",
+      "true_positives": [
+        {
+          "gold": {
+            "title": "Outdoor sports practice at 4pm if rain stops",
+            "class_": "schedule",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": []
+          },
+          "extracted": {
+            "title": "Outdoor sports practice to happen as planned if rain stops by 4pm; cancelled otherwise",
+            "class_": "schedule",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [],
+            "confidence": 0.78
+          },
+          "title_match": true,
+          "due_match": true,
+          "class_match": true,
+          "amount_match": true
+        }
+      ],
+      "false_positives": [
+        {
+          "title": "Keep checking the weather to monitor if rain stops by 4pm",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [],
+          "confidence": 0.75
+        }
+      ],
+      "false_negatives": [],
+      "latency_ms": 3615.1016680523753
+    },
+    {
+      "case_id": "aug-0340",
+      "provenance_kind": "message",
+      "true_positives": [
+        {
+          "gold": {
+            "title": "Prepare Indian history charts for exhibition Friday",
+            "class_": "task",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Gopal",
+                "role": "counterparty"
+              },
+              {
+                "name": "Lakshmi",
+                "role": "counterparty"
+              },
+              {
+                "name": "Ramesh",
+                "role": "counterparty"
+              }
+            ]
+          },
+          "extracted": {
+            "title": "Prepare charts related to Indian history for the exhibition",
+            "class_": "task",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Gopal",
+                "phone_e164": null,
+                "role": "counterparty"
+              },
+              {
+                "name": "Lakshmi",
+                "phone_e164": null,
+                "role": "counterparty"
+              },
+              {
+                "name": "Ramesh",
+                "phone_e164": null,
+                "role": "counterparty"
+              }
+            ],
+            "confidence": 0.88
+          },
+          "title_match": true,
+          "due_match": true,
+          "class_match": true,
+          "amount_match": true
+        }
+      ],
+      "false_positives": [
+        {
+          "title": "Exhibition scheduled for next Friday",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Gopal",
+              "phone_e164": null,
+              "role": "counterparty"
+            },
+            {
+              "name": "Lakshmi",
+              "phone_e164": null,
+              "role": "counterparty"
+            },
+            {
+              "name": "Ramesh",
+              "phone_e164": null,
+              "role": "counterparty"
+            }
+          ],
+          "confidence": 0.88
+        }
+      ],
+      "false_negatives": [],
+      "latency_ms": 3895.7414880860597
+    },
+    {
+      "case_id": "aug-0385",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Received Rs 5000 from Vishal's mother for Oct-Nov fees",
+          "class_": "payment",
+          "amount_paise": 500000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Vishal",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 1698.866262100637
+    },
+    {
+      "case_id": "aug-0393",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Bring signed consent form for school trip",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1495.8395040594041
+    },
+    {
+      "case_id": "aug-0423",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "10% fee discount for students scoring above 95% in quarterly exam",
+          "class_": "fee",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1974.9493559356779
+    },
+    {
+      "case_id": "aug-0424",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "10% fee discount for students scoring above 95% in quarterly exam",
+          "class_": "fee",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1397.3084369208664
+    },
+    {
+      "case_id": "aug-0425",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "10% fee discount for students scoring above 95% in quarterly exam",
+          "class_": "fee",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1422.4247180391103
+    },
+    {
+      "case_id": "aug-0426",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "10% fee discount for students scoring above 95% in quarterly exam",
+          "class_": "fee",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1871.1981130763888
+    },
+    {
+      "case_id": "aug-0432",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Annual sports day September 15th",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2026-09-15T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 2793.7554160598665
+    },
+    {
+      "case_id": "aug-0435",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Annual sports day September 15th",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2026-09-15T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1900.8246269077063
+    }
+  ],
+  "gate_passed": false
+}

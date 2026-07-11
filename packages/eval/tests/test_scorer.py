@@ -43,6 +43,24 @@ class TestTitleMatching:
     def test_empty_gold(self):
         assert not _titles_match("", "Something")
 
+    def test_abbreviation_expansion(self):
+        assert _titles_match(
+            "Parent-teacher meeting Thursday 5pm",
+            "PTM proposed for Thursday at 5:00 PM",
+        )
+
+    def test_currency_normalization(self):
+        assert _titles_match("Pay fee ₹500", "Pay fee Rs 500")
+
+    def test_time_format_normalization(self):
+        assert _titles_match("Class at 5pm", "Class at 5:00 PM")
+
+    def test_plural_stemming(self):
+        assert _titles_match(
+            "Call parents with unpaid fees by Friday",
+            "Personally call each parent whose fee payment is pending by Friday",
+        )
+
 
 # ─── Due date matching ───
 

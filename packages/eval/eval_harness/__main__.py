@@ -12,8 +12,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from eval_harness.models import EvalReport
-from eval_harness.runner import load_dataset, run_eval
+from eval_harness.models import EvalReport, ExtractionOutput
+from eval_harness.runner import load_dataset, run_eval, run_eval_offline
 
 console = Console()
 
@@ -139,6 +139,13 @@ def main() -> None:
         default=0.0,
         help="Confidence threshold for filtering (default: 0.0 = use all)",
     )
+    parser.add_argument(
+        "--rescore",
+        type=str,
+        default=None,
+        metavar="OUTPUTS_FILE",
+        help="Re-score cached outputs file (no LLM calls)",
+    )
     args = parser.parse_args()
 
     console.print("[bold blue]OpenLnk Eval Harness[/bold blue]")
@@ -154,9 +161,19 @@ def main() -> None:
     )
     console.print()
 
-    report = asyncio.run(
-        run_eval(dataset, confidence_threshold=args.threshold)
-    )
+    if args.rescore:
+        import json
+        from pathlib import Path
+
+        outputs_path = Path(args.rescore)
+        raw = json.loads(outputs_path.read_text())
+        outputs = [ExtractionOutput.model_validate(o) for o in raw]
+        console.print(f"  Re-scoring {len(outputs)} cached outputs\n")
+        report = asyncio.run(run_eval_offline(dataset, outputs))
+    else:
+        report = asyncio.run(
+            run_eval(dataset, confidence_threshold=args.threshold)
+        )
 
     _render_report(report)
 

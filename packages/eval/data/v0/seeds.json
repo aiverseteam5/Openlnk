@@ -15,7 +15,11 @@
           "counterparties": []
         }
       ],
-      "tags": ["fee", "due-date", "amount"]
+      "tags": [
+        "fee",
+        "due-date",
+        "amount"
+      ]
     },
     {
       "id": "seed-002",
@@ -30,21 +34,29 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule"]
+      "tags": [
+        "schedule"
+      ]
     },
     {
       "id": "seed-003",
       "message": "Good morning! Hope you had a great weekend. The weather has been lovely lately.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "greeting"]
+      "tags": [
+        "adversarial",
+        "greeting"
+      ]
     },
     {
       "id": "seed-004",
       "message": "We should catch up sometime soon. It's been ages!",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "vague-plan"]
+      "tags": [
+        "adversarial",
+        "vague-plan"
+      ]
     },
     {
       "id": "seed-005",
@@ -57,13 +69,25 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Arjun", "role": "counterparty"},
-            {"name": "Priya", "role": "counterparty"},
-            {"name": "Kavya", "role": "counterparty"}
+            {
+              "name": "Arjun",
+              "role": "counterparty"
+            },
+            {
+              "name": "Priya",
+              "role": "counterparty"
+            },
+            {
+              "name": "Kavya",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "task"]
+      "tags": [
+        "multi-cp",
+        "task"
+      ]
     },
     {
       "id": "seed-006",
@@ -78,14 +102,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["payment", "amount"]
+      "tags": [
+        "payment",
+        "amount"
+      ]
     },
     {
       "id": "seed-007",
       "message": "Check out our new batch starting soon! Early bird discount available. Limited seats.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "marketing"]
+      "tags": [
+        "adversarial",
+        "marketing"
+      ]
     },
     {
       "id": "seed-008",
@@ -98,11 +128,17 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Rohan", "role": "counterparty"}
+            {
+              "name": "Rohan",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["conditional", "task"]
+      "tags": [
+        "conditional",
+        "task"
+      ]
     },
     {
       "id": "seed-009",
@@ -117,14 +153,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["proposed", "schedule"]
+      "tags": [
+        "proposed",
+        "schedule"
+      ]
     },
     {
       "id": "seed-010",
       "message": "Forwarded: 😂😂 This joke is hilarious! Share with everyone in the group.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "forwarded-joke"]
+      "tags": [
+        "adversarial",
+        "forwarded-joke"
+      ]
     },
     {
       "id": "seed-011",
@@ -137,19 +179,32 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Ananya", "role": "counterparty"},
-            {"name": "Vikram", "role": "counterparty"}
+            {
+              "name": "Ananya",
+              "role": "counterparty"
+            },
+            {
+              "name": "Vikram",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "task", "due-date"]
+      "tags": [
+        "multi-cp",
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-012",
       "message": "Last month's fee was already paid on the 5th, just confirming. No pending balance.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "past-event"]
+      "tags": [
+        "adversarial",
+        "past-event"
+      ]
     },
     {
       "id": "seed-013",
@@ -171,14 +226,21 @@
           "counterparties": []
         }
       ],
-      "tags": ["multi-commitment", "fee", "schedule"]
+      "tags": [
+        "multi-commitment",
+        "fee",
+        "schedule"
+      ]
     },
     {
       "id": "seed-014",
       "message": "Let me know if you need anything else. Happy to help!",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "rhetorical-offer"]
+      "tags": [
+        "adversarial",
+        "rhetorical-offer"
+      ]
     },
     {
       "id": "seed-015",
@@ -193,7 +255,10 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-016",
@@ -205,24 +270,44 @@
           "class": "fee",
           "amount_paise": 300000,
           "due_at": "2026-08-10T00:00:00",
-          "counterparties": [{"name": "Meera", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Meera",
+              "role": "counterparty"
+            }
+          ]
         },
         {
           "title": "Quarterly fees Sanjay Rs 3000",
           "class": "fee",
           "amount_paise": 300000,
           "due_at": "2026-08-10T00:00:00",
-          "counterparties": [{"name": "Sanjay", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Sanjay",
+              "role": "counterparty"
+            }
+          ]
         },
         {
           "title": "Quarterly fees Lakshmi Rs 2500",
           "class": "fee",
           "amount_paise": 250000,
           "due_at": "2026-08-10T00:00:00",
-          "counterparties": [{"name": "Lakshmi", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Lakshmi",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+      "tags": [
+        "multi-commitment",
+        "multi-cp",
+        "fee",
+        "amount"
+      ]
     },
     {
       "id": "seed-017",
@@ -237,14 +322,19 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule"]
+      "tags": [
+        "schedule"
+      ]
     },
     {
       "id": "seed-018",
       "message": "The kids really enjoyed the field trip last week. Such a lovely experience!",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "past-event"]
+      "tags": [
+        "adversarial",
+        "past-event"
+      ]
     },
     {
       "id": "seed-019",
@@ -259,14 +349,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-020",
       "message": "I think Ravi is doing really well in science. Very proud of his progress.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "opinion"]
+      "tags": [
+        "adversarial",
+        "opinion"
+      ]
     },
     {
       "id": "seed-021",
@@ -279,13 +375,25 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Karthik", "role": "counterparty"},
-            {"name": "Deepa", "role": "counterparty"},
-            {"name": "Suresh", "role": "counterparty"}
+            {
+              "name": "Karthik",
+              "role": "counterparty"
+            },
+            {
+              "name": "Deepa",
+              "role": "counterparty"
+            },
+            {
+              "name": "Suresh",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "schedule"]
+      "tags": [
+        "multi-cp",
+        "schedule"
+      ]
     },
     {
       "id": "seed-022",
@@ -297,24 +405,42 @@
           "class": "payment",
           "amount_paise": 100000,
           "due_at": null,
-          "counterparties": [{"name": "Arun", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Arun",
+              "role": "counterparty"
+            }
+          ]
         },
         {
           "title": "Balance Rs 500 due on delivery for science kit",
           "class": "fee",
           "amount_paise": 50000,
           "due_at": null,
-          "counterparties": [{"name": "Arun", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Arun",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["multi-commitment", "payment", "fee", "amount"]
+      "tags": [
+        "multi-commitment",
+        "payment",
+        "fee",
+        "amount"
+      ]
     },
     {
       "id": "seed-023",
       "message": "Happy Diwali to all parents and students! 🪔 Wishing you joy and prosperity.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "greeting"]
+      "tags": [
+        "adversarial",
+        "greeting"
+      ]
     },
     {
       "id": "seed-024",
@@ -326,17 +452,27 @@
           "class": "task",
           "amount_paise": null,
           "due_at": null,
-          "counterparties": [{"name": "Priya", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Priya",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["task"]
+      "tags": [
+        "task"
+      ]
     },
     {
       "id": "seed-025",
       "message": "We might plan a picnic next month if the weather is good. Will confirm later.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "vague-plan"]
+      "tags": [
+        "adversarial",
+        "vague-plan"
+      ]
     },
     {
       "id": "seed-026",
@@ -348,17 +484,32 @@
           "class": "fee",
           "amount_paise": 75000,
           "due_at": null,
-          "counterparties": [{"name": "Nisha", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Nisha",
+              "role": "counterparty"
+            }
+          ]
         },
         {
           "title": "Exam fee Rs 750 for Rahul",
           "class": "fee",
           "amount_paise": 75000,
           "due_at": null,
-          "counterparties": [{"name": "Rahul", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Rahul",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+      "tags": [
+        "multi-commitment",
+        "multi-cp",
+        "fee",
+        "amount"
+      ]
     },
     {
       "id": "seed-027",
@@ -373,14 +524,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-028",
       "message": "Madam, my son Arjun has been sick this week. He'll be absent till Monday.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "information"]
+      "tags": [
+        "adversarial",
+        "information"
+      ]
     },
     {
       "id": "seed-029",
@@ -402,14 +559,21 @@
           "counterparties": []
         }
       ],
-      "tags": ["multi-commitment", "schedule", "fee"]
+      "tags": [
+        "multi-commitment",
+        "schedule",
+        "fee"
+      ]
     },
     {
       "id": "seed-030",
       "message": "Saw the new Rajinikanth movie? It was amazing! 🎬",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "casual"]
+      "tags": [
+        "adversarial",
+        "casual"
+      ]
     },
     {
       "id": "seed-031",
@@ -421,32 +585,38 @@
           "class": "task",
           "amount_paise": null,
           "due_at": null,
-          "counterparties": [{"name": "Divya", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Divya",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-032",
       "message": "Thank you for the wonderful feedback about our teaching. We appreciate your support!",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "gratitude"]
+      "tags": [
+        "adversarial",
+        "gratitude"
+      ]
     },
     {
       "id": "seed-033",
       "message": "Bus pickup for Adyar students: 7:30am from the main road stop. Driver's number shared separately.",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Bus pickup 7:30am from Adyar main road stop",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
-      "tags": ["schedule"]
+      "gold_commitments": [],
+      "tags": [
+        "adversarial",
+        "information"
+      ]
     },
     {
       "id": "seed-034",
@@ -458,10 +628,18 @@
           "class": "fee",
           "amount_paise": null,
           "due_at": null,
-          "counterparties": [{"name": "Sneha", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Sneha",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["conditional", "fee"]
+      "tags": [
+        "conditional",
+        "fee"
+      ]
     },
     {
       "id": "seed-035",
@@ -474,21 +652,39 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Aarav", "role": "counterparty"},
-            {"name": "Ishaan", "role": "counterparty"},
-            {"name": "Diya", "role": "counterparty"},
-            {"name": "Neha", "role": "counterparty"}
+            {
+              "name": "Aarav",
+              "role": "counterparty"
+            },
+            {
+              "name": "Ishaan",
+              "role": "counterparty"
+            },
+            {
+              "name": "Diya",
+              "role": "counterparty"
+            },
+            {
+              "name": "Neha",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "schedule"]
+      "tags": [
+        "multi-cp",
+        "schedule"
+      ]
     },
     {
       "id": "seed-036",
       "message": "Uniforms are available at Pothys, T Nagar. You can buy them anytime.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "information"]
+      "tags": [
+        "adversarial",
+        "information"
+      ]
     },
     {
       "id": "seed-037",
@@ -503,7 +699,11 @@
           "counterparties": []
         }
       ],
-      "tags": ["payment", "amount", "due-date"]
+      "tags": [
+        "payment",
+        "amount",
+        "due-date"
+      ]
     },
     {
       "id": "seed-038",
@@ -515,17 +715,27 @@
           "class": "task",
           "amount_paise": null,
           "due_at": null,
-          "counterparties": [{"name": "Kavitha", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Kavitha",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["task"]
+      "tags": [
+        "task"
+      ]
     },
     {
       "id": "seed-039",
       "message": "Does anyone have the phone number of the Besant Nagar center? Looking for a good tuition for my nephew.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "question"]
+      "tags": [
+        "adversarial",
+        "question"
+      ]
     },
     {
       "id": "seed-040",
@@ -540,14 +750,21 @@
           "counterparties": []
         }
       ],
-      "tags": ["fee", "amount", "due-date"]
+      "tags": [
+        "fee",
+        "amount",
+        "due-date"
+      ]
     },
     {
       "id": "seed-041",
       "message": "Hmm I'm not sure if we should continue with the current textbook or switch. What do other parents think?",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "opinion"]
+      "tags": [
+        "adversarial",
+        "opinion"
+      ]
     },
     {
       "id": "seed-042",
@@ -560,12 +777,21 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Rithika", "role": "counterparty"},
-            {"name": "Aditya", "role": "counterparty"}
+            {
+              "name": "Rithika",
+              "role": "counterparty"
+            },
+            {
+              "name": "Aditya",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "schedule"]
+      "tags": [
+        "multi-cp",
+        "schedule"
+      ]
     },
     {
       "id": "seed-043",
@@ -580,14 +806,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["payment", "amount"]
+      "tags": [
+        "payment",
+        "amount"
+      ]
     },
     {
       "id": "seed-044",
       "message": "The water purifier at the center is broken. Told them to fix it, but who knows when they'll come.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "complaint"]
+      "tags": [
+        "adversarial",
+        "complaint"
+      ]
     },
     {
       "id": "seed-045",
@@ -602,14 +834,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule", "due-date"]
+      "tags": [
+        "schedule",
+        "due-date"
+      ]
     },
     {
       "id": "seed-046",
       "message": "Already submitted the forms yesterday. No need to bring anything else.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "past-event"]
+      "tags": [
+        "adversarial",
+        "past-event"
+      ]
     },
     {
       "id": "seed-047",
@@ -622,15 +860,33 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Arun", "role": "counterparty"},
-            {"name": "Bhavya", "role": "counterparty"},
-            {"name": "Chitra", "role": "counterparty"},
-            {"name": "Dinesh", "role": "counterparty"},
-            {"name": "Esha", "role": "counterparty"}
+            {
+              "name": "Arun",
+              "role": "counterparty"
+            },
+            {
+              "name": "Bhavya",
+              "role": "counterparty"
+            },
+            {
+              "name": "Chitra",
+              "role": "counterparty"
+            },
+            {
+              "name": "Dinesh",
+              "role": "counterparty"
+            },
+            {
+              "name": "Esha",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "task"]
+      "tags": [
+        "multi-cp",
+        "task"
+      ]
     },
     {
       "id": "seed-048",
@@ -645,14 +901,19 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule"]
+      "tags": [
+        "schedule"
+      ]
     },
     {
       "id": "seed-049",
       "message": "LOL that's so funny 😂 who sent this?",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "casual"]
+      "tags": [
+        "adversarial",
+        "casual"
+      ]
     },
     {
       "id": "seed-050",
@@ -667,14 +928,21 @@
           "counterparties": []
         }
       ],
-      "tags": ["conditional", "fee", "amount"]
+      "tags": [
+        "conditional",
+        "fee",
+        "amount"
+      ]
     },
     {
       "id": "seed-051",
       "message": "Can you share the syllabus portions for the upcoming unit test? Want to help my daughter prepare.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "question"]
+      "tags": [
+        "adversarial",
+        "question"
+      ]
     },
     {
       "id": "seed-052",
@@ -689,14 +957,19 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule"]
+      "tags": [
+        "schedule"
+      ]
     },
     {
       "id": "seed-053",
       "message": "My daughter did great in the last test! So happy with her improvement.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "opinion"]
+      "tags": [
+        "adversarial",
+        "opinion"
+      ]
     },
     {
       "id": "seed-054",
@@ -704,18 +977,47 @@
       "provenance_kind": "message",
       "gold_commitments": [
         {
-          "title": "Lab materials fee Rs 150 each",
+          "title": "Lab materials fee Rs 150 for Harini",
           "class": "fee",
           "amount_paise": 15000,
           "due_at": null,
           "counterparties": [
-            {"name": "Harini", "role": "counterparty"},
-            {"name": "Prasad", "role": "counterparty"},
-            {"name": "Varun", "role": "counterparty"}
+            {
+              "name": "Harini",
+              "role": "counterparty"
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Prasad",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Prasad",
+              "role": "counterparty"
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Varun",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Varun",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "fee", "amount"]
+      "tags": [
+        "multi-commitment",
+        "fee",
+        "amount"
+      ]
     },
     {
       "id": "seed-055",
@@ -730,14 +1032,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-056",
       "message": "Traffic was terrible today on OMR. Took me an hour to reach the center!",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "casual"]
+      "tags": [
+        "adversarial",
+        "casual"
+      ]
     },
     {
       "id": "seed-057",
@@ -752,14 +1060,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-058",
       "message": "🙏 Thank you so much for your patience with my son. Really grateful.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "gratitude"]
+      "tags": [
+        "adversarial",
+        "gratitude"
+      ]
     },
     {
       "id": "seed-059",
@@ -774,14 +1088,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule", "due-date"]
+      "tags": [
+        "schedule",
+        "due-date"
+      ]
     },
     {
       "id": "seed-060",
       "message": "Sure ma'am, will try to come on time from tomorrow.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "vague-plan"]
+      "tags": [
+        "adversarial",
+        "vague-plan"
+      ]
     },
     {
       "id": "seed-061",
@@ -796,14 +1116,21 @@
           "counterparties": []
         }
       ],
-      "tags": ["fee", "amount", "due-date"]
+      "tags": [
+        "fee",
+        "amount",
+        "due-date"
+      ]
     },
     {
       "id": "seed-062",
       "message": "Our WhatsApp group is only for class updates. Please don't share forwards or memes here.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "admin"]
+      "tags": [
+        "adversarial",
+        "admin"
+      ]
     },
     {
       "id": "seed-063",
@@ -818,14 +1145,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-064",
       "message": "Has anyone seen Arun's water bottle? He left it in the classroom yesterday.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "question"]
+      "tags": [
+        "adversarial",
+        "question"
+      ]
     },
     {
       "id": "seed-065",
@@ -838,8 +1171,14 @@
           "amount_paise": 30000,
           "due_at": "2026-07-25T00:00:00",
           "counterparties": [
-            {"name": "Anu", "role": "counterparty"},
-            {"name": "Ravi", "role": "counterparty"}
+            {
+              "name": "Anu",
+              "role": "counterparty"
+            },
+            {
+              "name": "Ravi",
+              "role": "counterparty"
+            }
           ]
         },
         {
@@ -848,8 +1187,14 @@
           "amount_paise": 30000,
           "due_at": "2026-07-25T00:00:00",
           "counterparties": [
-            {"name": "Deepika", "role": "counterparty"},
-            {"name": "Kiran", "role": "counterparty"}
+            {
+              "name": "Deepika",
+              "role": "counterparty"
+            },
+            {
+              "name": "Kiran",
+              "role": "counterparty"
+            }
           ]
         },
         {
@@ -858,12 +1203,23 @@
           "amount_paise": 30000,
           "due_at": "2026-07-25T00:00:00",
           "counterparties": [
-            {"name": "Meena", "role": "counterparty"},
-            {"name": "Sunil", "role": "counterparty"}
+            {
+              "name": "Meena",
+              "role": "counterparty"
+            },
+            {
+              "name": "Sunil",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+      "tags": [
+        "multi-commitment",
+        "multi-cp",
+        "fee",
+        "amount"
+      ]
     },
     {
       "id": "seed-066",
@@ -878,14 +1234,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["proposed", "schedule"]
+      "tags": [
+        "proposed",
+        "schedule"
+      ]
     },
     {
       "id": "seed-067",
       "message": "I already told them about it last week. They know.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "past-event"]
+      "tags": [
+        "adversarial",
+        "past-event"
+      ]
     },
     {
       "id": "seed-068",
@@ -900,14 +1262,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-069",
       "message": "Forwarded: 10 tips for your child's exam preparation! 📚 #StudyTips #ExamSeason",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "forwarded"]
+      "tags": [
+        "adversarial",
+        "forwarded"
+      ]
     },
     {
       "id": "seed-070",
@@ -919,46 +1287,58 @@
           "class": "payment",
           "amount_paise": 180000,
           "due_at": null,
-          "counterparties": [{"name": "Shalini", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Shalini",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["payment", "amount"]
+      "tags": [
+        "payment",
+        "amount"
+      ]
     },
     {
       "id": "seed-071",
       "message": "The AC in room 2 isn't working properly. It's so hot inside!",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "complaint"]
+      "tags": [
+        "adversarial",
+        "complaint"
+      ]
     },
     {
       "id": "seed-072",
       "message": "Madam, please give extra attention to Pooja in maths. She's struggling with algebra.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "request-no-commitment"]
+      "tags": [
+        "adversarial",
+        "request-no-commitment"
+      ]
     },
     {
       "id": "seed-073",
       "message": "Book fair at the center next Saturday 10am-4pm. All parents and students welcome. Entry free.",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Book fair next Saturday 10am-4pm",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
-      "tags": ["schedule"]
+      "gold_commitments": [],
+      "tags": [
+        "adversarial",
+        "event-announcement"
+      ]
     },
     {
       "id": "seed-074",
       "message": "Got it, thanks for letting me know.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "acknowledgement"]
+      "tags": [
+        "adversarial",
+        "acknowledgement"
+      ]
     },
     {
       "id": "seed-075",
@@ -973,14 +1353,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["conditional", "schedule"]
+      "tags": [
+        "conditional",
+        "schedule"
+      ]
     },
     {
       "id": "seed-076",
       "message": "The CBSE board exam date sheet is out. Check the official website for details.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "information"]
+      "tags": [
+        "adversarial",
+        "information"
+      ]
     },
     {
       "id": "seed-077",
@@ -993,20 +1379,36 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Gopal", "role": "counterparty"},
-            {"name": "Lakshmi", "role": "counterparty"},
-            {"name": "Ramesh", "role": "counterparty"}
+            {
+              "name": "Gopal",
+              "role": "counterparty"
+            },
+            {
+              "name": "Lakshmi",
+              "role": "counterparty"
+            },
+            {
+              "name": "Ramesh",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "task", "due-date"]
+      "tags": [
+        "multi-cp",
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-078",
       "message": "Paid the building rent for this month, no worries on that front.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "past-event"]
+      "tags": [
+        "adversarial",
+        "past-event"
+      ]
     },
     {
       "id": "seed-079",
@@ -1021,14 +1423,19 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule"]
+      "tags": [
+        "schedule"
+      ]
     },
     {
       "id": "seed-080",
       "message": "Hmm ok let me think about it and get back to you.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "vague-plan"]
+      "tags": [
+        "adversarial",
+        "vague-plan"
+      ]
     },
     {
       "id": "seed-081",
@@ -1040,24 +1447,42 @@
           "class": "fee",
           "amount_paise": 600000,
           "due_at": null,
-          "counterparties": [{"name": "Aadhira", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Aadhira",
+              "role": "counterparty"
+            }
+          ]
         },
         {
           "title": "Outstanding fees Rs 4500 for Karthi by month end",
           "class": "fee",
           "amount_paise": 450000,
           "due_at": null,
-          "counterparties": [{"name": "Karthi", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Karthi",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+      "tags": [
+        "multi-commitment",
+        "multi-cp",
+        "fee",
+        "amount"
+      ]
     },
     {
       "id": "seed-082",
       "message": "I spoke to the principal about the issue. They said they will look into it.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "past-event"]
+      "tags": [
+        "adversarial",
+        "past-event"
+      ]
     },
     {
       "id": "seed-083",
@@ -1079,14 +1504,21 @@
           "counterparties": []
         }
       ],
-      "tags": ["multi-commitment", "task", "fee"]
+      "tags": [
+        "multi-commitment",
+        "task",
+        "fee"
+      ]
     },
     {
       "id": "seed-084",
       "message": "Why is no one responding in this group? 😤",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "complaint"]
+      "tags": [
+        "adversarial",
+        "complaint"
+      ]
     },
     {
       "id": "seed-085",
@@ -1099,19 +1531,31 @@
           "amount_paise": null,
           "due_at": null,
           "counterparties": [
-            {"name": "Sundar", "role": "counterparty"},
-            {"name": "Preethi", "role": "counterparty"}
+            {
+              "name": "Sundar",
+              "role": "counterparty"
+            },
+            {
+              "name": "Preethi",
+              "role": "counterparty"
+            }
           ]
         }
       ],
-      "tags": ["multi-cp", "task"]
+      "tags": [
+        "multi-cp",
+        "task"
+      ]
     },
     {
       "id": "seed-086",
       "message": "That's a good idea, let's discuss it at the next meeting.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "vague-plan"]
+      "tags": [
+        "adversarial",
+        "vague-plan"
+      ]
     },
     {
       "id": "seed-087",
@@ -1123,17 +1567,28 @@
           "class": "payment",
           "amount_paise": 500000,
           "due_at": null,
-          "counterparties": [{"name": "Vishal", "role": "counterparty"}]
+          "counterparties": [
+            {
+              "name": "Vishal",
+              "role": "counterparty"
+            }
+          ]
         }
       ],
-      "tags": ["payment", "amount"]
+      "tags": [
+        "payment",
+        "amount"
+      ]
     },
     {
       "id": "seed-088",
       "message": "Maybe we can do a parents' day event sometime. Would be nice for the children.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "vague-plan"]
+      "tags": [
+        "adversarial",
+        "vague-plan"
+      ]
     },
     {
       "id": "seed-089",
@@ -1148,14 +1603,19 @@
           "counterparties": []
         }
       ],
-      "tags": ["task"]
+      "tags": [
+        "task"
+      ]
     },
     {
       "id": "seed-090",
       "message": "Just sharing — the education minister announced new exam pattern changes. Nothing confirmed yet.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "information"]
+      "tags": [
+        "adversarial",
+        "information"
+      ]
     },
     {
       "id": "seed-091",
@@ -1170,14 +1630,21 @@
           "counterparties": []
         }
       ],
-      "tags": ["fee", "amount", "due-date"]
+      "tags": [
+        "fee",
+        "amount",
+        "due-date"
+      ]
     },
     {
       "id": "seed-092",
       "message": "Test results were shared last Wednesday. Those who missed can collect from the office.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "past-event"]
+      "tags": [
+        "adversarial",
+        "past-event"
+      ]
     },
     {
       "id": "seed-093",
@@ -1192,21 +1659,30 @@
           "counterparties": []
         }
       ],
-      "tags": ["task", "due-date"]
+      "tags": [
+        "task",
+        "due-date"
+      ]
     },
     {
       "id": "seed-094",
       "message": "👍",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "emoji-only"]
+      "tags": [
+        "adversarial",
+        "emoji-only"
+      ]
     },
     {
       "id": "seed-095",
       "message": "Can you check if the library has the NCERT reference guide? I want to borrow it for Tanvi.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "question"]
+      "tags": [
+        "adversarial",
+        "question"
+      ]
     },
     {
       "id": "seed-096",
@@ -1221,14 +1697,20 @@
           "counterparties": []
         }
       ],
-      "tags": ["conditional", "fee"]
+      "tags": [
+        "conditional",
+        "fee"
+      ]
     },
     {
       "id": "seed-097",
       "message": "Sending the attendance report for this week. All looks fine except 3 absences.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "information"]
+      "tags": [
+        "adversarial",
+        "information"
+      ]
     },
     {
       "id": "seed-098",
@@ -1243,21 +1725,30 @@
           "counterparties": []
         }
       ],
-      "tags": ["schedule", "due-date"]
+      "tags": [
+        "schedule",
+        "due-date"
+      ]
     },
     {
       "id": "seed-099",
       "message": "Ok",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "acknowledgement"]
+      "tags": [
+        "adversarial",
+        "acknowledgement"
+      ]
     },
     {
       "id": "seed-100",
       "message": "Please note: from next month, fee payment only via UPI or bank transfer. No cash accepted at the center.",
       "provenance_kind": "message",
       "gold_commitments": [],
-      "tags": ["adversarial", "policy"]
+      "tags": [
+        "adversarial",
+        "policy"
+      ]
     }
   ]
 }

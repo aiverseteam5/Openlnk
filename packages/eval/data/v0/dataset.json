@@ -60,7 +60,7 @@
     },
     {
       "id": "seed-005",
-      "message": "I'll pick up all three kids — Arjun, Priya, and Kavya — from school at 3pm tomorrow.",
+      "message": "I'll pick up all three kids \u2014 Arjun, Priya, and Kavya \u2014 from school at 3pm tomorrow.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -160,7 +160,7 @@
     },
     {
       "id": "seed-010",
-      "message": "Forwarded: 😂😂 This joke is hilarious! Share with everyone in the group.",
+      "message": "Forwarded: \ud83d\ude02\ud83d\ude02 This joke is hilarious! Share with everyone in the group.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -434,7 +434,7 @@
     },
     {
       "id": "seed-023",
-      "message": "Happy Diwali to all parents and students! 🪔 Wishing you joy and prosperity.",
+      "message": "Happy Diwali to all parents and students! \ud83e\ude94 Wishing you joy and prosperity.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -476,7 +476,7 @@
     },
     {
       "id": "seed-026",
-      "message": "Exam fee ₹750 per student. Please pay for both Nisha and Rahul by next Wednesday.",
+      "message": "Exam fee \u20b9750 per student. Please pay for both Nisha and Rahul by next Wednesday.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -567,7 +567,7 @@
     },
     {
       "id": "seed-030",
-      "message": "Saw the new Rajinikanth movie? It was amazing! 🎬",
+      "message": "Saw the new Rajinikanth movie? It was amazing! \ud83c\udfac",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -612,17 +612,10 @@
       "id": "seed-033",
       "message": "Bus pickup for Adyar students: 7:30am from the main road stop. Driver's number shared separately.",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Bus pickup 7:30am from Adyar main road stop",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
-        "schedule"
+        "schedule",
+        "adversarial"
       ]
     },
     {
@@ -650,7 +643,7 @@
     },
     {
       "id": "seed-035",
-      "message": "All 8th std students — Aarav, Ishaan, Diya, Neha — must attend the career guidance session this Saturday 10am.",
+      "message": "All 8th std students \u2014 Aarav, Ishaan, Diya, Neha \u2014 must attend the career guidance session this Saturday 10am.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -714,7 +707,7 @@
     },
     {
       "id": "seed-038",
-      "message": "The chart paper and colour pens for the project — I'll buy them and send with Kavitha on Monday.",
+      "message": "The chart paper and colour pens for the project \u2014 I'll buy them and send with Kavitha on Monday.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -858,7 +851,7 @@
     },
     {
       "id": "seed-047",
-      "message": "I'll handle the transportation for all five students — Arun, Bhavya, Chitra, Dinesh, and Esha — for the inter-school competition on Saturday.",
+      "message": "I'll handle the transportation for all five students \u2014 Arun, Bhavya, Chitra, Dinesh, and Esha \u2014 for the inter-school competition on Saturday.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -914,7 +907,7 @@
     },
     {
       "id": "seed-049",
-      "message": "LOL that's so funny 😂 who sent this?",
+      "message": "LOL that's so funny \ud83d\ude02 who sent this?",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -984,7 +977,7 @@
       "provenance_kind": "message",
       "gold_commitments": [
         {
-          "title": "Lab materials fee Rs 150 each",
+          "title": "Lab materials fee Rs 150 for Harini",
           "class": "fee",
           "amount_paise": 15000,
           "due_at": null,
@@ -992,11 +985,27 @@
             {
               "name": "Harini",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Prasad",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Prasad",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Varun",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Varun",
               "role": "counterparty"
@@ -1005,7 +1014,7 @@
         }
       ],
       "tags": [
-        "multi-cp",
+        "multi-commitment",
         "fee",
         "amount"
       ]
@@ -1058,7 +1067,7 @@
     },
     {
       "id": "seed-058",
-      "message": "🙏 Thank you so much for your patience with my son. Really grateful.",
+      "message": "\ud83d\ude4f Thank you so much for your patience with my son. Really grateful.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1260,7 +1269,7 @@
     },
     {
       "id": "seed-069",
-      "message": "Forwarded: 10 tips for your child's exam preparation! 📚 #StudyTips #ExamSeason",
+      "message": "Forwarded: 10 tips for your child's exam preparation! \ud83d\udcda #StudyTips #ExamSeason",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1315,17 +1324,10 @@
       "id": "seed-073",
       "message": "Book fair at the center next Saturday 10am-4pm. All parents and students welcome. Entry free.",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Book fair next Saturday 10am-4pm",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
-        "schedule"
+        "schedule",
+        "adversarial"
       ]
     },
     {
@@ -1510,7 +1512,7 @@
     },
     {
       "id": "seed-084",
-      "message": "Why is no one responding in this group? 😤",
+      "message": "Why is no one responding in this group? \ud83d\ude24",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1607,7 +1609,7 @@
     },
     {
       "id": "seed-090",
-      "message": "Just sharing — the education minister announced new exam pattern changes. Nothing confirmed yet.",
+      "message": "Just sharing \u2014 the education minister announced new exam pattern changes. Nothing confirmed yet.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1664,7 +1666,7 @@
     },
     {
       "id": "seed-094",
-      "message": "👍",
+      "message": "\ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1750,7 +1752,7 @@
     },
     {
       "id": "aug-0001",
-      "message": "Hi, kindly make the tuition fee payment of Rs 2000 on or before July 15th. Please ensure it is done on time. Thank you! 🙏",
+      "message": "Hi, kindly make the tuition fee payment of Rs 2000 on or before July 15th. Please ensure it is done on time. Thank you! \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -1771,7 +1773,7 @@
     },
     {
       "id": "aug-0002",
-      "message": "Pls pay the tuition fees Rs 2000 by 15th July without fail 🙏",
+      "message": "Pls pay the tuition fees Rs 2000 by 15th July without fail \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -1792,7 +1794,7 @@
     },
     {
       "id": "aug-0003",
-      "message": "Dear parent, this is a gentle reminder to pay the tuition fee of ₹2000 before July 15th. Kindly do the needful and confirm once paid. Thank you.",
+      "message": "Dear parent, this is a gentle reminder to pay the tuition fee of \u20b92000 before July 15th. Kindly do the needful and confirm once paid. Thank you.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -1813,7 +1815,7 @@
     },
     {
       "id": "aug-0004",
-      "message": "Hi! Just a quick reminder — tuition fee of ₹2000 to be paid by July 15th ya. Pls don't miss the date 😊",
+      "message": "Hi! Just a quick reminder \u2014 tuition fee of \u20b92000 to be paid by July 15th ya. Pls don't miss the date \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -1834,7 +1836,7 @@
     },
     {
       "id": "aug-0005",
-      "message": "Hi all, just to inform — class has been rescheduled to Thursday 5pm. Pls take note of the new timing 🙏",
+      "message": "Hi all, just to inform \u2014 class has been rescheduled to Thursday 5pm. Pls take note of the new timing \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -1872,7 +1874,7 @@
     },
     {
       "id": "aug-0007",
-      "message": "Class is shifted to Thursday 5pm. Note the timing change pls 👍",
+      "message": "Class is shifted to Thursday 5pm. Note the timing change pls \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -1891,7 +1893,7 @@
     },
     {
       "id": "aug-0008",
-      "message": "Imp update ⚠️ — class has been rescheduled. New slot is Thursday 5:00 PM. Kindly make a note of this change and be on time 🙏",
+      "message": "Imp update \u26a0\ufe0f \u2014 class has been rescheduled. New slot is Thursday 5:00 PM. Kindly make a note of this change and be on time \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -1910,7 +1912,7 @@
     },
     {
       "id": "aug-0009",
-      "message": "Good morning! Hope ur weekend was good 😊 Weather has been so nice these days na?",
+      "message": "Good morning! Hope ur weekend was good \ud83d\ude0a Weather has been so nice these days na?",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1922,7 +1924,7 @@
     },
     {
       "id": "aug-0010",
-      "message": "Gm! Weekend was good I hope? The climate has been really pleasant lately 🌤️",
+      "message": "Gm! Weekend was good I hope? The climate has been really pleasant lately \ud83c\udf24\ufe0f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1934,7 +1936,7 @@
     },
     {
       "id": "aug-0011",
-      "message": "Good morning madam/sir! Hope you had a restful weekend. Chennai weather is being quite kind these days 😄",
+      "message": "Good morning madam/sir! Hope you had a restful weekend. Chennai weather is being quite kind these days \ud83d\ude04",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1946,7 +1948,7 @@
     },
     {
       "id": "aug-0012",
-      "message": "Gm 🙏 Hope the weekend was refreshing! The weather outside is so pleasant no? Enjoying it?",
+      "message": "Gm \ud83d\ude4f Hope the weekend was refreshing! The weather outside is so pleasant no? Enjoying it?",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1958,7 +1960,7 @@
     },
     {
       "id": "aug-0013",
-      "message": "Good morning! Hope ur weekend went well 😊 The weather has been lovely no? Such a nice change!",
+      "message": "Good morning! Hope ur weekend went well \ud83d\ude0a The weather has been lovely no? Such a nice change!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1970,7 +1972,7 @@
     },
     {
       "id": "aug-0014",
-      "message": "Ayyo it's been so long! We should meet up sometime na 😄",
+      "message": "Ayyo it's been so long! We should meet up sometime na \ud83d\ude04",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1982,7 +1984,7 @@
     },
     {
       "id": "aug-0015",
-      "message": "Yeah da, ages since we caught up! We should plan something soon 🙌",
+      "message": "Yeah da, ages since we caught up! We should plan something soon \ud83d\ude4c",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -1994,7 +1996,7 @@
     },
     {
       "id": "aug-0016",
-      "message": "It really has been so long! Let's catch up sometime, would be nice 😊",
+      "message": "It really has been so long! Let's catch up sometime, would be nice \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2006,7 +2008,7 @@
     },
     {
       "id": "aug-0017",
-      "message": "Omg yes!! Too long since we met, we should definitely plan something soon yaar 😂",
+      "message": "Omg yes!! Too long since we met, we should definitely plan something soon yaar \ud83d\ude02",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2018,7 +2020,7 @@
     },
     {
       "id": "aug-0018",
-      "message": "True na, it's been ages! We must catch up one of these days 👍",
+      "message": "True na, it's been ages! We must catch up one of these days \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2030,7 +2032,7 @@
     },
     {
       "id": "aug-0019",
-      "message": "Tomorrow 3pm I'll be there to pick up all 3 kids — Arjun, Priya and Kavya from school. Will be on time 👍",
+      "message": "Tomorrow 3pm I'll be there to pick up all 3 kids \u2014 Arjun, Priya and Kavya from school. Will be on time \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2063,7 +2065,7 @@
     },
     {
       "id": "aug-0020",
-      "message": "Just confirming — I'll come to school tomorrow at 3pm and pick up Arjun, Priya, and Kavya. All three will be with me, no worries 🙂",
+      "message": "Just confirming \u2014 I'll come to school tomorrow at 3pm and pick up Arjun, Priya, and Kavya. All three will be with me, no worries \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2129,7 +2131,7 @@
     },
     {
       "id": "aug-0022",
-      "message": "Tomorrow pickup is with me — Arjun, Priya, and Kavya, all three. I'll reach school at 3pm sharp. No need to arrange anything else for them.",
+      "message": "Tomorrow pickup is with me \u2014 Arjun, Priya, and Kavya, all three. I'll reach school at 3pm sharp. No need to arrange anything else for them.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2162,7 +2164,7 @@
     },
     {
       "id": "aug-0023",
-      "message": "Rs 1500 received towards July month fees. Thanks! 🙏",
+      "message": "Rs 1500 received towards July month fees. Thanks! \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2182,7 +2184,7 @@
     },
     {
       "id": "aug-0024",
-      "message": "We have received the payment of ₹1500 for the month of July. Thank you so much for the prompt payment! 😊",
+      "message": "We have received the payment of \u20b91500 for the month of July. Thank you so much for the prompt payment! \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2202,7 +2204,7 @@
     },
     {
       "id": "aug-0025",
-      "message": "July fees payment of Rs 1500 noted and received. Thank u! 👍",
+      "message": "July fees payment of Rs 1500 noted and received. Thank u! \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2222,7 +2224,7 @@
     },
     {
       "id": "aug-0026",
-      "message": "This is to confirm that we've received ₹1500 from you for July month tuition fees. Thank you! 🙏😊",
+      "message": "This is to confirm that we've received \u20b91500 from you for July month tuition fees. Thank you! \ud83d\ude4f\ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2242,7 +2244,7 @@
     },
     {
       "id": "aug-0027",
-      "message": "New batch starting soon! Early bird discount available 🎉 Limited seats only — don't miss out!",
+      "message": "New batch starting soon! Early bird discount available \ud83c\udf89 Limited seats only \u2014 don't miss out!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2254,7 +2256,7 @@
     },
     {
       "id": "aug-0028",
-      "message": "Hi! Just wanted to let you know we have a new batch coming up shortly. Early bird offer is there, and seats are filling up fast 😊",
+      "message": "Hi! Just wanted to let you know we have a new batch coming up shortly. Early bird offer is there, and seats are filling up fast \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2266,7 +2268,7 @@
     },
     {
       "id": "aug-0029",
-      "message": "New batch announcement! 🚀 Early bird discount available for a limited time. Seats are limited so enquire soon!",
+      "message": "New batch announcement! \ud83d\ude80 Early bird discount available for a limited time. Seats are limited so enquire soon!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2278,7 +2280,7 @@
     },
     {
       "id": "aug-0030",
-      "message": "Hii! Our new batch is starting soon 🙌 Early bird discount available. Very limited seats left — check it out!",
+      "message": "Hii! Our new batch is starting soon \ud83d\ude4c Early bird discount available. Very limited seats left \u2014 check it out!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2290,7 +2292,7 @@
     },
     {
       "id": "aug-0031",
-      "message": "New batch coming up soon! Early bird discount ondhu irukku, seats also limited. Pls check and let us know if interested 😊",
+      "message": "New batch coming up soon! Early bird discount ondhu irukku, seats also limited. Pls check and let us know if interested \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2302,7 +2304,7 @@
     },
     {
       "id": "aug-0032",
-      "message": "If it rains tomorrow, I'll come pick up Rohan from class. No need for him to take the bus 🙂",
+      "message": "If it rains tomorrow, I'll come pick up Rohan from class. No need for him to take the bus \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2327,7 +2329,7 @@
     },
     {
       "id": "aug-0033",
-      "message": "Tomorrow if it rains, I will pick Rohan up from class directly — he doesn't have to take the bus.",
+      "message": "Tomorrow if it rains, I will pick Rohan up from class directly \u2014 he doesn't have to take the bus.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2352,7 +2354,7 @@
     },
     {
       "id": "aug-0034",
-      "message": "Jus letting u know — if it rains tmrw, I'll pick up Rohan from class myself, so he won't need the bus 👍",
+      "message": "Jus letting u know \u2014 if it rains tmrw, I'll pick up Rohan from class myself, so he won't need the bus \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2442,7 +2444,7 @@
     },
     {
       "id": "aug-0038",
-      "message": "Sir/Madam, just checking — can we fix the PTM for Thursday at 5pm? Pls confirm 🙏",
+      "message": "Sir/Madam, just checking \u2014 can we fix the PTM for Thursday at 5pm? Pls confirm \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2482,7 +2484,7 @@
     },
     {
       "id": "aug-0040",
-      "message": "Forwarded: 🤣🤣 Omg this is too funny!! Send to everyone da!",
+      "message": "Forwarded: \ud83e\udd23\ud83e\udd23 Omg this is too funny!! Send to everyone da!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2494,7 +2496,7 @@
     },
     {
       "id": "aug-0041",
-      "message": "Forwarded: 😂 Haha this joke is so good yaar, pls share with the whole group!",
+      "message": "Forwarded: \ud83d\ude02 Haha this joke is so good yaar, pls share with the whole group!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2506,7 +2508,7 @@
     },
     {
       "id": "aug-0042",
-      "message": "Forwarded: 😂😂😂 Cannot stop laughing at this one lol!! Pass it on to everyone in the group!",
+      "message": "Forwarded: \ud83d\ude02\ud83d\ude02\ud83d\ude02 Cannot stop laughing at this one lol!! Pass it on to everyone in the group!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2518,7 +2520,7 @@
     },
     {
       "id": "aug-0043",
-      "message": "Fwd: 🤣 This joke is hilarious ra!! Make sure u share with all in the group 😂",
+      "message": "Fwd: \ud83e\udd23 This joke is hilarious ra!! Make sure u share with all in the group \ud83d\ude02",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2530,7 +2532,7 @@
     },
     {
       "id": "aug-0044",
-      "message": "Forwarded: 😂😂 Too funny!! Everyone in the group should see this, share share share!!",
+      "message": "Forwarded: \ud83d\ude02\ud83d\ude02 Too funny!! Everyone in the group should see this, share share share!!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2542,7 +2544,7 @@
     },
     {
       "id": "aug-0045",
-      "message": "Reminder: Science project report should be submitted by next Monday. Ananya and Vikram, both of you need to work on this together and make sure it's done on time 🙏",
+      "message": "Reminder: Science project report should be submitted by next Monday. Ananya and Vikram, both of you need to work on this together and make sure it's done on time \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2572,7 +2574,7 @@
     },
     {
       "id": "aug-0046",
-      "message": "Pls note — the science project report has to be submitted by next Monday. Ananya and Vikram need to do it together, so coordinate accordingly.",
+      "message": "Pls note \u2014 the science project report has to be submitted by next Monday. Ananya and Vikram need to do it together, so coordinate accordingly.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2602,7 +2604,7 @@
     },
     {
       "id": "aug-0047",
-      "message": "Hi, just wanted to remind that science project report submission is due next Monday. It's a joint work for Ananya and Vikram, so both should collaborate on it ✅",
+      "message": "Hi, just wanted to remind that science project report submission is due next Monday. It's a joint work for Ananya and Vikram, so both should collaborate on it \u2705",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2632,7 +2634,7 @@
     },
     {
       "id": "aug-0048",
-      "message": "Ananya and Vikram — science project report submit pannanum, next Monday deadline. Both of you work together on it, pls don't delay 🙏",
+      "message": "Ananya and Vikram \u2014 science project report submit pannanum, next Monday deadline. Both of you work together on it, pls don't delay \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2662,7 +2664,7 @@
     },
     {
       "id": "aug-0049",
-      "message": "Hi, just wanted to check — last month's fee was paid on the 5th itself. No dues pending as far as I know.",
+      "message": "Hi, just wanted to check \u2014 last month's fee was paid on the 5th itself. No dues pending as far as I know.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2710,7 +2712,7 @@
     },
     {
       "id": "aug-0053",
-      "message": "Just checking — prev month fee was paid on the 5th. No pending amount as such, right? Pls do confirm once.",
+      "message": "Just checking \u2014 prev month fee was paid on the 5th. No pending amount as such, right? Pls do confirm once.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2750,7 +2752,7 @@
     },
     {
       "id": "aug-0055",
-      "message": "August fee is Rs 2500 — pls pay by 5th Aug. Also note, extra class on Saturday 10am for board exam prep. Don't miss it!",
+      "message": "August fee is Rs 2500 \u2014 pls pay by 5th Aug. Also note, extra class on Saturday 10am for board exam prep. Don't miss it!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2806,7 +2808,7 @@
     },
     {
       "id": "aug-0057",
-      "message": "August fees - Rs 2500, due by Aug 5th ✅ Also extra class Saturday @ 10am for board exam prep 📚 Pls make note!",
+      "message": "August fees - Rs 2500, due by Aug 5th \u2705 Also extra class Saturday @ 10am for board exam prep \ud83d\udcda Pls make note!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2834,7 +2836,7 @@
     },
     {
       "id": "aug-0058",
-      "message": "Let me know if anything else is needed. Always here to help 😊",
+      "message": "Let me know if anything else is needed. Always here to help \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2858,7 +2860,7 @@
     },
     {
       "id": "aug-0060",
-      "message": "Pls don't hesitate to reach out if u need anything else 🙏",
+      "message": "Pls don't hesitate to reach out if u need anything else \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2882,7 +2884,7 @@
     },
     {
       "id": "aug-0062",
-      "message": "Any other questions or doubts, just ping me here itself 👍",
+      "message": "Any other questions or doubts, just ping me here itself \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -2894,7 +2896,7 @@
     },
     {
       "id": "aug-0063",
-      "message": "I'll share the study materials for the mid-term exam by Wednesday evening itself, don't worry 👍",
+      "message": "I'll share the study materials for the mid-term exam by Wednesday evening itself, don't worry \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2914,7 +2916,7 @@
     },
     {
       "id": "aug-0064",
-      "message": "Pls note — I will be sending the mid-term exam study materials by Wednesday evening without fail.",
+      "message": "Pls note \u2014 I will be sending the mid-term exam study materials by Wednesday evening without fail.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2934,7 +2936,7 @@
     },
     {
       "id": "aug-0065",
-      "message": "Wednesday evening lo study materials pathupom for mid-term... will send it by then for sure 🙂",
+      "message": "Wednesday evening lo study materials pathupom for mid-term... will send it by then for sure \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2954,7 +2956,7 @@
     },
     {
       "id": "aug-0066",
-      "message": "Just a heads up — the study materials for mid-term exam will be shared with you all by Wednesday evening. Kindly wait till then.",
+      "message": "Just a heads up \u2014 the study materials for mid-term exam will be shared with you all by Wednesday evening. Kindly wait till then.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -2974,7 +2976,7 @@
     },
     {
       "id": "aug-0067",
-      "message": "Hi, just a reminder — this quarter's fees are due by Aug 10th. Meera: Rs 3000, Sanjay: Rs 3000, Lakshmi: Rs 2500. Kindly make the payment on time 🙏",
+      "message": "Hi, just a reminder \u2014 this quarter's fees are due by Aug 10th. Meera: Rs 3000, Sanjay: Rs 3000, Lakshmi: Rs 2500. Kindly make the payment on time \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3025,7 +3027,7 @@
     },
     {
       "id": "aug-0068",
-      "message": "Pls note the fees for this quarter:\n🔹 Meera – ₹3000\n🔹 Sanjay – ₹3000\n🔹 Lakshmi – ₹2500\nLast date for payment is August 10th. Do pay before that, thank you!",
+      "message": "Pls note the fees for this quarter:\n\ud83d\udd39 Meera \u2013 \u20b93000\n\ud83d\udd39 Sanjay \u2013 \u20b93000\n\ud83d\udd39 Lakshmi \u2013 \u20b92500\nLast date for payment is August 10th. Do pay before that, thank you!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3127,7 +3129,7 @@
     },
     {
       "id": "aug-0070",
-      "message": "Quarter fees due on Aug 10 — Meera ₹3000, Sanjay ₹3000, Lakshmi ₹2500. Plz pay on time 👍",
+      "message": "Quarter fees due on Aug 10 \u2014 Meera \u20b93000, Sanjay \u20b93000, Lakshmi \u20b92500. Plz pay on time \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3197,7 +3199,7 @@
     },
     {
       "id": "aug-0072",
-      "message": "Imp update: Maths class tmrw is cancelled bcoz teacher is not keeping well. Rescheduling will be done and we'll let u all know 🙏",
+      "message": "Imp update: Maths class tmrw is cancelled bcoz teacher is not keeping well. Rescheduling will be done and we'll let u all know \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3216,7 +3218,7 @@
     },
     {
       "id": "aug-0073",
-      "message": "Dear parents, kindly note that tomorrow's maths class has been cancelled due to the teacher's health issues. The class will be rescheduled — details will be shared soon.",
+      "message": "Dear parents, kindly note that tomorrow's maths class has been cancelled due to the teacher's health issues. The class will be rescheduled \u2014 details will be shared soon.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3235,7 +3237,7 @@
     },
     {
       "id": "aug-0074",
-      "message": "Tmrw maths class won't be happening — teacher is unwell 🤒 We'll reschedule and update you. Sorry for the inconvenience!",
+      "message": "Tmrw maths class won't be happening \u2014 teacher is unwell \ud83e\udd12 We'll reschedule and update you. Sorry for the inconvenience!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3254,7 +3256,7 @@
     },
     {
       "id": "aug-0075",
-      "message": "The children had such a wonderful time on the field trip last week! Really a lovely outing for them 😊",
+      "message": "The children had such a wonderful time on the field trip last week! Really a lovely outing for them \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3266,7 +3268,7 @@
     },
     {
       "id": "aug-0076",
-      "message": "Omg the kids absolutely loved the field trip last week! Such a nice experience for all of them 🥰",
+      "message": "Omg the kids absolutely loved the field trip last week! Such a nice experience for all of them \ud83e\udd70",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3278,7 +3280,7 @@
     },
     {
       "id": "aug-0077",
-      "message": "Last week's field trip was such a hit with the kids! They really seemed to enjoy it a lot 😄",
+      "message": "Last week's field trip was such a hit with the kids! They really seemed to enjoy it a lot \ud83d\ude04",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3290,7 +3292,7 @@
     },
     {
       "id": "aug-0078",
-      "message": "The little ones had a great time at the field trip last week na! So sweet to see them enjoy like that 🙌",
+      "message": "The little ones had a great time at the field trip last week na! So sweet to see them enjoy like that \ud83d\ude4c",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3302,7 +3304,7 @@
     },
     {
       "id": "aug-0079",
-      "message": "Wah, the kids really had a blast at last week's field trip! Such a memorable experience for them 😊👍",
+      "message": "Wah, the kids really had a blast at last week's field trip! Such a memorable experience for them \ud83d\ude0a\ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3334,7 +3336,7 @@
     },
     {
       "id": "aug-0081",
-      "message": "Pls collect the hall ticket from office before Friday ya. And don't forget to bring one passport photo also with you 🙏",
+      "message": "Pls collect the hall ticket from office before Friday ya. And don't forget to bring one passport photo also with you \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3374,7 +3376,7 @@
     },
     {
       "id": "aug-0083",
-      "message": "Hall ticket collection — pls do it before Friday from the office. Also bring a passport photo when u come. Don't miss it! ✅",
+      "message": "Hall ticket collection \u2014 pls do it before Friday from the office. Also bring a passport photo when u come. Don't miss it! \u2705",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3394,7 +3396,7 @@
     },
     {
       "id": "aug-0084",
-      "message": "Ravi seems to be doing quite well in science lately. Really happy to see his progress 😊",
+      "message": "Ravi seems to be doing quite well in science lately. Really happy to see his progress \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3418,7 +3420,7 @@
     },
     {
       "id": "aug-0086",
-      "message": "Ravi is doing so well in science madam, very proud parent here 😄 His progress has been great.",
+      "message": "Ravi is doing so well in science madam, very proud parent here \ud83d\ude04 His progress has been great.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3430,7 +3432,7 @@
     },
     {
       "id": "aug-0087",
-      "message": "Science wise Ravi is doing really good na… so proud of him honestly 🙏",
+      "message": "Science wise Ravi is doing really good na\u2026 so proud of him honestly \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3442,7 +3444,7 @@
     },
     {
       "id": "aug-0088",
-      "message": "Just wanted to say Ravi's progress in science is really impressive. Very proud of the boy! 👏",
+      "message": "Just wanted to say Ravi's progress in science is really impressive. Very proud of the boy! \ud83d\udc4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3454,7 +3456,7 @@
     },
     {
       "id": "aug-0089",
-      "message": "📢 Reminder to all parents! Annual day rehearsal is scheduled every Saturday from 9am to 12pm for the next 3 weeks. Karthik, Deepa, and Suresh — attendance is compulsory for all three. Kindly make sure they are present without fail. 🙏",
+      "message": "\ud83d\udce2 Reminder to all parents! Annual day rehearsal is scheduled every Saturday from 9am to 12pm for the next 3 weeks. Karthik, Deepa, and Suresh \u2014 attendance is compulsory for all three. Kindly make sure they are present without fail. \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3487,7 +3489,7 @@
     },
     {
       "id": "aug-0090",
-      "message": "Pls note — annual day rehearsal every Saturday 9am–12pm, for the next 3 weeks. Karthik, Deepa & Suresh must attend all sessions. No absence pls 🙏",
+      "message": "Pls note \u2014 annual day rehearsal every Saturday 9am\u201312pm, for the next 3 weeks. Karthik, Deepa & Suresh must attend all sessions. No absence pls \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3553,7 +3555,7 @@
     },
     {
       "id": "aug-0092",
-      "message": "⚠️ Imp reminder — rehearsal for annual day is every Saturday, 9am to 12pm, next 3 weeks. Karthik, Suresh & Deepa all must attend. Pls don't miss 👍",
+      "message": "\u26a0\ufe0f Imp reminder \u2014 rehearsal for annual day is every Saturday, 9am to 12pm, next 3 weeks. Karthik, Suresh & Deepa all must attend. Pls don't miss \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3586,7 +3588,7 @@
     },
     {
       "id": "aug-0093",
-      "message": "Noted — Rs 1000 advance collected from Arun's parent towards the science kit. Remaining Rs 500 to be paid at the time of delivery.",
+      "message": "Noted \u2014 Rs 1000 advance collected from Arun's parent towards the science kit. Remaining Rs 500 to be paid at the time of delivery.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3625,7 +3627,7 @@
     },
     {
       "id": "aug-0094",
-      "message": "Hi, just to confirm — we've received Rs 1000 advance from Arun's parent for the science kit. The balance amount of Rs 500 will be due on delivery 🙏",
+      "message": "Hi, just to confirm \u2014 we've received Rs 1000 advance from Arun's parent for the science kit. The balance amount of Rs 500 will be due on delivery \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3664,7 +3666,7 @@
     },
     {
       "id": "aug-0095",
-      "message": "Arun's parent has given ₹1000 advance for the science kit. ₹500 balance pending — to be collected on delivery.",
+      "message": "Arun's parent has given \u20b91000 advance for the science kit. \u20b9500 balance pending \u2014 to be collected on delivery.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3703,7 +3705,7 @@
     },
     {
       "id": "aug-0096",
-      "message": "Quick update madam/sir — ₹1000 advance recd from Arun's parent for the science kit. Remaining ₹500 due at delivery. Pls note.",
+      "message": "Quick update madam/sir \u2014 \u20b91000 advance recd from Arun's parent for the science kit. Remaining \u20b9500 due at delivery. Pls note.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3742,7 +3744,7 @@
     },
     {
       "id": "aug-0097",
-      "message": "Happy Diwali to all our parents and students! 🪔 Wishing everyone lots of joy and prosperity this festive season! 😊",
+      "message": "Happy Diwali to all our parents and students! \ud83e\ude94 Wishing everyone lots of joy and prosperity this festive season! \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3754,7 +3756,7 @@
     },
     {
       "id": "aug-0098",
-      "message": "Wishing all parents and students a very Happy Diwali! 🪔 Hope this festival brings you happiness and prosperity! 🎉",
+      "message": "Wishing all parents and students a very Happy Diwali! \ud83e\ude94 Hope this festival brings you happiness and prosperity! \ud83c\udf89",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3766,7 +3768,7 @@
     },
     {
       "id": "aug-0099",
-      "message": "Happy Diwali everyone! 🪔🎊 Sending warm wishes to all our students and parents — may this Diwali be filled with joy and prosperity!",
+      "message": "Happy Diwali everyone! \ud83e\ude94\ud83c\udf8a Sending warm wishes to all our students and parents \u2014 may this Diwali be filled with joy and prosperity!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3778,7 +3780,7 @@
     },
     {
       "id": "aug-0100",
-      "message": "Diwali greetings to all parents and students from our tuition center family! 🪔 Wishing u all happiness, good health, and lots of prosperity! 😄✨",
+      "message": "Diwali greetings to all parents and students from our tuition center family! \ud83e\ude94 Wishing u all happiness, good health, and lots of prosperity! \ud83d\ude04\u2728",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3790,7 +3792,7 @@
     },
     {
       "id": "aug-0101",
-      "message": "A very Happy Diwali to each and every one of our students and parents! 🪔 May this auspicious occasion bring you great joy and prosperity! 🙏😊",
+      "message": "A very Happy Diwali to each and every one of our students and parents! \ud83e\ude94 May this auspicious occasion bring you great joy and prosperity! \ud83d\ude4f\ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3802,7 +3804,7 @@
     },
     {
       "id": "aug-0102",
-      "message": "Hi, can you pls bring your textbook to class tomorrow? Priya forgot hers today 🙏",
+      "message": "Hi, can you pls bring your textbook to class tomorrow? Priya forgot hers today \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3826,7 +3828,7 @@
     },
     {
       "id": "aug-0103",
-      "message": "Just a reminder — Priya forgot her textbook today, so could you bring yours to class tomorrow?",
+      "message": "Just a reminder \u2014 Priya forgot her textbook today, so could you bring yours to class tomorrow?",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3850,7 +3852,7 @@
     },
     {
       "id": "aug-0104",
-      "message": "Enna madam, Priya forgot her textbook today la... can you bring yours tomorrow to class? It'll be helpful 😊",
+      "message": "Enna madam, Priya forgot her textbook today la... can you bring yours tomorrow to class? It'll be helpful \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3874,7 +3876,7 @@
     },
     {
       "id": "aug-0105",
-      "message": "Pls bring the textbook tomorrow to class — Priya left hers today, so she'll need it 🙏",
+      "message": "Pls bring the textbook tomorrow to class \u2014 Priya left hers today, so she'll need it \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3898,7 +3900,7 @@
     },
     {
       "id": "aug-0106",
-      "message": "Thinking of maybe doing a picnic next month la, only if weather cooperates. Will let you all know later 🙂",
+      "message": "Thinking of maybe doing a picnic next month la, only if weather cooperates. Will let you all know later \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3922,7 +3924,7 @@
     },
     {
       "id": "aug-0108",
-      "message": "We are considering a picnic sometime next month, but it all depends on the weather conditions. Will share more details once we decide 👍",
+      "message": "We are considering a picnic sometime next month, but it all depends on the weather conditions. Will share more details once we decide \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3934,7 +3936,7 @@
     },
     {
       "id": "aug-0109",
-      "message": "Might do a picnic next month if climate is ok. Not sure yet, confirmation will come later pls wait 😊",
+      "message": "Might do a picnic next month if climate is ok. Not sure yet, confirmation will come later pls wait \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -3958,7 +3960,7 @@
     },
     {
       "id": "aug-0111",
-      "message": "Exam fees are ₹750 per student. Kindly make the payment for both Nisha and Rahul before next Wednesday without fail 🙏",
+      "message": "Exam fees are \u20b9750 per student. Kindly make the payment for both Nisha and Rahul before next Wednesday without fail \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -3997,7 +3999,7 @@
     },
     {
       "id": "aug-0112",
-      "message": "Hi, just a reminder — exam fee is ₹750 per student. Pls pay for Nisha and Rahul by Wednesday itself, don't delay 😊",
+      "message": "Hi, just a reminder \u2014 exam fee is \u20b9750 per student. Pls pay for Nisha and Rahul by Wednesday itself, don't delay \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4036,7 +4038,7 @@
     },
     {
       "id": "aug-0113",
-      "message": "The exam fee comes to ₹750 per student. So total for Nisha and Rahul would be ₹1500. Plz ensure payment is done by next Wednesday. Thank you!",
+      "message": "The exam fee comes to \u20b9750 per student. So total for Nisha and Rahul would be \u20b91500. Plz ensure payment is done by next Wednesday. Thank you!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4075,7 +4077,7 @@
     },
     {
       "id": "aug-0114",
-      "message": "Exam fee — ₹750/student. Payment due for Nisha & Rahul by next Wednesday. Pls confirm once done 👍",
+      "message": "Exam fee \u2014 \u20b9750/student. Payment due for Nisha & Rahul by next Wednesday. Pls confirm once done \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4134,7 +4136,7 @@
     },
     {
       "id": "aug-0116",
-      "message": "Will drop the completed HW notebooks at the centre by 4pm today, don't worry 👍",
+      "message": "Will drop the completed HW notebooks at the centre by 4pm today, don't worry \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4154,7 +4156,7 @@
     },
     {
       "id": "aug-0117",
-      "message": "Madam, I will be dropping off the homework notebooks (all completed) at the center today by 4 o'clock. Pls confirm once received 🙏",
+      "message": "Madam, I will be dropping off the homework notebooks (all completed) at the center today by 4 o'clock. Pls confirm once received \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4194,7 +4196,7 @@
     },
     {
       "id": "aug-0119",
-      "message": "Madam, just wanted to let you know — Arjun is not well and won't be coming to class for a few days. He should be back by Monday.",
+      "message": "Madam, just wanted to let you know \u2014 Arjun is not well and won't be coming to class for a few days. He should be back by Monday.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4254,7 +4256,7 @@
     },
     {
       "id": "aug-0124",
-      "message": "Hi parents! Just a reminder that our special board exam batch is starting from August 1st 🎯 Classes will be held on Mon, Wed & Fri from 6pm to 8pm. Monthly fee is Rs 4000. Kindly confirm your ward's enrollment at the earliest!",
+      "message": "Hi parents! Just a reminder that our special board exam batch is starting from August 1st \ud83c\udfaf Classes will be held on Mon, Wed & Fri from 6pm to 8pm. Monthly fee is Rs 4000. Kindly confirm your ward's enrollment at the earliest!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4282,7 +4284,7 @@
     },
     {
       "id": "aug-0125",
-      "message": "Special batch for board exam — starting Aug 1st. Mon/Wed/Fri, 6–8pm. Fees: ₹4000/month. Interested students pls contact us soon.",
+      "message": "Special batch for board exam \u2014 starting Aug 1st. Mon/Wed/Fri, 6\u20138pm. Fees: \u20b94000/month. Interested students pls contact us soon.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4338,7 +4340,7 @@
     },
     {
       "id": "aug-0127",
-      "message": "Board exam special batch starting Aug 1st! 🙌 Timing — Mon/Wed/Fri 6pm to 8pm. Fee is ₹4000/month only. Seats are limited so register fast plz!",
+      "message": "Board exam special batch starting Aug 1st! \ud83d\ude4c Timing \u2014 Mon/Wed/Fri 6pm to 8pm. Fee is \u20b94000/month only. Seats are limited so register fast plz!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4366,7 +4368,7 @@
     },
     {
       "id": "aug-0128",
-      "message": "Dei, watched the new Rajinikanth movie aa? Simply superb da! 🎬🔥",
+      "message": "Dei, watched the new Rajinikanth movie aa? Simply superb da! \ud83c\udfac\ud83d\udd25",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4378,7 +4380,7 @@
     },
     {
       "id": "aug-0129",
-      "message": "Ayyo, Rajini sir's new movie was just too good na! Have u seen it yet? 🎬✨",
+      "message": "Ayyo, Rajini sir's new movie was just too good na! Have u seen it yet? \ud83c\udfac\u2728",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4390,7 +4392,7 @@
     },
     {
       "id": "aug-0130",
-      "message": "Bro did u catch the new Rajini movie?? It was absolutely mind-blowing! 🎬👌",
+      "message": "Bro did u catch the new Rajini movie?? It was absolutely mind-blowing! \ud83c\udfac\ud83d\udc4c",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4402,7 +4404,7 @@
     },
     {
       "id": "aug-0131",
-      "message": "Watched Rajinikanth's latest movie — Anna was on fire as always! Semma movie 🎬❤️",
+      "message": "Watched Rajinikanth's latest movie \u2014 Anna was on fire as always! Semma movie \ud83c\udfac\u2764\ufe0f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4414,7 +4416,7 @@
     },
     {
       "id": "aug-0132",
-      "message": "Machan, the new Rajini film was something else altogether yaar! Truly amazing 🎬😍",
+      "message": "Machan, the new Rajini film was something else altogether yaar! Truly amazing \ud83c\udfac\ud83d\ude0d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4451,7 +4453,7 @@
     },
     {
       "id": "aug-0134",
-      "message": "Pls ensure Divya completes her maths worksheet and brings it on Thursday to class 🙏",
+      "message": "Pls ensure Divya completes her maths worksheet and brings it on Thursday to class \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4476,7 +4478,7 @@
     },
     {
       "id": "aug-0135",
-      "message": "Just a reminder — Divya needs to complete the maths worksheet and bring it along to class on Thursday. Kindly see to it, thank you!",
+      "message": "Just a reminder \u2014 Divya needs to complete the maths worksheet and bring it along to class on Thursday. Kindly see to it, thank you!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4501,7 +4503,7 @@
     },
     {
       "id": "aug-0136",
-      "message": "Madam/Sir, pls make sure Divya does the maths worksheet and brings it to class by Thursday. Important! ✅",
+      "message": "Madam/Sir, pls make sure Divya does the maths worksheet and brings it to class by Thursday. Important! \u2705",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4526,7 +4528,7 @@
     },
     {
       "id": "aug-0137",
-      "message": "Thank you so much for the kind words about our teaching! Really means a lot to us 🙏",
+      "message": "Thank you so much for the kind words about our teaching! Really means a lot to us \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4538,7 +4540,7 @@
     },
     {
       "id": "aug-0138",
-      "message": "We're so happy to hear your feedback! Your support and encouragement keeps us going 😊",
+      "message": "We're so happy to hear your feedback! Your support and encouragement keeps us going \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4550,7 +4552,7 @@
     },
     {
       "id": "aug-0139",
-      "message": "Tq for the wonderful feedback madam/sir! We truly appreciate your kind words and support 🙏🙏",
+      "message": "Tq for the wonderful feedback madam/sir! We truly appreciate your kind words and support \ud83d\ude4f\ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4562,7 +4564,7 @@
     },
     {
       "id": "aug-0140",
-      "message": "So glad to know you liked our teaching style! Means a lot to the whole team here. Thank you! ☺️",
+      "message": "So glad to know you liked our teaching style! Means a lot to the whole team here. Thank you! \u263a\ufe0f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4574,7 +4576,7 @@
     },
     {
       "id": "aug-0141",
-      "message": "Aww thank you for the lovely feedback! We really appreciate your support and kind words 🙏😊",
+      "message": "Aww thank you for the lovely feedback! We really appreciate your support and kind words \ud83d\ude4f\ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4586,83 +4588,55 @@
     },
     {
       "id": "aug-0142",
-      "message": "Hi parents, just a reminder — bus pickup for all Adyar students will be at 7:30am from the main road stop. Driver's number will be shared separately. Pls make sure your child is ready on time! 🚌",
+      "message": "Hi parents, just a reminder \u2014 bus pickup for all Adyar students will be at 7:30am from the main road stop. Driver's number will be shared separately. Pls make sure your child is ready on time! \ud83d\ude8c",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Bus pickup 7:30am from Adyar main road stop",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-033"
+        "source:seed-033",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0143",
       "message": "Adyar students' bus pickup is at 7:30am from the main road stop. Driver contact number will be sent separately. Kindly note and plan accordingly.",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Bus pickup 7:30am from Adyar main road stop",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-033"
+        "source:seed-033",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0144",
-      "message": "Quick update: Adyar area students — bus will pick up from the main road stop at 7:30am sharp. We'll share the driver's number separately, so plz wait for that msg.",
+      "message": "Quick update: Adyar area students \u2014 bus will pick up from the main road stop at 7:30am sharp. We'll share the driver's number separately, so plz wait for that msg.",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Bus pickup 7:30am from Adyar main road stop",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-033"
+        "source:seed-033",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0145",
       "message": "Dear parents, please be informed that the bus pickup timing for Adyar students is 7:30am at the main road stop. The driver's contact number will be communicated to you separately. Thank you.",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Bus pickup 7:30am from Adyar main road stop",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-033"
+        "source:seed-033",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0146",
-      "message": "If Sneha gets above 90 in the unit test, the extra class fee for this month will be waived. No need to pay that amount if she crosses the mark! 😊",
+      "message": "If Sneha gets above 90 in the unit test, the extra class fee for this month will be waived. No need to pay that amount if she crosses the mark! \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4687,7 +4661,7 @@
     },
     {
       "id": "aug-0147",
-      "message": "Pls note — if Sneha scores more than 90 in the unit test, I'll waive off the extra class fee for this month. So let's see how she does!",
+      "message": "Pls note \u2014 if Sneha scores more than 90 in the unit test, I'll waive off the extra class fee for this month. So let's see how she does!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4712,7 +4686,7 @@
     },
     {
       "id": "aug-0148",
-      "message": "Just to confirm — this month's extra class fee will be waived for Sneha if she scores above 90 in the unit test. Kindly take note of this madam/sir.",
+      "message": "Just to confirm \u2014 this month's extra class fee will be waived for Sneha if she scores above 90 in the unit test. Kindly take note of this madam/sir.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4737,7 +4711,7 @@
     },
     {
       "id": "aug-0149",
-      "message": "If Sneha crosses 90 in the unit test, extra class fee this month — fully waived ✅. That's the deal!",
+      "message": "If Sneha crosses 90 in the unit test, extra class fee this month \u2014 fully waived \u2705. That's the deal!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4762,7 +4736,7 @@
     },
     {
       "id": "aug-0150",
-      "message": "Dear parents, kindly note that all 8th std students — Aarav, Ishaan, Diya, and Neha — are required to attend the career guidance session this Saturday at 10am. Attendance is mandatory, so please make sure they are present without fail. Thank you. 🙏",
+      "message": "Dear parents, kindly note that all 8th std students \u2014 Aarav, Ishaan, Diya, and Neha \u2014 are required to attend the career guidance session this Saturday at 10am. Attendance is mandatory, so please make sure they are present without fail. Thank you. \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4799,7 +4773,7 @@
     },
     {
       "id": "aug-0151",
-      "message": "Hi, just a reminder that the career guidance session is this Saturday at 10am. All 8th std students — Aarav, Ishaan, Diya & Neha — must attend. Pls ensure they come on time! 👍",
+      "message": "Hi, just a reminder that the career guidance session is this Saturday at 10am. All 8th std students \u2014 Aarav, Ishaan, Diya & Neha \u2014 must attend. Pls ensure they come on time! \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4836,7 +4810,7 @@
     },
     {
       "id": "aug-0152",
-      "message": "Imp notice ⚠️ — Aarav, Ishaan, Diya, Neha (all 8th std students) have to be there for the career guidance session this Sat, 10am sharp. No absences pls 🙏",
+      "message": "Imp notice \u26a0\ufe0f \u2014 Aarav, Ishaan, Diya, Neha (all 8th std students) have to be there for the career guidance session this Sat, 10am sharp. No absences pls \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4873,7 +4847,7 @@
     },
     {
       "id": "aug-0153",
-      "message": "This is to inform that the career guidance session is scheduled for this Saturday at 10:00 AM. It is compulsory for all 8th standard students — Aarav, Ishaan, Diya, and Neha — to attend the same. Kindly plan accordingly and ensure their presence. Thank you.",
+      "message": "This is to inform that the career guidance session is scheduled for this Saturday at 10:00 AM. It is compulsory for all 8th standard students \u2014 Aarav, Ishaan, Diya, and Neha \u2014 to attend the same. Kindly plan accordingly and ensure their presence. Thank you.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -4910,7 +4884,7 @@
     },
     {
       "id": "aug-0154",
-      "message": "Uniforms are available at Pothys, T Nagar. You can go and get them anytime 🙂",
+      "message": "Uniforms are available at Pothys, T Nagar. You can go and get them anytime \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4922,7 +4896,7 @@
     },
     {
       "id": "aug-0155",
-      "message": "Just to inform — uniforms can be purchased from Pothys, T Nagar. No specific time restriction, you can go whenever convenient.",
+      "message": "Just to inform \u2014 uniforms can be purchased from Pothys, T Nagar. No specific time restriction, you can go whenever convenient.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4934,7 +4908,7 @@
     },
     {
       "id": "aug-0156",
-      "message": "Hi, uniforms are there at Pothys T Nagar. Anytime you can go and buy 👍",
+      "message": "Hi, uniforms are there at Pothys T Nagar. Anytime you can go and buy \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4946,7 +4920,7 @@
     },
     {
       "id": "aug-0157",
-      "message": "Pls note — uniforms r available at Pothys, T Nagar. You can buy them at any time as per ur convenience.",
+      "message": "Pls note \u2014 uniforms r available at Pothys, T Nagar. You can buy them at any time as per ur convenience.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -4991,7 +4965,7 @@
     },
     {
       "id": "aug-0160",
-      "message": "Pending Rs 3500 I'll transfer to ur GPay by EOD today 👍",
+      "message": "Pending Rs 3500 I'll transfer to ur GPay by EOD today \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5012,7 +4986,7 @@
     },
     {
       "id": "aug-0161",
-      "message": "Just to confirm — I'll be sending the pending payment of ₹3500 to your GPay number by end of today. Please let me know if you don't receive it.",
+      "message": "Just to confirm \u2014 I'll be sending the pending payment of \u20b93500 to your GPay number by end of today. Please let me know if you don't receive it.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5033,7 +5007,7 @@
     },
     {
       "id": "aug-0162",
-      "message": "The Rs 3500 that is pending, I'll GPay it to you today before evening itself, don't worry 🙏",
+      "message": "The Rs 3500 that is pending, I'll GPay it to you today before evening itself, don't worry \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5078,7 +5052,7 @@
     },
     {
       "id": "aug-0164",
-      "message": "Don't worry about the chart paper and colour pens — I'll purchase them and send through Kavitha on Monday itself.",
+      "message": "Don't worry about the chart paper and colour pens \u2014 I'll purchase them and send through Kavitha on Monday itself.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5102,7 +5076,7 @@
     },
     {
       "id": "aug-0165",
-      "message": "Chart paper and colour pens for the project — buying them myself, will send with Kavitha on Monday 👍",
+      "message": "Chart paper and colour pens for the project \u2014 buying them myself, will send with Kavitha on Monday \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5162,7 +5136,7 @@
     },
     {
       "id": "aug-0168",
-      "message": "Anyone here have the phone no. of the Besant Nagar branch? Looking for tuition options for my nephew 🙏",
+      "message": "Anyone here have the phone no. of the Besant Nagar branch? Looking for tuition options for my nephew \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5186,7 +5160,7 @@
     },
     {
       "id": "aug-0170",
-      "message": "Hii.. do anyone have the contact of Besant Nagar tuition center? Asking for my nephew only, searching for a good one 😊",
+      "message": "Hii.. do anyone have the contact of Besant Nagar tuition center? Asking for my nephew only, searching for a good one \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5210,7 +5184,7 @@
     },
     {
       "id": "aug-0172",
-      "message": "Summer camp registration fee is Rs 1200. Please note this is non-refundable. Last date to register is July 20th. Kindly make the payment before the deadline 🙏",
+      "message": "Summer camp registration fee is Rs 1200. Please note this is non-refundable. Last date to register is July 20th. Kindly make the payment before the deadline \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5231,7 +5205,7 @@
     },
     {
       "id": "aug-0173",
-      "message": "Hi, just a reminder — the registration fee for summer camp is ₹1200 and it's non-refundable. Deadline to register is July 20th, so pls don't miss it!",
+      "message": "Hi, just a reminder \u2014 the registration fee for summer camp is \u20b91200 and it's non-refundable. Deadline to register is July 20th, so pls don't miss it!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5252,7 +5226,7 @@
     },
     {
       "id": "aug-0174",
-      "message": "Summer camp reg fee: ₹1200 (non-refundable). Last date — July 20th. Register before that, okay? No extensions will be given.",
+      "message": "Summer camp reg fee: \u20b91200 (non-refundable). Last date \u2014 July 20th. Register before that, okay? No extensions will be given.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5294,7 +5268,7 @@
     },
     {
       "id": "aug-0176",
-      "message": "Hmm not sure la... should we keep using the same textbook or change to something else? Curious what other parents feel about this 🤔",
+      "message": "Hmm not sure la... should we keep using the same textbook or change to something else? Curious what other parents feel about this \ud83e\udd14",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5318,7 +5292,7 @@
     },
     {
       "id": "aug-0178",
-      "message": "Tbh I'm going back and forth on this textbook situation 😅 continue or change? What's everyone else's opinion?",
+      "message": "Tbh I'm going back and forth on this textbook situation \ud83d\ude05 continue or change? What's everyone else's opinion?",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5354,7 +5328,7 @@
     },
     {
       "id": "aug-0181",
-      "message": "Pls note — both Rithika and Aditya need to stay back after class this Wednesday for extra practice. Kindly make sure they are available. 🙏",
+      "message": "Pls note \u2014 both Rithika and Aditya need to stay back after class this Wednesday for extra practice. Kindly make sure they are available. \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5412,7 +5386,7 @@
     },
     {
       "id": "aug-0183",
-      "message": "Madam/Sir, can you ensure Rithika and Aditya both stay back after class on Wednesday? They need to attend extra practice session. It's important 👍",
+      "message": "Madam/Sir, can you ensure Rithika and Aditya both stay back after class on Wednesday? They need to attend extra practice session. It's important \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5490,7 +5464,7 @@
     },
     {
       "id": "aug-0186",
-      "message": "Done mam! Transferred ₹2000 via PhonePe for Sep tuition. TXN ID is TXN12345 🙏",
+      "message": "Done mam! Transferred \u20b92000 via PhonePe for Sep tuition. TXN ID is TXN12345 \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5510,7 +5484,7 @@
     },
     {
       "id": "aug-0187",
-      "message": "Pls note — paid ₹2000 thru PhonePe right now towards September tuition. Transaction ref: TXN12345.",
+      "message": "Pls note \u2014 paid \u20b92000 thru PhonePe right now towards September tuition. Transaction ref: TXN12345.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5550,7 +5524,7 @@
     },
     {
       "id": "aug-0189",
-      "message": "The water purifier in the center is not working. Complained to the people but no idea when they will come and fix it 🤷",
+      "message": "The water purifier in the center is not working. Complained to the people but no idea when they will come and fix it \ud83e\udd37",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5562,7 +5536,7 @@
     },
     {
       "id": "aug-0190",
-      "message": "Arey the water purifier broke down again at the center. Have informed them but God knows when they'll actually show up to repair it 😒",
+      "message": "Arey the water purifier broke down again at the center. Have informed them but God knows when they'll actually show up to repair it \ud83d\ude12",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5586,7 +5560,7 @@
     },
     {
       "id": "aug-0192",
-      "message": "The water purifier is down at the center. Told the service people to come fix it... still waiting, no clue when they'll turn up 🙄",
+      "message": "The water purifier is down at the center. Told the service people to come fix it... still waiting, no clue when they'll turn up \ud83d\ude44",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5598,7 +5572,7 @@
     },
     {
       "id": "aug-0193",
-      "message": "Water purifier at center is not functioning. Complaint has been given but no update on when the technician will come. These people take their own time only 😤",
+      "message": "Water purifier at center is not functioning. Complaint has been given but no update on when the technician will come. These people take their own time only \ud83d\ude24",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5670,7 +5644,7 @@
     },
     {
       "id": "aug-0197",
-      "message": "Model exam - 15th Aug ✅ Syllabus: Chapters 1-8 📚 Calculator: Bring ur own 🔢 Pls inform ur ward accordingly.",
+      "message": "Model exam - 15th Aug \u2705 Syllabus: Chapters 1-8 \ud83d\udcda Calculator: Bring ur own \ud83d\udd22 Pls inform ur ward accordingly.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5690,7 +5664,7 @@
     },
     {
       "id": "aug-0198",
-      "message": "Forms already submitted yesterday itself, no need to bring anything extra 👍",
+      "message": "Forms already submitted yesterday itself, no need to bring anything extra \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5702,7 +5676,7 @@
     },
     {
       "id": "aug-0199",
-      "message": "Hi, just to let you know — forms were submitted yesterday. Nothing more needed from your side.",
+      "message": "Hi, just to let you know \u2014 forms were submitted yesterday. Nothing more needed from your side.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5714,7 +5688,7 @@
     },
     {
       "id": "aug-0200",
-      "message": "Ya the forms are done, submitted yesterday only. No need to bring anything else da 😊",
+      "message": "Ya the forms are done, submitted yesterday only. No need to bring anything else da \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5738,7 +5712,7 @@
     },
     {
       "id": "aug-0202",
-      "message": "Pls note — forms have been submitted as of yesterday. Nothing else needs to be brought, all covered!",
+      "message": "Pls note \u2014 forms have been submitted as of yesterday. Nothing else needs to be brought, all covered!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -5750,7 +5724,7 @@
     },
     {
       "id": "aug-0203",
-      "message": "I'll arrange the transport for all 5 kids — Arun, Bhavya, Chitra, Dinesh, and Esha — for the inter-school competition this Saturday. Don't worry about that 👍",
+      "message": "I'll arrange the transport for all 5 kids \u2014 Arun, Bhavya, Chitra, Dinesh, and Esha \u2014 for the inter-school competition this Saturday. Don't worry about that \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5791,7 +5765,7 @@
     },
     {
       "id": "aug-0204",
-      "message": "Transportation for the inter-school competition on Saturday is taken care of from my side. I'll be handling it for all five students — Arun, Bhavya, Chitra, Dinesh, and Esha. Please let me know if there's anything else needed.",
+      "message": "Transportation for the inter-school competition on Saturday is taken care of from my side. I'll be handling it for all five students \u2014 Arun, Bhavya, Chitra, Dinesh, and Esha. Please let me know if there's anything else needed.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5832,7 +5806,7 @@
     },
     {
       "id": "aug-0205",
-      "message": "Pls note — I'm taking care of the transportation this Saturday for the inter-school competition. All 5 students (Arun, Bhavya, Chitra, Dinesh & Esha) are covered 🙂",
+      "message": "Pls note \u2014 I'm taking care of the transportation this Saturday for the inter-school competition. All 5 students (Arun, Bhavya, Chitra, Dinesh & Esha) are covered \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5914,7 +5888,7 @@
     },
     {
       "id": "aug-0207",
-      "message": "Just a reminder — there will be NO class on August 15th due to Independence Day. Classes will resume as usual from August 16th. 🇮🇳",
+      "message": "Just a reminder \u2014 there will be NO class on August 15th due to Independence Day. Classes will resume as usual from August 16th. \ud83c\uddee\ud83c\uddf3",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5933,7 +5907,7 @@
     },
     {
       "id": "aug-0208",
-      "message": "Pls note: class is cancelled on 15th August (Independence Day holiday). We'll be back on 16th August. Kindly inform ur wards accordingly 🙏",
+      "message": "Pls note: class is cancelled on 15th August (Independence Day holiday). We'll be back on 16th August. Kindly inform ur wards accordingly \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5952,7 +5926,7 @@
     },
     {
       "id": "aug-0209",
-      "message": "Hi all! 🙏 Wanted to remind everyone that this August 15th there's no class — Independence Day holiday. We resume from August 16th, so see you all then!",
+      "message": "Hi all! \ud83d\ude4f Wanted to remind everyone that this August 15th there's no class \u2014 Independence Day holiday. We resume from August 16th, so see you all then!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5971,7 +5945,7 @@
     },
     {
       "id": "aug-0210",
-      "message": "⚠️ Reminder ⚠️\nNo classes on 15 Aug (Independence Day). Regular classes will continue from 16 Aug onwards. Thank you for ur understanding 🇮🇳",
+      "message": "\u26a0\ufe0f Reminder \u26a0\ufe0f\nNo classes on 15 Aug (Independence Day). Regular classes will continue from 16 Aug onwards. Thank you for ur understanding \ud83c\uddee\ud83c\uddf3",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -5990,7 +5964,7 @@
     },
     {
       "id": "aug-0211",
-      "message": "Haha this is too funny 😂😂 who forwarded this one?",
+      "message": "Haha this is too funny \ud83d\ude02\ud83d\ude02 who forwarded this one?",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6002,7 +5976,7 @@
     },
     {
       "id": "aug-0212",
-      "message": "Omg 😂 I'm dying — where did this even come from lol",
+      "message": "Omg \ud83d\ude02 I'm dying \u2014 where did this even come from lol",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6014,7 +5988,7 @@
     },
     {
       "id": "aug-0213",
-      "message": "Aiyo so funny da 😂 which group did this come from?",
+      "message": "Aiyo so funny da \ud83d\ude02 which group did this come from?",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6026,7 +6000,7 @@
     },
     {
       "id": "aug-0214",
-      "message": "Hahaha 😂😂 this is hilarious!! Who sent ah?",
+      "message": "Hahaha \ud83d\ude02\ud83d\ude02 this is hilarious!! Who sent ah?",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6038,7 +6012,7 @@
     },
     {
       "id": "aug-0215",
-      "message": "Lmaooo 😂 bro who shared this, too good 🤣",
+      "message": "Lmaooo \ud83d\ude02 bro who shared this, too good \ud83e\udd23",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6092,7 +6066,7 @@
     },
     {
       "id": "aug-0218",
-      "message": "Just a reminder — if payment is not received by the 10th, Rs 200 late fee will be added. This is for all accounts with pending dues, no exceptions.",
+      "message": "Just a reminder \u2014 if payment is not received by the 10th, Rs 200 late fee will be added. This is for all accounts with pending dues, no exceptions.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6113,7 +6087,7 @@
     },
     {
       "id": "aug-0219",
-      "message": "Pls make sure payment is done by 10th itself. Rs 200 extra will be charged if not received on time. Applicable for all pending accounts 🙏",
+      "message": "Pls make sure payment is done by 10th itself. Rs 200 extra will be charged if not received on time. Applicable for all pending accounts \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6134,7 +6108,7 @@
     },
     {
       "id": "aug-0220",
-      "message": "Hi, could you please share the portions for the upcoming unit test? Wanted to help my daughter start preparing 🙏",
+      "message": "Hi, could you please share the portions for the upcoming unit test? Wanted to help my daughter start preparing \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6158,7 +6132,7 @@
     },
     {
       "id": "aug-0222",
-      "message": "Hi sir/madam, just wanted to check — what are the portions for the unit test coming up? Trying to help my daughter prepare at home 😊",
+      "message": "Hi sir/madam, just wanted to check \u2014 what are the portions for the unit test coming up? Trying to help my daughter prepare at home \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6170,7 +6144,7 @@
     },
     {
       "id": "aug-0223",
-      "message": "Pls share the unit test portions when free. Want to help my daughter revise the right topics 🙏",
+      "message": "Pls share the unit test portions when free. Want to help my daughter revise the right topics \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6194,7 +6168,7 @@
     },
     {
       "id": "aug-0225",
-      "message": "Hi parents, pls note PTM has been rescheduled to Saturday at 3pm. Thursday PTM is cancelled. Kindly confirm if you'll be attending 🙏",
+      "message": "Hi parents, pls note PTM has been rescheduled to Saturday at 3pm. Thursday PTM is cancelled. Kindly confirm if you'll be attending \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6213,7 +6187,7 @@
     },
     {
       "id": "aug-0226",
-      "message": "Dear parent, just a quick update — the PTM timing has changed. It will now be held on Saturday at 3:00 PM instead of Thursday. Please do confirm your attendance at the earliest.",
+      "message": "Dear parent, just a quick update \u2014 the PTM timing has changed. It will now be held on Saturday at 3:00 PM instead of Thursday. Please do confirm your attendance at the earliest.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6232,7 +6206,7 @@
     },
     {
       "id": "aug-0227",
-      "message": "PTM date changed! It's Saturday 3pm now, not Thursday anymore. Pls reply and confirm whether you're coming 👍",
+      "message": "PTM date changed! It's Saturday 3pm now, not Thursday anymore. Pls reply and confirm whether you're coming \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6270,7 +6244,7 @@
     },
     {
       "id": "aug-0229",
-      "message": "My daughter scored really well in the recent test! Very happy to see her improving like this 😊",
+      "message": "My daughter scored really well in the recent test! Very happy to see her improving like this \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6294,7 +6268,7 @@
     },
     {
       "id": "aug-0231",
-      "message": "Just wanted to say my daughter's test went really well! So good to see the improvement 👍",
+      "message": "Just wanted to say my daughter's test went really well! So good to see the improvement \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6306,7 +6280,7 @@
     },
     {
       "id": "aug-0232",
-      "message": "Amma was so happy seeing her marks! She's really improved a lot from the last test 😄",
+      "message": "Amma was so happy seeing her marks! She's really improved a lot from the last test \ud83d\ude04",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6334,7 +6308,7 @@
       "provenance_kind": "message",
       "gold_commitments": [
         {
-          "title": "Lab materials fee Rs 150 each",
+          "title": "Lab materials fee Rs 150 for Harini",
           "class": "fee",
           "amount_paise": 15000,
           "due_at": null,
@@ -6342,11 +6316,27 @@
             {
               "name": "Harini",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Prasad",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Prasad",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Varun",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Varun",
               "role": "counterparty"
@@ -6355,20 +6345,20 @@
         }
       ],
       "tags": [
-        "multi-cp",
         "fee",
         "amount",
         "augmented",
-        "source:seed-054"
+        "source:seed-054",
+        "multi-commitment"
       ]
     },
     {
       "id": "aug-0235",
-      "message": "Hi, just a reminder — lab materials fee is Rs 150 per student. Need to collect this amount from Harini, Prasad, and Varun. Pls do the needful 🙏",
+      "message": "Hi, just a reminder \u2014 lab materials fee is Rs 150 per student. Need to collect this amount from Harini, Prasad, and Varun. Pls do the needful \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
-          "title": "Lab materials fee Rs 150 each",
+          "title": "Lab materials fee Rs 150 for Harini",
           "class": "fee",
           "amount_paise": 15000,
           "due_at": null,
@@ -6376,11 +6366,27 @@
             {
               "name": "Harini",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Prasad",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Prasad",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Varun",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Varun",
               "role": "counterparty"
@@ -6389,11 +6395,11 @@
         }
       ],
       "tags": [
-        "multi-cp",
         "fee",
         "amount",
         "augmented",
-        "source:seed-054"
+        "source:seed-054",
+        "multi-commitment"
       ]
     },
     {
@@ -6402,7 +6408,7 @@
       "provenance_kind": "message",
       "gold_commitments": [
         {
-          "title": "Lab materials fee Rs 150 each",
+          "title": "Lab materials fee Rs 150 for Harini",
           "class": "fee",
           "amount_paise": 15000,
           "due_at": null,
@@ -6410,11 +6416,27 @@
             {
               "name": "Harini",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Prasad",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Prasad",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Varun",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Varun",
               "role": "counterparty"
@@ -6423,20 +6445,20 @@
         }
       ],
       "tags": [
-        "multi-cp",
         "fee",
         "amount",
         "augmented",
-        "source:seed-054"
+        "source:seed-054",
+        "multi-commitment"
       ]
     },
     {
       "id": "aug-0237",
-      "message": "₹150 for lab materials to be collected from each student. Kindly collect from Harini, Prasad, and Varun at the earliest. Thx!",
+      "message": "\u20b9150 for lab materials to be collected from each student. Kindly collect from Harini, Prasad, and Varun at the earliest. Thx!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
-          "title": "Lab materials fee Rs 150 each",
+          "title": "Lab materials fee Rs 150 for Harini",
           "class": "fee",
           "amount_paise": 15000,
           "due_at": null,
@@ -6444,11 +6466,27 @@
             {
               "name": "Harini",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Prasad",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Prasad",
               "role": "counterparty"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Lab materials fee Rs 150 for Varun",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
             {
               "name": "Varun",
               "role": "counterparty"
@@ -6457,11 +6495,11 @@
         }
       ],
       "tags": [
-        "multi-cp",
         "fee",
         "amount",
         "augmented",
-        "source:seed-054"
+        "source:seed-054",
+        "multi-commitment"
       ]
     },
     {
@@ -6506,7 +6544,7 @@
     },
     {
       "id": "aug-0240",
-      "message": "Pls note — I will personally call all parents who have not yet paid this month's fee, and I'll do it before Friday.",
+      "message": "Pls note \u2014 I will personally call all parents who have not yet paid this month's fee, and I'll do it before Friday.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6526,7 +6564,7 @@
     },
     {
       "id": "aug-0241",
-      "message": "Those parents who haven't paid this month's fee — I myself will call each one of them by Friday. Will make sure it's done.",
+      "message": "Those parents who haven't paid this month's fee \u2014 I myself will call each one of them by Friday. Will make sure it's done.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6546,7 +6584,7 @@
     },
     {
       "id": "aug-0242",
-      "message": "Aiyyo the traffic on OMR today was something else 😩 took a full one hour just to reach the center!",
+      "message": "Aiyyo the traffic on OMR today was something else \ud83d\ude29 took a full one hour just to reach the center!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6558,7 +6596,7 @@
     },
     {
       "id": "aug-0243",
-      "message": "OMR traffic was so bad today, no joke. Sat in the car for almost an hour before I could get here 😤",
+      "message": "OMR traffic was so bad today, no joke. Sat in the car for almost an hour before I could get here \ud83d\ude24",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6582,7 +6620,7 @@
     },
     {
       "id": "aug-0245",
-      "message": "The traffic today on OMR was really horrible 😫 couldn't believe it took me an entire hour to reach. These roads I tell you...",
+      "message": "The traffic today on OMR was really horrible \ud83d\ude2b couldn't believe it took me an entire hour to reach. These roads I tell you...",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6594,7 +6632,7 @@
     },
     {
       "id": "aug-0246",
-      "message": "Machan OMR traffic today was next level 🙄 one hour to reach the center only... fully wasted sitting in traffic!",
+      "message": "Machan OMR traffic today was next level \ud83d\ude44 one hour to reach the center only... fully wasted sitting in traffic!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6606,7 +6644,7 @@
     },
     {
       "id": "aug-0247",
-      "message": "Hi, just wanted to let you know — quarterly assessment marks will be shared by next week. Overall performance is good, so no need to worry 😊",
+      "message": "Hi, just wanted to let you know \u2014 quarterly assessment marks will be shared by next week. Overall performance is good, so no need to worry \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6626,7 +6664,7 @@
     },
     {
       "id": "aug-0248",
-      "message": "Quarterly assessment marks will be sent by next week. Don't worry at all, overall performance is good 👍",
+      "message": "Quarterly assessment marks will be sent by next week. Don't worry at all, overall performance is good \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6646,7 +6684,7 @@
     },
     {
       "id": "aug-0249",
-      "message": "Pls note — quarterly assessment marks will be shared by next week. Overall performance is good, so nothing to worry abt!",
+      "message": "Pls note \u2014 quarterly assessment marks will be shared by next week. Overall performance is good, so nothing to worry abt!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6686,7 +6724,7 @@
     },
     {
       "id": "aug-0251",
-      "message": "🙏 Thank you so much for being so patient with my son. We really appreciate everything you do for him.",
+      "message": "\ud83d\ude4f Thank you so much for being so patient with my son. We really appreciate everything you do for him.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6698,7 +6736,7 @@
     },
     {
       "id": "aug-0252",
-      "message": "Really grateful for all your patience with my son 🙏 means a lot to us.",
+      "message": "Really grateful for all your patience with my son \ud83d\ude4f means a lot to us.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6710,7 +6748,7 @@
     },
     {
       "id": "aug-0253",
-      "message": "Madam, just wanted to say thank you for being so patient with my son. We truly appreciate it 🙏",
+      "message": "Madam, just wanted to say thank you for being so patient with my son. We truly appreciate it \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6722,7 +6760,7 @@
     },
     {
       "id": "aug-0254",
-      "message": "So thankful for ur patience with my son 🙏🙏 really means a lot!",
+      "message": "So thankful for ur patience with my son \ud83d\ude4f\ud83d\ude4f really means a lot!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6734,7 +6772,7 @@
     },
     {
       "id": "aug-0255",
-      "message": "Sir/Madam 🙏 we are very grateful for the patience you show towards my son. Thank you so much.",
+      "message": "Sir/Madam \ud83d\ude4f we are very grateful for the patience you show towards my son. Thank you so much.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6746,7 +6784,7 @@
     },
     {
       "id": "aug-0256",
-      "message": "Scholarship test is scheduled for August 20th at 10am. Top 3 students will be selected and they will receive a 50% fee waiver. Kindly make sure your child is present on time 🙏",
+      "message": "Scholarship test is scheduled for August 20th at 10am. Top 3 students will be selected and they will receive a 50% fee waiver. Kindly make sure your child is present on time \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6766,7 +6804,7 @@
     },
     {
       "id": "aug-0257",
-      "message": "Imp announcement! Scholarship exam for the top 3 students is on Aug 20th, 10am sharp. Winners will get 50% waiver on fees. Pls don't miss it ✅",
+      "message": "Imp announcement! Scholarship exam for the top 3 students is on Aug 20th, 10am sharp. Winners will get 50% waiver on fees. Pls don't miss it \u2705",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6786,7 +6824,7 @@
     },
     {
       "id": "aug-0258",
-      "message": "Just a reminder — scholarship test is on 20th August at 10am. The top 3 students who clear it will get 50% off on their fees. Do attend!",
+      "message": "Just a reminder \u2014 scholarship test is on 20th August at 10am. The top 3 students who clear it will get 50% off on their fees. Do attend!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6806,7 +6844,7 @@
     },
     {
       "id": "aug-0259",
-      "message": "Dear parents, pls note that the scholarship test will be held on August 20th at 10:00am. Top 3 performers will be awarded a 50% fee waiver. Kindly ensure your ward participates. Thank you 😊",
+      "message": "Dear parents, pls note that the scholarship test will be held on August 20th at 10:00am. Top 3 performers will be awarded a 50% fee waiver. Kindly ensure your ward participates. Thank you \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6826,7 +6864,7 @@
     },
     {
       "id": "aug-0260",
-      "message": "Ok ma'am, will try to be on time from tomorrow 🙏",
+      "message": "Ok ma'am, will try to be on time from tomorrow \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6850,7 +6888,7 @@
     },
     {
       "id": "aug-0262",
-      "message": "Ok ma'am will try 🙏",
+      "message": "Ok ma'am will try \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6874,7 +6912,7 @@
     },
     {
       "id": "aug-0264",
-      "message": "Sure ma'am, from tomorrow I'll try to come on time. Will do my best 🙏",
+      "message": "Sure ma'am, from tomorrow I'll try to come on time. Will do my best \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6886,7 +6924,7 @@
     },
     {
       "id": "aug-0265",
-      "message": "Kindly make sure Rs 500 is arranged for the Mahabalipuram educational trip before this Friday. Please don't miss the deadline 🙏",
+      "message": "Kindly make sure Rs 500 is arranged for the Mahabalipuram educational trip before this Friday. Please don't miss the deadline \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6907,7 +6945,7 @@
     },
     {
       "id": "aug-0266",
-      "message": "Hi, just a reminder — pls send Rs 500 for the edu trip to Mahabalipuram. Last date is this Friday only, so arrange asap!",
+      "message": "Hi, just a reminder \u2014 pls send Rs 500 for the edu trip to Mahabalipuram. Last date is this Friday only, so arrange asap!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6949,7 +6987,7 @@
     },
     {
       "id": "aug-0268",
-      "message": "Enna sir/madam, pls arrange ₹500 for Mahabalipuram trip by this Friday itself. Don't delay ya, deadline is Friday 👍",
+      "message": "Enna sir/madam, pls arrange \u20b9500 for Mahabalipuram trip by this Friday itself. Don't delay ya, deadline is Friday \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -6970,7 +7008,7 @@
     },
     {
       "id": "aug-0269",
-      "message": "This group is strictly for class-related updates only. Kindly avoid sending any forwards or memes here. Thank you for understanding 🙏",
+      "message": "This group is strictly for class-related updates only. Kindly avoid sending any forwards or memes here. Thank you for understanding \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6982,7 +7020,7 @@
     },
     {
       "id": "aug-0270",
-      "message": "Pls note — this WhatsApp group is meant only for updates regarding class. Requesting everyone not to share memes or forwarded messages here.",
+      "message": "Pls note \u2014 this WhatsApp group is meant only for updates regarding class. Requesting everyone not to share memes or forwarded messages here.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -6994,7 +7032,7 @@
     },
     {
       "id": "aug-0271",
-      "message": "Just a reminder to all parents/students — this group is ONLY for class updates. Please do not forward any memes or random messages here. Let's keep it clean and useful 🙏",
+      "message": "Just a reminder to all parents/students \u2014 this group is ONLY for class updates. Please do not forward any memes or random messages here. Let's keep it clean and useful \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7006,7 +7044,7 @@
     },
     {
       "id": "aug-0272",
-      "message": "Hi all, kind request — no memes or forwards in this group plz. This is only for important class info. Thank you 😊",
+      "message": "Hi all, kind request \u2014 no memes or forwards in this group plz. This is only for important class info. Thank you \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7018,7 +7056,7 @@
     },
     {
       "id": "aug-0273",
-      "message": "⚠️ Reminder: This group is for class updates only. Memes and forwards are not allowed here. Pls cooperate, thank you!",
+      "message": "\u26a0\ufe0f Reminder: This group is for class updates only. Memes and forwards are not allowed here. Pls cooperate, thank you!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7030,7 +7068,7 @@
     },
     {
       "id": "aug-0274",
-      "message": "I'll have the projector fixed and return it by Thursday — the science class is waiting for it.",
+      "message": "I'll have the projector fixed and return it by Thursday \u2014 the science class is waiting for it.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7070,7 +7108,7 @@
     },
     {
       "id": "aug-0276",
-      "message": "Pls note — I'll get the projector repaired and bring it back by Thursday itself. Science class requires it.",
+      "message": "Pls note \u2014 I'll get the projector repaired and bring it back by Thursday itself. Science class requires it.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7110,7 +7148,7 @@
     },
     {
       "id": "aug-0278",
-      "message": "Anyone seen Arun's water bottle? He forgot it in the class yesterday 😅",
+      "message": "Anyone seen Arun's water bottle? He forgot it in the class yesterday \ud83d\ude05",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7122,7 +7160,7 @@
     },
     {
       "id": "aug-0279",
-      "message": "Hi all, just checking — did anyone notice a water bottle in the classroom? Think Arun left it there yesterday.",
+      "message": "Hi all, just checking \u2014 did anyone notice a water bottle in the classroom? Think Arun left it there yesterday.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7146,7 +7184,7 @@
     },
     {
       "id": "aug-0281",
-      "message": "Excuse me, has anybody come across Arun's water bottle? It was left behind in the classroom yesterday. Kindly let us know 🙏",
+      "message": "Excuse me, has anybody come across Arun's water bottle? It was left behind in the classroom yesterday. Kindly let us know \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7158,7 +7196,7 @@
     },
     {
       "id": "aug-0282",
-      "message": "Arun's water bottle missing la 😄 he left it in class yesterday — anyone seen it??",
+      "message": "Arun's water bottle missing la \ud83d\ude04 he left it in class yesterday \u2014 anyone seen it??",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7170,7 +7208,7 @@
     },
     {
       "id": "aug-0283",
-      "message": "Competition entry fee is Rs 300 per team. The 3 teams are Anu+Ravi, Deepika+Kiran, and Meena+Sunil. Pls make sure all entries are submitted by July 25th without fail 🙏",
+      "message": "Competition entry fee is Rs 300 per team. The 3 teams are Anu+Ravi, Deepika+Kiran, and Meena+Sunil. Pls make sure all entries are submitted by July 25th without fail \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7233,7 +7271,7 @@
     },
     {
       "id": "aug-0284",
-      "message": "Hi all, just a reminder — entry fee for the competition is ₹300 per team. Teams confirmed so far: Anu & Ravi, Deepika & Kiran, Meena & Sunil. Last date for all entries is July 25th. Don't miss the deadline!",
+      "message": "Hi all, just a reminder \u2014 entry fee for the competition is \u20b9300 per team. Teams confirmed so far: Anu & Ravi, Deepika & Kiran, Meena & Sunil. Last date for all entries is July 25th. Don't miss the deadline!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7296,7 +7334,7 @@
     },
     {
       "id": "aug-0285",
-      "message": "Entry fee ₹300 per team. Teams - Anu+Ravi, Deepika+Kiran, Meena+Sunil. All entries must be submitted on or before July 25th. Plz confirm accordingly.",
+      "message": "Entry fee \u20b9300 per team. Teams - Anu+Ravi, Deepika+Kiran, Meena+Sunil. All entries must be submitted on or before July 25th. Plz confirm accordingly.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7359,7 +7397,7 @@
     },
     {
       "id": "aug-0286",
-      "message": "Dear parents/students, kindly note that the competition entry fee is Rs 300 per team. The registered teams are as follows: Anu & Ravi, Deepika & Kiran, and Meena & Sunil. All entries are due by July 25th. Kindly ensure the same is done before the due date. Thank you 😊",
+      "message": "Dear parents/students, kindly note that the competition entry fee is Rs 300 per team. The registered teams are as follows: Anu & Ravi, Deepika & Kiran, and Meena & Sunil. All entries are due by July 25th. Kindly ensure the same is done before the due date. Thank you \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7422,7 +7460,7 @@
     },
     {
       "id": "aug-0287",
-      "message": "Hi, just wanted to check — is it possible to move the Wednesday batch timing from 5pm to 5:30pm? The school bus is getting late so the kids can't make it by 5.",
+      "message": "Hi, just wanted to check \u2014 is it possible to move the Wednesday batch timing from 5pm to 5:30pm? The school bus is getting late so the kids can't make it by 5.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7442,7 +7480,7 @@
     },
     {
       "id": "aug-0288",
-      "message": "Madam, can we please change Wednesday class to 5:30 instead of 5? School bus reaches late, that's why asking 🙏",
+      "message": "Madam, can we please change Wednesday class to 5:30 instead of 5? School bus reaches late, that's why asking \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7482,7 +7520,7 @@
     },
     {
       "id": "aug-0290",
-      "message": "Pls can the Wednesday batch be rescheduled to 5:30pm? Currently it's at 5pm but the school bus gets late so it's becoming difficult 😊",
+      "message": "Pls can the Wednesday batch be rescheduled to 5:30pm? Currently it's at 5pm but the school bus gets late so it's becoming difficult \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7562,7 +7600,7 @@
     },
     {
       "id": "aug-0296",
-      "message": "Dear parents and students, wishing you all a Happy Pongal 🎉 Please note the holiday homework: children have to complete the Tamil essay and English grammar exercises. Kindly ensure it is submitted by January 20th without fail. Thank you.",
+      "message": "Dear parents and students, wishing you all a Happy Pongal \ud83c\udf89 Please note the holiday homework: children have to complete the Tamil essay and English grammar exercises. Kindly ensure it is submitted by January 20th without fail. Thank you.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7582,7 +7620,7 @@
     },
     {
       "id": "aug-0297",
-      "message": "Pongal holiday HW reminder 🌾 — finish the Tamil essay + English grammar exercises and submit by Jan 20th. No extensions pls!",
+      "message": "Pongal holiday HW reminder \ud83c\udf3e \u2014 finish the Tamil essay + English grammar exercises and submit by Jan 20th. No extensions pls!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7602,7 +7640,7 @@
     },
     {
       "id": "aug-0298",
-      "message": "Happy Pongal everyone! 😊 Just a quick note — holiday homework includes the Tamil essay and the English grammar exercises. Make sure everything is submitted on or before January 20th. Do let me know if you have any doubts!",
+      "message": "Happy Pongal everyone! \ud83d\ude0a Just a quick note \u2014 holiday homework includes the Tamil essay and the English grammar exercises. Make sure everything is submitted on or before January 20th. Do let me know if you have any doubts!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7622,7 +7660,7 @@
     },
     {
       "id": "aug-0299",
-      "message": "Attention students 📢 Pongal holiday homework: 1️⃣ Tamil essay 2️⃣ English grammar exercises. Last date for submission is January 20th. Pls complete and bring it on time 🙏",
+      "message": "Attention students \ud83d\udce2 Pongal holiday homework: 1\ufe0f\u20e3 Tamil essay 2\ufe0f\u20e3 English grammar exercises. Last date for submission is January 20th. Pls complete and bring it on time \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7642,7 +7680,7 @@
     },
     {
       "id": "aug-0300",
-      "message": "Forwarded: Check out these 10 tips to help your child prepare for exams! 📚 #StudyTips #ExamSeason",
+      "message": "Forwarded: Check out these 10 tips to help your child prepare for exams! \ud83d\udcda #StudyTips #ExamSeason",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7654,7 +7692,7 @@
     },
     {
       "id": "aug-0301",
-      "message": "Sharing this here — 10 useful exam prep tips for your kids! 📖 #ExamSeason #StudyTips",
+      "message": "Sharing this here \u2014 10 useful exam prep tips for your kids! \ud83d\udcd6 #ExamSeason #StudyTips",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7666,7 +7704,7 @@
     },
     {
       "id": "aug-0302",
-      "message": "Fwd: Found this helpful 😊 10 tips for children's exam preparation! #StudyTips 📚 #ExamSeason",
+      "message": "Fwd: Found this helpful \ud83d\ude0a 10 tips for children's exam preparation! #StudyTips \ud83d\udcda #ExamSeason",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7678,7 +7716,7 @@
     },
     {
       "id": "aug-0303",
-      "message": "Just forwarding — 10 handy tips for your child's exam prep! 📚 Hope it's useful 🙂 #StudyTips #ExamSeason",
+      "message": "Just forwarding \u2014 10 handy tips for your child's exam prep! \ud83d\udcda Hope it's useful \ud83d\ude42 #StudyTips #ExamSeason",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7690,7 +7728,7 @@
     },
     {
       "id": "aug-0304",
-      "message": "Passing this along — 10 tips to support your child during exam season! 📖 #ExamSeason #StudyTips",
+      "message": "Passing this along \u2014 10 tips to support your child during exam season! \ud83d\udcd6 #ExamSeason #StudyTips",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7702,7 +7740,7 @@
     },
     {
       "id": "aug-0305",
-      "message": "Will pay the remaining Rs 1800 balance tomorrow evening when I come to pick up Shalini 🙏",
+      "message": "Will pay the remaining Rs 1800 balance tomorrow evening when I come to pick up Shalini \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7752,7 +7790,7 @@
     },
     {
       "id": "aug-0307",
-      "message": "Amma, the balance ₹1800 I'll bring tomorrow evening only when I come to pick up Shalini. Pls note.",
+      "message": "Amma, the balance \u20b91800 I'll bring tomorrow evening only when I come to pick up Shalini. Pls note.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7777,7 +7815,7 @@
     },
     {
       "id": "aug-0308",
-      "message": "Just wanted to confirm — I'll be paying the due balance of ₹1800 tomorrow evening when I come to pick Shalini up. Will hand it over then.",
+      "message": "Just wanted to confirm \u2014 I'll be paying the due balance of \u20b91800 tomorrow evening when I come to pick Shalini up. Will hand it over then.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -7814,7 +7852,7 @@
     },
     {
       "id": "aug-0310",
-      "message": "Room 2 AC is not working well... it's really hot in there 😓",
+      "message": "Room 2 AC is not working well... it's really hot in there \ud83d\ude13",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7826,7 +7864,7 @@
     },
     {
       "id": "aug-0311",
-      "message": "Hii, just wanted to mention — the AC in room 2 is giving problem, feeling very hot inside 🥵",
+      "message": "Hii, just wanted to mention \u2014 the AC in room 2 is giving problem, feeling very hot inside \ud83e\udd75",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7850,7 +7888,7 @@
     },
     {
       "id": "aug-0313",
-      "message": "Room 2 la AC seri illa, it's so hot inside!! 😰 Something is wrong with it",
+      "message": "Room 2 la AC seri illa, it's so hot inside!! \ud83d\ude30 Something is wrong with it",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7874,7 +7912,7 @@
     },
     {
       "id": "aug-0315",
-      "message": "Hi madam, Pooja is struggling with algebra, so pls do give her some extra attention in maths class 🙏",
+      "message": "Hi madam, Pooja is struggling with algebra, so pls do give her some extra attention in maths class \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7886,7 +7924,7 @@
     },
     {
       "id": "aug-0316",
-      "message": "Madam one request — Pooja is having trouble with algebra. If possible pls keep an eye on her in maths.",
+      "message": "Madam one request \u2014 Pooja is having trouble with algebra. If possible pls keep an eye on her in maths.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7898,7 +7936,7 @@
     },
     {
       "id": "aug-0317",
-      "message": "Madam, just wanted to mention that Pooja is finding algebra a bit tough. Wud appreciate if u cud give her some extra attention in maths 🙏",
+      "message": "Madam, just wanted to mention that Pooja is finding algebra a bit tough. Wud appreciate if u cud give her some extra attention in maths \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7910,7 +7948,7 @@
     },
     {
       "id": "aug-0318",
-      "message": "Hi madam, Pooja is struggling a bit in maths, especially algebra. Pls do give her a little more attention if u get the chance 😊",
+      "message": "Hi madam, Pooja is struggling a bit in maths, especially algebra. Pls do give her a little more attention if u get the chance \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -7922,83 +7960,55 @@
     },
     {
       "id": "aug-0319",
-      "message": "📚 Book fair happening at our center this coming Saturday from 10am to 4pm. All parents and students are most welcome. Entry is completely free!",
+      "message": "\ud83d\udcda Book fair happening at our center this coming Saturday from 10am to 4pm. All parents and students are most welcome. Entry is completely free!",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Book fair next Saturday 10am-4pm",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-073"
+        "source:seed-073",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0320",
-      "message": "Reminder: Book fair at the center next Saturday, 10am–4pm. Open to all parents and students. No entry fee 🙂",
+      "message": "Reminder: Book fair at the center next Saturday, 10am\u20134pm. Open to all parents and students. No entry fee \ud83d\ude42",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Book fair next Saturday 10am-4pm",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-073"
+        "source:seed-073",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0321",
-      "message": "Hi all! We r organizing a book fair at the center next Saturday. Timings: 10am to 4pm. Parents and students all welcome, entry is free. Do come! 📖",
+      "message": "Hi all! We r organizing a book fair at the center next Saturday. Timings: 10am to 4pm. Parents and students all welcome, entry is free. Do come! \ud83d\udcd6",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Book fair next Saturday 10am-4pm",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-073"
+        "source:seed-073",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0322",
-      "message": "Just a heads up — book fair at our center on Saturday (next week), 10 in the morning till 4 in the evening. Free entry for all students and parents. Don't miss it! 🎉",
+      "message": "Just a heads up \u2014 book fair at our center on Saturday (next week), 10 in the morning till 4 in the evening. Free entry for all students and parents. Don't miss it! \ud83c\udf89",
       "provenance_kind": "message",
-      "gold_commitments": [
-        {
-          "title": "Book fair next Saturday 10am-4pm",
-          "class": "schedule",
-          "amount_paise": null,
-          "due_at": null,
-          "counterparties": []
-        }
-      ],
+      "gold_commitments": [],
       "tags": [
         "schedule",
         "augmented",
-        "source:seed-073"
+        "source:seed-073",
+        "adversarial"
       ]
     },
     {
       "id": "aug-0323",
-      "message": "Ok noted, thanks 👍",
+      "message": "Ok noted, thanks \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8022,7 +8032,7 @@
     },
     {
       "id": "aug-0325",
-      "message": "Noted madam, thank you for letting us know 🙏",
+      "message": "Noted madam, thank you for letting us know \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8046,7 +8056,7 @@
     },
     {
       "id": "aug-0327",
-      "message": "Ahh ok understood, appreciate you telling us 😊",
+      "message": "Ahh ok understood, appreciate you telling us \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8058,7 +8068,7 @@
     },
     {
       "id": "aug-0328",
-      "message": "If rain stops by 4pm, outdoor sports practice will happen as planned. If not, it's cancelled. Pls keep checking the weather 🌧️",
+      "message": "If rain stops by 4pm, outdoor sports practice will happen as planned. If not, it's cancelled. Pls keep checking the weather \ud83c\udf27\ufe0f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8078,7 +8088,7 @@
     },
     {
       "id": "aug-0329",
-      "message": "Dear parents, kindly note — today's outdoor sports practice will be conducted as scheduled ONLY IF the rain stops by 4pm. In case it doesn't, the session stands cancelled. Thank you.",
+      "message": "Dear parents, kindly note \u2014 today's outdoor sports practice will be conducted as scheduled ONLY IF the rain stops by 4pm. In case it doesn't, the session stands cancelled. Thank you.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8098,7 +8108,7 @@
     },
     {
       "id": "aug-0330",
-      "message": "Just to update — if it's still raining at 4pm, today's outdoor sports practice is cancelled. If rain stops before that, we'll go ahead as planned 👍",
+      "message": "Just to update \u2014 if it's still raining at 4pm, today's outdoor sports practice is cancelled. If rain stops before that, we'll go ahead as planned \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8118,7 +8128,7 @@
     },
     {
       "id": "aug-0331",
-      "message": "Sports practice update: we'll proceed with outdoor session as planned if rain clears by 4pm, otherwise it's cancelled. Will confirm once we know 🙏",
+      "message": "Sports practice update: we'll proceed with outdoor session as planned if rain clears by 4pm, otherwise it's cancelled. Will confirm once we know \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8150,7 +8160,7 @@
     },
     {
       "id": "aug-0333",
-      "message": "Guys, CBSE board exam date sheet is out now! Go check the official website for all the details 👍",
+      "message": "Guys, CBSE board exam date sheet is out now! Go check the official website for all the details \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8174,7 +8184,7 @@
     },
     {
       "id": "aug-0335",
-      "message": "Just saw that the CBSE board exam date sheet is out 📢 Everyone pls check the official website and go through the schedule.",
+      "message": "Just saw that the CBSE board exam date sheet is out \ud83d\udce2 Everyone pls check the official website and go through the schedule.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8186,7 +8196,7 @@
     },
     {
       "id": "aug-0336",
-      "message": "CBSE board exam dates are out! Visit the official website to get the full details. Do check asap! 🙏",
+      "message": "CBSE board exam dates are out! Visit the official website to get the full details. Do check asap! \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8198,7 +8208,7 @@
     },
     {
       "id": "aug-0337",
-      "message": "Gopal, Lakshmi, and Ramesh — all three of you need to prepare charts on Indian history for the exhibition next Friday. Pls make sure it's done on time 🙏",
+      "message": "Gopal, Lakshmi, and Ramesh \u2014 all three of you need to prepare charts on Indian history for the exhibition next Friday. Pls make sure it's done on time \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8232,7 +8242,7 @@
     },
     {
       "id": "aug-0338",
-      "message": "Just a reminder — Gopal, Lakshmi, and Ramesh are required to prepare charts on Indian history for next Friday's exhibition. Kindly ensure this is completed without fail.",
+      "message": "Just a reminder \u2014 Gopal, Lakshmi, and Ramesh are required to prepare charts on Indian history for next Friday's exhibition. Kindly ensure this is completed without fail.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8334,7 +8344,7 @@
     },
     {
       "id": "aug-0341",
-      "message": "Building rent for this month has been taken care of, so no issues there 👍",
+      "message": "Building rent for this month has been taken care of, so no issues there \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8358,7 +8368,7 @@
     },
     {
       "id": "aug-0343",
-      "message": "Rent for the building this month is done, all good 😊",
+      "message": "Rent for the building this month is done, all good \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8370,7 +8380,7 @@
     },
     {
       "id": "aug-0344",
-      "message": "Arey, building rent paid already for this month — no tension on that front!",
+      "message": "Arey, building rent paid already for this month \u2014 no tension on that front!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8394,7 +8404,7 @@
     },
     {
       "id": "aug-0346",
-      "message": "New batch timings starting August — Mon, Wed & Fri all at 4pm. Fee structure remains the same as before. Kindly note and plan accordingly 🙏",
+      "message": "New batch timings starting August \u2014 Mon, Wed & Fri all at 4pm. Fee structure remains the same as before. Kindly note and plan accordingly \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8432,7 +8442,7 @@
     },
     {
       "id": "aug-0348",
-      "message": "Hi all, just a quick update — from August, classes will be on Mon / Wed / Fri at 4pm. Same fees apply, no changes there 👍",
+      "message": "Hi all, just a quick update \u2014 from August, classes will be on Mon / Wed / Fri at 4pm. Same fees apply, no changes there \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8451,7 +8461,7 @@
     },
     {
       "id": "aug-0349",
-      "message": "Important update madam/sir — new batch timings effective August are Monday, Wednesday, and Friday at 4:00 PM. The existing fee structure stays the same. Kindly acknowledge ✅",
+      "message": "Important update madam/sir \u2014 new batch timings effective August are Monday, Wednesday, and Friday at 4:00 PM. The existing fee structure stays the same. Kindly acknowledge \u2705",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8470,7 +8480,7 @@
     },
     {
       "id": "aug-0350",
-      "message": "Ok ok, let me think and will let you know 🙂",
+      "message": "Ok ok, let me think and will let you know \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8506,7 +8516,7 @@
     },
     {
       "id": "aug-0353",
-      "message": "Ok let me check and revert back to you 👍",
+      "message": "Ok let me check and revert back to you \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8530,7 +8540,7 @@
     },
     {
       "id": "aug-0355",
-      "message": "Dear parent, kindly note that fees are outstanding for 3 months. Aadhira has a pending amount of Rs 6000 and Karthi has Rs 4500 due. Request you to please clear both payments before month end. Thank you 🙏",
+      "message": "Dear parent, kindly note that fees are outstanding for 3 months. Aadhira has a pending amount of Rs 6000 and Karthi has Rs 4500 due. Request you to please clear both payments before month end. Thank you \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8569,7 +8579,7 @@
     },
     {
       "id": "aug-0356",
-      "message": "Hi, just a reminder — Aadhira's fees pending for 3 months is Rs 6000 and Karthi's is Rs 4500. Pls make sure both are cleared by end of this month 🙏",
+      "message": "Hi, just a reminder \u2014 Aadhira's fees pending for 3 months is Rs 6000 and Karthi's is Rs 4500. Pls make sure both are cleared by end of this month \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8608,7 +8618,7 @@
     },
     {
       "id": "aug-0357",
-      "message": "⚠️ Fees due for 3 months:\n• Aadhira — Rs 6000\n• Karthi — Rs 4500\nKindly settle before month end. Plz do the needful 🙏",
+      "message": "\u26a0\ufe0f Fees due for 3 months:\n\u2022 Aadhira \u2014 Rs 6000\n\u2022 Karthi \u2014 Rs 4500\nKindly settle before month end. Plz do the needful \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8647,7 +8657,7 @@
     },
     {
       "id": "aug-0358",
-      "message": "3 months fees still pending — Aadhira owes Rs 6000 and Karthi owes Rs 4500. Both amounts need to be cleared by month end without fail. Pls do the needful sir/madam 🙏",
+      "message": "3 months fees still pending \u2014 Aadhira owes Rs 6000 and Karthi owes Rs 4500. Both amounts need to be cleared by month end without fail. Pls do the needful sir/madam \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8746,7 +8756,7 @@
     },
     {
       "id": "aug-0364",
-      "message": "Hi all, just a reminder — Science lab practical is on Monday. Please make sure your child brings lab coat, goggles, and notebook. Also, kindly note that the lab fee is Rs 100 per session. Pls arrange the amount beforehand. Thank you! 🙏",
+      "message": "Hi all, just a reminder \u2014 Science lab practical is on Monday. Please make sure your child brings lab coat, goggles, and notebook. Also, kindly note that the lab fee is Rs 100 per session. Pls arrange the amount beforehand. Thank you! \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8802,7 +8812,7 @@
     },
     {
       "id": "aug-0366",
-      "message": "Pls note — Monday Science lab practical. Kids should bring: lab coat, goggles & notebook. Lab fee: Rs 100 per session. Pls send the amount along with your child 👍",
+      "message": "Pls note \u2014 Monday Science lab practical. Kids should bring: lab coat, goggles & notebook. Lab fee: Rs 100 per session. Pls send the amount along with your child \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8830,7 +8840,7 @@
     },
     {
       "id": "aug-0367",
-      "message": "Attention parents 🔔 Science lab practical is scheduled for Monday. Students are required to bring their lab coat, goggles, and notebook. Lab fee of ₹100 per session is applicable — kindly ensure payment is ready. Thank you madam/sir! 😊",
+      "message": "Attention parents \ud83d\udd14 Science lab practical is scheduled for Monday. Students are required to bring their lab coat, goggles, and notebook. Lab fee of \u20b9100 per session is applicable \u2014 kindly ensure payment is ready. Thank you madam/sir! \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -8858,7 +8868,7 @@
     },
     {
       "id": "aug-0368",
-      "message": "Why is everyone so silent in this group? 😤 Hello?? Anyone there??",
+      "message": "Why is everyone so silent in this group? \ud83d\ude24 Hello?? Anyone there??",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8870,7 +8880,7 @@
     },
     {
       "id": "aug-0369",
-      "message": "Enna aachu guys, no one is replying here 😒 This group is so dead la",
+      "message": "Enna aachu guys, no one is replying here \ud83d\ude12 This group is so dead la",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8882,7 +8892,7 @@
     },
     {
       "id": "aug-0370",
-      "message": "Hellooo?? 👋 Is this group even active or what? Nobody responding at all 😤",
+      "message": "Hellooo?? \ud83d\udc4b Is this group even active or what? Nobody responding at all \ud83d\ude24",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8894,7 +8904,7 @@
     },
     {
       "id": "aug-0371",
-      "message": "Why are people not replying in this group da? So many seen, zero replies 🙄",
+      "message": "Why are people not replying in this group da? So many seen, zero replies \ud83d\ude44",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8906,7 +8916,7 @@
     },
     {
       "id": "aug-0372",
-      "message": "This group is completely silent na... nobody bothered to respond at all 😒 What's happening??",
+      "message": "This group is completely silent na... nobody bothered to respond at all \ud83d\ude12 What's happening??",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -8947,7 +8957,7 @@
     },
     {
       "id": "aug-0374",
-      "message": "Will coordinate with the parents of Sundar and Preethi regarding the carpool for the field trip this Saturday 👍",
+      "message": "Will coordinate with the parents of Sundar and Preethi regarding the carpool for the field trip this Saturday \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9005,7 +9015,7 @@
     },
     {
       "id": "aug-0376",
-      "message": "Pls don't worry — I'll personally coordinate with Sundar's and Preethi's parents to fix the carpool for Saturday's field trip 🙏",
+      "message": "Pls don't worry \u2014 I'll personally coordinate with Sundar's and Preethi's parents to fix the carpool for Saturday's field trip \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9034,7 +9044,7 @@
     },
     {
       "id": "aug-0377",
-      "message": "Ya that sounds good, we can talk about it when we meet next 👍",
+      "message": "Ya that sounds good, we can talk about it when we meet next \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9046,7 +9056,7 @@
     },
     {
       "id": "aug-0378",
-      "message": "Ok ok, let's take it up in the next meeting itself, no rush 😊",
+      "message": "Ok ok, let's take it up in the next meeting itself, no rush \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9070,7 +9080,7 @@
     },
     {
       "id": "aug-0380",
-      "message": "Hm yes, good point. Can cover this in our next session, let's see 🙂",
+      "message": "Hm yes, good point. Can cover this in our next session, let's see \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9082,7 +9092,7 @@
     },
     {
       "id": "aug-0381",
-      "message": "Sure madam, we'll bring it up next time we all sit together and discuss 👌",
+      "message": "Sure madam, we'll bring it up next time we all sit together and discuss \ud83d\udc4c",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9094,7 +9104,7 @@
     },
     {
       "id": "aug-0382",
-      "message": "Yes, confirmed ✅ — we have received Rs 5000 from Vishal's mother towards the combined fees for October and November.",
+      "message": "Yes, confirmed \u2705 \u2014 we have received Rs 5000 from Vishal's mother towards the combined fees for October and November.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9119,7 +9129,7 @@
     },
     {
       "id": "aug-0383",
-      "message": "Just to update — Vishal's mother has paid Rs 5000 covering both October and November fees. Amount received and noted 🙏",
+      "message": "Just to update \u2014 Vishal's mother has paid Rs 5000 covering both October and November fees. Amount received and noted \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9144,7 +9154,7 @@
     },
     {
       "id": "aug-0384",
-      "message": "Noted! Rs 5000 collected from Vishal's amma for Oct & Nov fees together. Payment confirmed ✔️",
+      "message": "Noted! Rs 5000 collected from Vishal's amma for Oct & Nov fees together. Payment confirmed \u2714\ufe0f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9194,7 +9204,7 @@
     },
     {
       "id": "aug-0386",
-      "message": "Thinking we could possibly have some kind of parents' day event at some point. The kids would enjoy it na 😊",
+      "message": "Thinking we could possibly have some kind of parents' day event at some point. The kids would enjoy it na \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9206,7 +9216,7 @@
     },
     {
       "id": "aug-0387",
-      "message": "Was just thinking... maybe we can organise a parents' day sometime? Could be a nice thing for the children 🙂",
+      "message": "Was just thinking... maybe we can organise a parents' day sometime? Could be a nice thing for the children \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9218,7 +9228,7 @@
     },
     {
       "id": "aug-0388",
-      "message": "Ah, a parents' day event would be nice no? Something for the kids... let's see how it goes 😄",
+      "message": "Ah, a parents' day event would be nice no? Something for the kids... let's see how it goes \ud83d\ude04",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9230,7 +9240,7 @@
     },
     {
       "id": "aug-0389",
-      "message": "We could maybe do a parents' day program someday — would be good for the children I think! No plans as such, just a thought 😊",
+      "message": "We could maybe do a parents' day program someday \u2014 would be good for the children I think! No plans as such, just a thought \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9242,7 +9252,7 @@
     },
     {
       "id": "aug-0390",
-      "message": "Just an idea — some sort of parents' day event could be lovely for the kids. Nothing fixed, just thinking out loud!",
+      "message": "Just an idea \u2014 some sort of parents' day event could be lovely for the kids. Nothing fixed, just thinking out loud!",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9254,7 +9264,7 @@
     },
     {
       "id": "aug-0391",
-      "message": "Gentle reminder to all parents — pls make sure your child brings the signed consent form for the school trip. Without the form, they will not be allowed to participate. Kindly do the needful 🙏",
+      "message": "Gentle reminder to all parents \u2014 pls make sure your child brings the signed consent form for the school trip. Without the form, they will not be allowed to participate. Kindly do the needful \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9292,7 +9302,7 @@
     },
     {
       "id": "aug-0393",
-      "message": "⚠️ Reminder: The consent form MUST be signed and brought by your ward for the school trip. No form = no participation. No exceptions. Pls check your child's bag before they leave 🙏",
+      "message": "\u26a0\ufe0f Reminder: The consent form MUST be signed and brought by your ward for the school trip. No form = no participation. No exceptions. Pls check your child's bag before they leave \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9330,7 +9340,7 @@
     },
     {
       "id": "aug-0395",
-      "message": "FYI all — education minister made some announcement about changes to exam pattern. But nothing is confirmed as of now, so let's wait and watch 🙂",
+      "message": "FYI all \u2014 education minister made some announcement about changes to exam pattern. But nothing is confirmed as of now, so let's wait and watch \ud83d\ude42",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9342,7 +9352,7 @@
     },
     {
       "id": "aug-0396",
-      "message": "Just saw this — apparently the education minister has announced some new exam pattern changes. Still not official though, no confirmed details yet.",
+      "message": "Just saw this \u2014 apparently the education minister has announced some new exam pattern changes. Still not official though, no confirmed details yet.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9354,7 +9364,7 @@
     },
     {
       "id": "aug-0397",
-      "message": "Sharing for awareness only — there's news going around that the education minister announced exam pattern changes. Nothing finalised yet, don't panic 😅",
+      "message": "Sharing for awareness only \u2014 there's news going around that the education minister announced exam pattern changes. Nothing finalised yet, don't panic \ud83d\ude05",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9366,7 +9376,7 @@
     },
     {
       "id": "aug-0398",
-      "message": "Pls note — heard the education minister spoke about some exam pattern changes. But it's not confirmed yet so no need to read too much into it for now.",
+      "message": "Pls note \u2014 heard the education minister spoke about some exam pattern changes. But it's not confirmed yet so no need to read too much into it for now.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9378,7 +9388,7 @@
     },
     {
       "id": "aug-0399",
-      "message": "Just an FYI madam/sir — the education minister has mentioned something about new exam pattern changes. As of now nothing is confirmed, will update once we know more 👍",
+      "message": "Just an FYI madam/sir \u2014 the education minister has mentioned something about new exam pattern changes. As of now nothing is confirmed, will update once we know more \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9390,7 +9400,7 @@
     },
     {
       "id": "aug-0400",
-      "message": "Photocopy charges for question papers is Rs 50 per student. Please collect from all students before Thursday itself 🙏",
+      "message": "Photocopy charges for question papers is Rs 50 per student. Please collect from all students before Thursday itself \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9411,7 +9421,7 @@
     },
     {
       "id": "aug-0401",
-      "message": "Hi all, just a reminder — each student needs to pay Rs 50 towards photocopy charges for the question papers. Kindly make sure collection is done by Thursday.",
+      "message": "Hi all, just a reminder \u2014 each student needs to pay Rs 50 towards photocopy charges for the question papers. Kindly make sure collection is done by Thursday.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9453,7 +9463,7 @@
     },
     {
       "id": "aug-0403",
-      "message": "The photocopy cost for question papers comes to ₹50 per student. Collection should be completed from all students by Thursday without fail.",
+      "message": "The photocopy cost for question papers comes to \u20b950 per student. Collection should be completed from all students by Thursday without fail.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9498,7 +9508,7 @@
     },
     {
       "id": "aug-0406",
-      "message": "Hi all, just a reminder — test results were shared this past Wednesday. Anyone who missed can come to the office to collect theirs.",
+      "message": "Hi all, just a reminder \u2014 test results were shared this past Wednesday. Anyone who missed can come to the office to collect theirs.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9534,7 +9544,7 @@
     },
     {
       "id": "aug-0409",
-      "message": "I will prepare the mid-term question paper and send it to all the teachers by next Monday for their review. Kindly check once you receive it 🙏",
+      "message": "I will prepare the mid-term question paper and send it to all the teachers by next Monday for their review. Kindly check once you receive it \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9554,7 +9564,7 @@
     },
     {
       "id": "aug-0410",
-      "message": "Mid-term Q paper — I'll get it ready and share with all teachers by Monday next week for review. Pls go through it when u get it.",
+      "message": "Mid-term Q paper \u2014 I'll get it ready and share with all teachers by Monday next week for review. Pls go through it when u get it.",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9574,7 +9584,7 @@
     },
     {
       "id": "aug-0411",
-      "message": "Just to let everyone know, I'll be preparing the question paper for the mid-term exam and will share it with all teachers before next Monday so they can review it. Please keep an eye on your inbox 📋",
+      "message": "Just to let everyone know, I'll be preparing the question paper for the mid-term exam and will share it with all teachers before next Monday so they can review it. Please keep an eye on your inbox \ud83d\udccb",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9594,7 +9604,7 @@
     },
     {
       "id": "aug-0412",
-      "message": "I'll make the mid-term question paper and it'll be shared with all teachers by next Monday for review. Will ping once it's sent 👍",
+      "message": "I'll make the mid-term question paper and it'll be shared with all teachers by next Monday for review. Will ping once it's sent \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9614,7 +9624,7 @@
     },
     {
       "id": "aug-0413",
-      "message": "👍",
+      "message": "\ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9626,7 +9636,7 @@
     },
     {
       "id": "aug-0414",
-      "message": "🙂👍",
+      "message": "\ud83d\ude42\ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9650,7 +9660,7 @@
     },
     {
       "id": "aug-0416",
-      "message": "Hmm 👍",
+      "message": "Hmm \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9686,7 +9696,7 @@
     },
     {
       "id": "aug-0419",
-      "message": "Pls check if the NCERT reference guide is available in the library — Tanvi was asking about it.",
+      "message": "Pls check if the NCERT reference guide is available in the library \u2014 Tanvi was asking about it.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9722,7 +9732,7 @@
     },
     {
       "id": "aug-0422",
-      "message": "Madam/Sir, just wanted to ask — is the NCERT reference guide available in the library? Tanvi is looking to borrow it if possible.",
+      "message": "Madam/Sir, just wanted to ask \u2014 is the NCERT reference guide available in the library? Tanvi is looking to borrow it if possible.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9734,7 +9744,7 @@
     },
     {
       "id": "aug-0423",
-      "message": "Students who scored above 95% in the quarterly exam will get 10% discount on next month's fee. Pls note this down 🙏",
+      "message": "Students who scored above 95% in the quarterly exam will get 10% discount on next month's fee. Pls note this down \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9774,7 +9784,7 @@
     },
     {
       "id": "aug-0425",
-      "message": "Congrats to all students who got above 95% in quarterly exam! 🎉 You'll be getting 10% off on next month's fee. Well done da!",
+      "message": "Congrats to all students who got above 95% in quarterly exam! \ud83c\udf89 You'll be getting 10% off on next month's fee. Well done da!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9794,7 +9804,7 @@
     },
     {
       "id": "aug-0426",
-      "message": "Just to inform everyone — any student scoring above 95% in the quarterly exam is eligible for a 10% discount on next month's fees. Please check with us if ur ward qualifies 👍",
+      "message": "Just to inform everyone \u2014 any student scoring above 95% in the quarterly exam is eligible for a 10% discount on next month's fees. Please check with us if ur ward qualifies \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9862,7 +9872,7 @@
     },
     {
       "id": "aug-0431",
-      "message": "Forwarding this week's attendance report. Nothing major — only 3 absences, rest all looks fine.",
+      "message": "Forwarding this week's attendance report. Nothing major \u2014 only 3 absences, rest all looks fine.",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -9914,7 +9924,7 @@
     },
     {
       "id": "aug-0434",
-      "message": "Pls note — Annual Sports Day is fixed on Sept 15th. Details will be sent later 👍",
+      "message": "Pls note \u2014 Annual Sports Day is fixed on Sept 15th. Details will be sent later \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9934,7 +9944,7 @@
     },
     {
       "id": "aug-0435",
-      "message": "Just a heads up! 🏅 The Annual Sports Day is set for September 15th. We'll share more details soon, so stay tuned!",
+      "message": "Just a heads up! \ud83c\udfc5 The Annual Sports Day is set for September 15th. We'll share more details soon, so stay tuned!",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -9978,7 +9988,7 @@
     },
     {
       "id": "aug-0438",
-      "message": "👍",
+      "message": "\ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -10014,7 +10024,7 @@
     },
     {
       "id": "aug-0441",
-      "message": "Hi parents, just a heads up — starting next month, we'll be moving to UPI or bank transfer only for fee payments. Cash will no longer be accepted at the center. Kindly make note of this change 🙏",
+      "message": "Hi parents, just a heads up \u2014 starting next month, we'll be moving to UPI or bank transfer only for fee payments. Cash will no longer be accepted at the center. Kindly make note of this change \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -10038,7 +10048,7 @@
     },
     {
       "id": "aug-0443",
-      "message": "Imp update ⚠️ From next month, fees can be paid via UPI or bank transfer only. No cash payments at the center pls. Kindly keep this in mind going forward 👍",
+      "message": "Imp update \u26a0\ufe0f From next month, fees can be paid via UPI or bank transfer only. No cash payments at the center pls. Kindly keep this in mind going forward \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -10050,7 +10060,7 @@
     },
     {
       "id": "aug-0444",
-      "message": "Just to inform all parents — w.e.f. next month, we are switching to cashless payments only. Fees to be paid via UPI or bank transfer. Cash will not be accepted at our center anymore. Thank you for your cooperation 🙏",
+      "message": "Just to inform all parents \u2014 w.e.f. next month, we are switching to cashless payments only. Fees to be paid via UPI or bank transfer. Cash will not be accepted at our center anymore. Thank you for your cooperation \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -10062,7 +10072,7 @@
     },
     {
       "id": "aug-0445",
-      "message": "Quick notice to all: from next month, only UPI or bank transfer will be accepted for fee payment. No cash at the center. Pls take note and share with other parents if possible. Thanks! 😊",
+      "message": "Quick notice to all: from next month, only UPI or bank transfer will be accepted for fee payment. No cash at the center. Pls take note and share with other parents if possible. Thanks! \ud83d\ude0a",
       "provenance_kind": "message",
       "gold_commitments": [],
       "tags": [
@@ -10074,7 +10084,7 @@
     },
     {
       "id": "aug-0446",
-      "message": "Tomorrow 3pm I'll come to pick up all 3 kids — Arjun, Priya and Kavya — from school 👍",
+      "message": "Tomorrow 3pm I'll come to pick up all 3 kids \u2014 Arjun, Priya and Kavya \u2014 from school \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -10108,7 +10118,7 @@
     },
     {
       "id": "aug-0447",
-      "message": "Ananya and Vikram, pls make sure the science project report is submitted by next Monday ya — it's a joint work, both of u need to collaborate and get it done together 🙏",
+      "message": "Ananya and Vikram, pls make sure the science project report is submitted by next Monday ya \u2014 it's a joint work, both of u need to collaborate and get it done together \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -10139,7 +10149,7 @@
     },
     {
       "id": "aug-0448",
-      "message": "📢 Just a reminder — Annual Day rehearsals are scheduled every Saturday from 9am to 12pm for the next 3 weeks. Attendance is compulsory for Karthik, Deepa, and Suresh. Pls make sure all three are present without fail! 🙏",
+      "message": "\ud83d\udce2 Just a reminder \u2014 Annual Day rehearsals are scheduled every Saturday from 9am to 12pm for the next 3 weeks. Attendance is compulsory for Karthik, Deepa, and Suresh. Pls make sure all three are present without fail! \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -10173,7 +10183,7 @@
     },
     {
       "id": "aug-0449",
-      "message": "Dear parents, kindly note that all 8th std students — Aarav, Ishaan, Diya & Neha — are required to attend the career guidance session this Saturday at 10am sharp. Attendance is mandatory, pls make sure they are present 🙏",
+      "message": "Dear parents, kindly note that all 8th std students \u2014 Aarav, Ishaan, Diya & Neha \u2014 are required to attend the career guidance session this Saturday at 10am sharp. Attendance is mandatory, pls make sure they are present \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -10211,7 +10221,7 @@
     },
     {
       "id": "aug-0450",
-      "message": "Pls note — Rithika and Aditya both need to stay back after class this Wednesday for extra practice session. Kindly make sure they are available 🙏",
+      "message": "Pls note \u2014 Rithika and Aditya both need to stay back after class this Wednesday for extra practice session. Kindly make sure they are available \ud83d\ude4f",
       "provenance_kind": "message",
       "gold_commitments": [
         {
@@ -10241,7 +10251,7 @@
     },
     {
       "id": "aug-0451",
-      "message": "Saturday's inter-school competition transport is on me — I'll make sure Arun, Bhavya, Chitra, Dinesh, and Esha all reach safely 👍",
+      "message": "Saturday's inter-school competition transport is on me \u2014 I'll make sure Arun, Bhavya, Chitra, Dinesh, and Esha all reach safely \ud83d\udc4d",
       "provenance_kind": "message",
       "gold_commitments": [
         {

@@ -18,16 +18,35 @@ A COMMITMENT is a specific obligation where one party undertakes (or is asked to
 - Confirmations of completed payments with no pending balance
 - Forwarded jokes, images without obligation context
 - Rhetorical offers: "Let me know if you need anything"
-- Vague plans without a specific undertaking
+- Vague plans without a specific undertaking: "will try to come on time", "let me think about it"
+- Informational statements about absences, illness, or status updates with no obligation
+- Promotional rewards or incentives tied to contest/competition outcomes: "winners get 50% fee waiver", "top scorers get free books"
+- Questions asking for information without proposing a time or action: "Can you share the syllabus?", "What are the timings?"
+- Ancillary instructions that support a primary commitment: "bring calculator", "wear uniform", "carry ID" — these are NOT separate commitments when attached to an event already being extracted
+- Logistical notifications about existing arrangements: "bus will pick up at 7:30am", "driver details will be shared" — FYI messages that don't create an obligation for the recipient
 
 ## Extraction rules:
 1. Extract ONLY commitments you are confident about. When in doubt, do NOT extract.
 2. For each commitment identify: title, class (fee/schedule/task/payment/custom), amount (if monetary, in paise), due date (ISO 8601), and counterparties.
 3. Amounts without explicit currency default to INR. Convert to paise (₹100 = 10000 paise).
-4. If multiple commitments exist in one message, extract all of them.
-5. If a message references multiple people for the SAME action ("all three kids", "both students"), extract ONE commitment with multiple counterparties — do NOT split into separate commitments per person.
-6. Confidence score: 0.0-1.0. Use ≥0.85 only when the commitment is unambiguous.
-7. For conditional commitments, include the condition in the title.
-8. Questions proposing times are commitments with class=schedule at confidence 0.7-0.8.
+4. If multiple DISTINCT commitments exist in one message, extract all of them. But do NOT split a single action into sub-steps or components.
+5. Multiple people:
+   - If a single NON-MONETARY action covers a group collectively ("I'll handle transportation for all five students"), extract ONE commitment with multiple counterparties.
+   - But if fees/amounts are specified PER PERSON, PER STUDENT, or PER TEAM with named individuals, extract SEPARATE commitments for each:
+     - "Fees: Meera Rs 3000, Sanjay Rs 3000, Lakshmi Rs 2500" → THREE fee commitments (one per person with their specific amount)
+     - "Fee ₹750 per student, pay for Nisha and Rahul" → TWO fee commitments (one per student, each ₹750)
+     - "Entry fee Rs 300 per team: Anu+Ravi, Deepika+Kiran" → TWO fee commitments (one per team)
+6. ONE commitment per obligation. Combine related parts into one:
+   - "Class cancelled, will reschedule" → ONE schedule commitment (not two)
+   - "No class Aug 15, resume Aug 16" → ONE schedule commitment
+   - "Complete essay and grammar exercises" → ONE task commitment
+   - "Rehearsal every Saturday for 3 weeks" → ONE schedule commitment (not three)
+   - "Collect hall ticket and bring passport photo" → ONE task commitment
+   But DO extract separately when commitments are genuinely distinct (different class, different amount, different deadline):
+   - "Fee Rs 4000/month + class starts August 1st" → TWO: one fee + one schedule
+   - "Lab fee Rs 100 + bring lab coat Monday" → TWO: one fee + one task
+7. Confidence score: 0.0-1.0. Use ≥0.85 only when the commitment is unambiguous.
+8. For conditional commitments, include the condition in the title.
+9. Questions PROPOSING a specific time or action are commitments with class=schedule at confidence 0.7-0.8. But questions merely ASKING for information ("Can you share the syllabus?", "What's the fee?") are NOT commitments.
 
 Use the extract_commitments tool to return your findings.

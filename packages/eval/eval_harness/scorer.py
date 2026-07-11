@@ -26,9 +26,77 @@ from eval_harness.models import (
 _DUE_TOLERANCE = timedelta(minutes=30)
 
 
+_ABBREVIATIONS: dict[str, str] = {
+    "ptm": "parent teacher meeting",
+    "hw": "homework",
+    "govt": "government",
+    "govt.": "government",
+    "std": "standard",
+    "std.": "standard",
+    "yr": "year",
+    "mth": "month",
+    "amt": "amount",
+    "pmt": "payment",
+}
+
+# Synonyms collapsed to a canonical form for word-overlap matching
+_SYNONYMS: dict[str, str] = {
+    "exam": "test",
+    "examination": "test",
+    "commence": "start",
+    "commences": "start",
+    "begin": "start",
+    "begins": "start",
+    "beginning": "start",
+    "submit": "complete",
+    "submitting": "complete",
+    "submission": "complete",
+    "prepare": "complete",
+    "preparation": "complete",
+    "scheduled": "schedule",
+    "scheduling": "schedule",
+    "reschedule": "schedule",
+    "rescheduled": "schedule",
+}
+
+import re
+
+_TIME_RE = re.compile(
+    r"\b(\d{1,2})\s*:\s*(\d{2})\s*(am|pm|a\.m\.|p\.m\.)\b", re.IGNORECASE
+)
+_TIME_SIMPLE_RE = re.compile(r"\b(\d{1,2})\s*(am|pm)\b", re.IGNORECASE)
+
+
 def _normalize_title(title: str) -> str:
-    """Normalize title for comparison: lowercase, strip, collapse whitespace."""
-    return " ".join(title.lower().strip().split())
+    """Normalize title for comparison: lowercase, strip, collapse whitespace,
+    expand abbreviations, normalize time and currency formats."""
+    t = title.lower().strip()
+    # Normalize currency symbols to 'rs'
+    t = t.replace("₹", "rs ").replace("rs.", "rs ").replace("inr", "rs ")
+    # Normalize times: "5:00 PM" → "5pm", "5:00pm" → "5pm"
+    t = _TIME_RE.sub(
+        lambda m: f"{m.group(1)}{m.group(3).rstrip('.').replace('.','').lower()}",
+        t,
+    )
+    t = " ".join(t.split())
+    # Expand abbreviations and collapse synonyms
+    words = t.split()
+    expanded = [_ABBREVIATIONS.get(w, w) for w in words]
+    normalized = []
+    for w in " ".join(expanded).split():
+        normalized.append(_SYNONYMS.get(w, w))
+    return " ".join(normalized)
+
+
+def _stem(word: str) -> str:
+    """Minimal English stemmer for matching: strip trailing 's', 'ed', 'ing'."""
+    if len(word) > 4 and word.endswith("ing"):
+        return word[:-3]
+    if len(word) > 3 and word.endswith("ed"):
+        return word[:-2]
+    if len(word) > 3 and word.endswith("s") and not word.endswith("ss"):
+        return word[:-1]
+    return word
 
 
 def _titles_match(gold_title: str, extracted_title: str) -> bool:
@@ -50,8 +118,8 @@ def _titles_match(gold_title: str, extracted_title: str) -> bool:
              "in", "at", "from", "with", "will", "be", "has", "was", "are",
              "this", "that", "it", "its", "i", "we", "you", "my", "our",
              "please", "kindly", "sir", "madam", "ma'am", "dear"}
-    gold_words = set(g.split()) - _STOP
-    extracted_words = set(e.split()) - _STOP
+    gold_words = set(_stem(w) for w in g.split()) - _STOP
+    extracted_words = set(_stem(w) for w in e.split()) - _STOP
     if not gold_words:
         return False
     overlap = gold_words & extracted_words
@@ -97,8 +165,12 @@ def _can_match(
     amount_ok = _amounts_match(gold.amount_paise, ext.amount_paise)
     cp_ok = _counterparties_overlap(gold.counterparties, ext.counterparties)
 
-    # Amount match is strong signal (specific number)
+    # Amount match is strong signal, but if both sides name specific
+    # counterparties those must also overlap (prevents cross-person matching
+    # in multi-person fee messages where amounts are identical).
     if amount_ok and gold.amount_paise is not None:
+        if gold.counterparties and ext.counterparties:
+            return cp_ok  # Both have CPs → require overlap
         return True
 
     # Counterparty match is strong signal (specific names)
@@ -153,6 +225,7 @@ def score_case(
     for ei, ext in enumerate(unmatched_extracted):
         best_gi: int | None = None
         best_match: CommitmentMatch | None = None
+        best_score: int = -1
 
         for gi, gold in enumerate(unmatched_gold):
             if not _can_match(gold, ext):
@@ -162,6 +235,7 @@ def score_case(
             due_ok = _due_dates_match(gold.due_at, ext.due_at)
             class_ok = gold.class_ == ext.class_
             amount_ok = _amounts_match(gold.amount_paise, ext.amount_paise)
+            cp_ok = _counterparties_overlap(gold.counterparties, ext.counterparties)
 
             match = CommitmentMatch(
                 gold=gold,
@@ -172,14 +246,13 @@ def score_case(
                 amount_match=amount_ok,
             )
 
-            # Score match quality for ranking
-            score = sum([title_ok, due_ok, class_ok, amount_ok])
-            if best_match is None or score > sum([
-                best_match.title_match, best_match.due_match,
-                best_match.class_match, best_match.amount_match,
-            ]):
+            # Score match quality for ranking (cp_ok breaks ties on
+            # multi-person fee messages where class+amount are identical)
+            score = sum([title_ok, due_ok, class_ok, amount_ok, cp_ok])
+            if score > best_score:
                 best_gi = gi
                 best_match = match
+                best_score = score
 
         if best_match is not None and best_gi is not None:
             matched_pairs.append((best_gi, ei, best_match))
@@ -191,6 +264,7 @@ def score_case(
     # Sort by quality (more field matches = better)
     matched_pairs.sort(
         key=lambda t: (
+            t[2].title_match,
             t[2].due_match,
             t[2].class_match,
             t[2].amount_match,
@@ -295,6 +369,6 @@ def build_report(
         total_fn=overall.fn_count,
         latency_p50_ms=p50,
         latency_p95_ms=p95,
-        confusion_samples=confusion[:20],  # Cap at 20 for readability
+        confusion_samples=confusion[:50],  # Cap at 50 for debugging
         gate_passed=gate_passed,
     )

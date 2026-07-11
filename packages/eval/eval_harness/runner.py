@@ -125,11 +125,22 @@ async def run_eval(
         case_results=case_results,
     )
 
-    # Archive the report
+    # Archive the report and raw outputs
     _REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    report_path = _REPORTS_DIR / f"report_{dataset.version}_{report.run_at[:19].replace(':', '-')}.json"
+    run_ts = report.run_at[:19].replace(":", "-")
+    report_path = _REPORTS_DIR / f"report_{dataset.version}_{run_ts}.json"
     report_path.write_text(
         report.model_dump_json(indent=2),
+        encoding="utf-8",
+    )
+
+    # Save raw outputs for offline re-scoring
+    outputs_path = _REPORTS_DIR / f"outputs_{dataset.version}_{run_ts}.json"
+    outputs_path.write_text(
+        json.dumps(
+            [o.model_dump(by_alias=True) for o in outputs],
+            indent=2,
+        ),
         encoding="utf-8",
     )
 
