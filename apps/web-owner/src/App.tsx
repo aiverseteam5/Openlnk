@@ -15,6 +15,8 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import theme from "./theme/theme";
 import CommitmentsPage from "./pages/CommitmentsPage";
+import CommitmentDetailPage from "./pages/CommitmentDetailPage";
+import CreateCommitmentPage from "./pages/CreateCommitmentPage";
 import DailyBriefPage from "./pages/DailyBriefPage";
 import { useContextSync } from "./hooks/useContextSync";
 import { useAppStore } from "./store/app";
@@ -107,6 +109,8 @@ function AppShell() {
           <Routes>
             <Route path="/" element={<DailyBriefPage />} />
             <Route path="/commitments" element={<CommitmentsPage />} />
+            <Route path="/commitments/new" element={<CreateCommitmentPage />} />
+            <Route path="/commitments/:id" element={<CommitmentDetailPage />} />
           </Routes>
         </Box>
       </Box>

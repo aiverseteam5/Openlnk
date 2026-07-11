@@ -6,6 +6,7 @@
  */
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -16,6 +17,7 @@ import StateFilter from "../components/StateFilter";
 import { useAppStore } from "../store/app";
 
 export default function CommitmentsPage() {
+  const navigate = useNavigate();
   const { principalId, selectedContextId, stateFilter, setStateFilter } =
     useAppStore();
   const [cursor, setCursor] = useState<string | null>(null);
@@ -33,9 +35,18 @@ export default function CommitmentsPage() {
 
   return (
     <Box sx={{ maxWidth: 960, mx: "auto" }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Commitments
-      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+        <Typography variant="h6">
+          Commitments
+        </Typography>
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() => navigate("/commitments/new")}
+        >
+          Create
+        </Button>
+      </Box>
 
       <StateFilter selected={stateFilter} onChange={setStateFilter} />
 
@@ -67,7 +78,11 @@ export default function CommitmentsPage() {
       {data && (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           {data.items.map((c) => (
-            <CommitmentCard key={c.id} commitment={c} />
+            <CommitmentCard
+              key={c.id}
+              commitment={c}
+              onClick={() => navigate(`/commitments/${c.id}`)}
+            />
           ))}
         </Box>
       )}

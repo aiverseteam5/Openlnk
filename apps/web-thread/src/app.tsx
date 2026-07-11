@@ -6,7 +6,7 @@
  * Performance budget: ≤120KB gzip total JS+CSS.
  */
 
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 
 // API base — no design-system imports for bundle size
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000/v1";
@@ -51,6 +51,19 @@ function formatDue(iso: string | null): string {
   return new Date(iso).toLocaleDateString("en-IN", {
     day: "numeric",
     month: "short",
+  });
+}
+
+/** Track funnel events (OL-085). Fire-and-forget to API. */
+function trackFunnel(event: "open" | "return"): void {
+  const token = getPersistedToken();
+  if (!token) return;
+  fetch(`${API_BASE}/threads/funnel`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ event_type: event, token }),
+  }).catch(() => {
+    /* non-critical — silent fail */
   });
 }
 
@@ -106,21 +119,25 @@ function CommitmentReceipt({ c }: { c: Commitment }) {
 function ActionButtons({
   state,
   onAction,
+  pending,
 }: {
   state: string;
   onAction: (action: string) => void;
+  pending: boolean;
 }) {
   if (state === "proposed") {
     return (
       <div class="flex gap-2 my-3">
         <button
-          class="flex-1 py-2.5 bg-accent text-white font-medium text-sm rounded-[4px] hover:bg-accent-hover"
+          class="flex-1 py-2.5 bg-accent text-white font-medium text-sm rounded-[4px] hover:bg-accent-hover disabled:opacity-50"
+          disabled={pending}
           onClick={() => onAction("accepted")}
         >
           Accept
         </button>
         <button
-          class="flex-1 py-2.5 border border-border text-text-primary font-medium text-sm rounded-[4px]"
+          class="flex-1 py-2.5 border border-border text-text-primary font-medium text-sm rounded-[4px] disabled:opacity-50"
+          disabled={pending}
           onClick={() => onAction("cancelled")}
         >
           Reject
@@ -132,7 +149,8 @@ function ActionButtons({
     return (
       <div class="flex gap-2 my-3">
         <button
-          class="flex-1 py-2.5 bg-accent text-white font-medium text-sm rounded-[4px] hover:bg-accent-hover"
+          class="flex-1 py-2.5 bg-accent text-white font-medium text-sm rounded-[4px] hover:bg-accent-hover disabled:opacity-50"
+          disabled={pending}
           onClick={() => onAction("in_progress")}
         >
           Mark In Progress
@@ -144,7 +162,8 @@ function ActionButtons({
     return (
       <div class="flex gap-2 my-3">
         <button
-          class="flex-1 py-2.5 bg-accent text-white font-medium text-sm rounded-[4px] hover:bg-accent-hover"
+          class="flex-1 py-2.5 bg-accent text-white font-medium text-sm rounded-[4px] hover:bg-accent-hover disabled:opacity-50"
+          disabled={pending}
           onClick={() => onAction("done")}
         >
           Mark Done
@@ -153,6 +172,27 @@ function ActionButtons({
     );
   }
   return null;
+}
+
+/** OL-083: Install offer — only when ≥2 active threads. */
+function InstallOffer({ threadCount }: { threadCount: number }) {
+  if (threadCount < 2) return null;
+  return (
+    <div class="border border-accent rounded-[2px] bg-[#EDF1FB] px-3 py-2.5 my-3">
+      <p class="text-sm font-medium text-text-primary mb-1">
+        You have {threadCount} active threads
+      </p>
+      <p class="text-xs text-text-muted mb-2">
+        Install the OpenLnk app to manage all your commitments in one place.
+      </p>
+      <a
+        href="https://openlnk.in/install"
+        class="inline-block px-4 py-2 bg-accent text-white text-sm font-medium rounded-[4px] hover:bg-accent-hover no-underline"
+      >
+        Install OpenLnk
+      </a>
+    </div>
+  );
 }
 
 /** Persist token in localStorage for session continuity (OL-082). */
@@ -176,7 +216,11 @@ export function App() {
   const [commitment, setCommitment] = useState<Commitment | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [actionPending, setActionPending] = useState(false);
   const [chatInput, setChatInput] = useState("");
+  const [threadCount, setThreadCount] = useState(0);
+  const prevCommitment = useRef<Commitment | null>(null);
 
   // Extract token from URL path: /t/{token}
   const urlToken = window.location.pathname.split("/t/")[1] ?? "";
@@ -190,17 +234,27 @@ export function App() {
 
     persistSession(token);
 
+    // OL-085: Track open/return funnel event
+    const hasVisited = getPersistedToken() === token;
+    trackFunnel(hasVisited ? "return" : "open");
+
     fetch(`${API_BASE}/threads/resolve/${encodeURIComponent(token)}`)
       .then((res) => {
         if (!res.ok) throw new Error(`${res.status}`);
         return res.json();
       })
-      .then((data: { commitments: Commitment[] }) => {
-        if (data.commitments.length > 0) {
-          setCommitment(data.commitments[0]);
-        }
-        setLoading(false);
-      })
+      .then(
+        (data: {
+          commitments: Commitment[];
+          thread_count?: number;
+        }) => {
+          if (data.commitments.length > 0) {
+            setCommitment(data.commitments[0]);
+          }
+          setThreadCount(data.thread_count ?? 0);
+          setLoading(false);
+        },
+      )
       .catch(() => {
         setError("Link expired or invalid.");
         setLoading(false);
@@ -209,17 +263,26 @@ export function App() {
 
   const handleAction = (newState: string) => {
     if (!commitment) return;
+    prevCommitment.current = commitment;
     setCommitment({ ...commitment, state: newState });
+    setActionError(null);
+    setActionPending(true);
 
-    // Optimistic update — fire and forget state transition
     fetch(`${API_BASE}/threads/resolve/${encodeURIComponent(token)}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: newState, version: commitment.version }),
-    }).catch(() => {
-      // Revert on failure
-      setCommitment(commitment);
-    });
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`${res.status}`);
+        setActionPending(false);
+      })
+      .catch(() => {
+        // Revert on failure
+        setCommitment(prevCommitment.current);
+        setActionError("Action failed. Please try again.");
+        setActionPending(false);
+      });
   };
 
   return (
@@ -254,7 +317,17 @@ export function App() {
         {!loading && commitment && (
           <>
             <CommitmentReceipt c={commitment} />
-            <ActionButtons state={commitment.state} onAction={handleAction} />
+            <ActionButtons
+              state={commitment.state}
+              onAction={handleAction}
+              pending={actionPending}
+            />
+            {actionError && (
+              <p class="text-xs text-center" style={{ color: "#B91C1C" }}>
+                {actionError}
+              </p>
+            )}
+            <InstallOffer threadCount={threadCount} />
           </>
         )}
       </main>

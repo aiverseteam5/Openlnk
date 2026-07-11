@@ -5,6 +5,7 @@
  * Shows today's commitments grouped by state priority.
  */
 
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
@@ -14,6 +15,7 @@ import { useAppStore } from "../store/app";
 import { fonts } from "@openlnk/ui";
 
 export default function DailyBriefPage() {
+  const navigate = useNavigate();
   const { principalId } = useAppStore();
 
   const { data, isLoading } = useQuery({
@@ -74,7 +76,7 @@ export default function DailyBriefPage() {
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             {atRisk.map((c) => (
-              <CommitmentCard key={c.id} commitment={c} />
+              <CommitmentCard key={c.id} commitment={c} onClick={() => navigate(`/commitments/${c.id}`)} />
             ))}
           </Box>
         </Box>
@@ -97,7 +99,7 @@ export default function DailyBriefPage() {
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             {dueToday.map((c) => (
-              <CommitmentCard key={c.id} commitment={c} />
+              <CommitmentCard key={c.id} commitment={c} onClick={() => navigate(`/commitments/${c.id}`)} />
             ))}
           </Box>
         </Box>
@@ -120,7 +122,7 @@ export default function DailyBriefPage() {
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             {proposed.map((c) => (
-              <CommitmentCard key={c.id} commitment={c} />
+              <CommitmentCard key={c.id} commitment={c} onClick={() => navigate(`/commitments/${c.id}`)} />
             ))}
           </Box>
         </Box>

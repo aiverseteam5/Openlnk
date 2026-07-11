@@ -6,7 +6,7 @@
  * No shadows, no skeleton loaders (use dashes), no avatars.
  */
 
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import {
   RefreshControl,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { CommitmentCard } from "@/components/CommitmentCard";
 import { StateFilter } from "@/components/StateFilter";
@@ -24,7 +25,6 @@ import { useAppStore } from "@/store/app";
 
 export default function HomeScreen() {
   const { stateFilter } = useAppStore();
-  const [cursor, setCursor] = useState<string | undefined>();
 
   const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["commitments", stateFilter],
@@ -35,20 +35,37 @@ export default function HomeScreen() {
   const nextCursor = data?.next_cursor ?? null;
 
   const renderItem = useCallback(
-    ({ item }: { item: Commitment }) => <CommitmentCard commitment={item} />,
+    ({ item }: { item: Commitment }) => (
+      <Pressable onPress={() => router.push({ pathname: "/commitment-detail", params: { id: item.id } })}>
+        <CommitmentCard commitment={item} />
+      </Pressable>
+    ),
     [],
   );
 
   return (
     <SafeAreaView className="flex-1 bg-bg" edges={["top"]}>
       {/* Header */}
-      <View className="px-4 py-3 border-b border-border">
+      <View className="px-4 py-3 border-b border-border flex-row justify-between items-center">
         <Text
           className="text-accent tracking-[0.08em]"
           style={{ fontFamily: "JetBrains Mono SemiBold", fontSize: 13 }}
         >
           OPENLNK
         </Text>
+        <Pressable
+          onPress={() => router.push("/create-commitment")}
+          style={{
+            backgroundColor: "#1A4FBF",
+            borderRadius: 4,
+            paddingHorizontal: 12,
+            paddingVertical: 6,
+          }}
+        >
+          <Text style={{ fontFamily: "DM Sans Medium", fontSize: 13, color: "#FFFFFF" }}>
+            Create
+          </Text>
+        </Pressable>
       </View>
 
       <FlatList
