@@ -5,7 +5,7 @@ Delta replay is bounded: <= 200 events or <= 30 days (OL-003a).
 """
 
 from collections import deque
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from uuid import UUID
 
 import structlog
@@ -52,7 +52,7 @@ class ConnectionManager:
         # Store in replay buffer
         if context_id not in self._replay_buffer:
             self._replay_buffer[context_id] = deque(maxlen=REPLAY_MAX_EVENTS)
-        self._replay_buffer[context_id].append((datetime.utcnow(), event))
+        self._replay_buffer[context_id].append((datetime.now(UTC), event))
 
         # Broadcast to connected clients
         if context_id not in self._connections:
@@ -77,7 +77,7 @@ class ConnectionManager:
         if context_id not in self._replay_buffer:
             return []
 
-        cutoff = datetime.utcnow() - timedelta(days=REPLAY_MAX_DAYS)
+        cutoff = datetime.now(UTC) - timedelta(days=REPLAY_MAX_DAYS)
         events = [
             event
             for ts, event in self._replay_buffer[context_id]

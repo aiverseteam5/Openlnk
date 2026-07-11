@@ -3,7 +3,7 @@
 Read-only Google Calendar sync, conflict detection, household overlay.
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
 import pytest
@@ -85,7 +85,7 @@ class TestConflictDetection:
 
         service = CalendarService()
         assignee_id = uuid4()
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         # Add an existing event
         service.add_calendar_event(
@@ -109,7 +109,7 @@ class TestConflictDetection:
 
         service = CalendarService()
         assignee_id = uuid4()
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         service.add_calendar_event(
             principal_id=assignee_id,
@@ -130,7 +130,7 @@ class TestConflictDetection:
 
         service = CalendarService()
         assignee_id = uuid4()
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         # Add an existing commitment slot
         service.add_commitment_slot(
@@ -151,7 +151,7 @@ class TestConflictDetection:
 
         service = CalendarService()
         assignee_id = uuid4()
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         service.add_calendar_event(
             principal_id=assignee_id,
@@ -181,7 +181,7 @@ class TestHouseholdCalendarOverlay:
         household_id = uuid4()
         member_a = uuid4()
         member_b = uuid4()
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         service.sync_calendar(
             principal_id=member_a, household_id=household_id, consent_granted=True
@@ -218,7 +218,7 @@ class TestHouseholdCalendarOverlay:
         service = CalendarService()
         household_id = uuid4()
         member = uuid4()
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         service.sync_calendar(principal_id=member, household_id=household_id, consent_granted=True)
         service.add_commitment_slot(
@@ -243,7 +243,7 @@ class TestHouseholdCalendarOverlay:
         household_b = uuid4()
         member_a = uuid4()
         member_b = uuid4()
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         service.sync_calendar(
             principal_id=member_a, household_id=household_a, consent_granted=True

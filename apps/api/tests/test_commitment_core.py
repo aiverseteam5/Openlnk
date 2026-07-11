@@ -4,7 +4,7 @@ Unit tests: schema validation, model structure, state machine logic.
 These run without a database.
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
 import pytest
@@ -40,7 +40,7 @@ class TestCommitmentModel:
             class_=CommitmentClass.FEE,
             amount_paise=150000,
             currency="INR",
-            due_at=datetime.utcnow(),
+            due_at=datetime.now(UTC),
             state=CommitmentState.PROPOSED,
             version=1,
             provenance_kind="message",
@@ -90,7 +90,7 @@ class TestCommitmentModel:
 
     def test_commitment_response_includes_at_risk(self):
         """CommitmentResponse includes computed at_risk field."""
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
         resp = CommitmentResponse(
             id=uuid4(),
             context_id=uuid4(),
@@ -268,35 +268,35 @@ class TestAtRisk:
     def test_at_risk_when_overdue_and_not_terminal(self):
         c = self._make_commitment(
             CommitmentState.IN_PROGRESS,
-            datetime.utcnow() - timedelta(hours=1),
+            datetime.now(UTC) - timedelta(hours=1),
         )
         assert _is_at_risk(c) is True
 
     def test_not_at_risk_when_overdue_but_done(self):
         c = self._make_commitment(
             CommitmentState.DONE,
-            datetime.utcnow() - timedelta(hours=1),
+            datetime.now(UTC) - timedelta(hours=1),
         )
         assert _is_at_risk(c) is False
 
     def test_not_at_risk_when_overdue_but_cancelled(self):
         c = self._make_commitment(
             CommitmentState.CANCELLED,
-            datetime.utcnow() - timedelta(hours=1),
+            datetime.now(UTC) - timedelta(hours=1),
         )
         assert _is_at_risk(c) is False
 
     def test_not_at_risk_when_overdue_but_broken(self):
         c = self._make_commitment(
             CommitmentState.BROKEN,
-            datetime.utcnow() - timedelta(hours=1),
+            datetime.now(UTC) - timedelta(hours=1),
         )
         assert _is_at_risk(c) is False
 
     def test_not_at_risk_when_not_yet_due(self):
         c = self._make_commitment(
             CommitmentState.IN_PROGRESS,
-            datetime.utcnow() + timedelta(hours=24),
+            datetime.now(UTC) + timedelta(hours=24),
         )
         assert _is_at_risk(c) is False
 
@@ -307,7 +307,7 @@ class TestAtRisk:
     def test_at_risk_proposed_overdue(self):
         c = self._make_commitment(
             CommitmentState.PROPOSED,
-            datetime.utcnow() - timedelta(days=1),
+            datetime.now(UTC) - timedelta(days=1),
         )
         assert _is_at_risk(c) is True
 
@@ -348,7 +348,7 @@ class TestCursorPageSchema:
         assert page.has_more is False
 
     def test_page_with_items_and_cursor(self):
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
         item = CommitmentResponse(
             id=uuid4(),
             context_id=uuid4(),

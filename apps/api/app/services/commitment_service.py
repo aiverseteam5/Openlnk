@@ -7,7 +7,7 @@ Key invariants:
 - Audit log entry for every state change
 """
 
-from datetime import datetime
+from datetime import UTC, datetime
 from uuid import UUID
 
 import structlog
@@ -43,7 +43,7 @@ def _is_at_risk(commitment: Commitment) -> bool:
     if commitment.due_at is None:
         return False
     terminal = {CommitmentState.DONE, CommitmentState.BROKEN, CommitmentState.CANCELLED}
-    return commitment.due_at < datetime.utcnow() and commitment.state not in terminal
+    return commitment.due_at < datetime.now(UTC) and commitment.state not in terminal
 
 
 def _to_response(commitment: Commitment) -> CommitmentResponse:
@@ -306,7 +306,7 @@ class CommitmentService:
         old_state = current_state
         commitment.state = CommitmentState(data.new_state)
         commitment.version += 1
-        commitment.updated_at = datetime.utcnow()
+        commitment.updated_at = datetime.now(UTC)
 
         # Record idempotency
         await self._record_idempotency(idempotency_key, str(commitment.id))
@@ -425,7 +425,7 @@ class CommitmentService:
             }
 
         commitment.version += 1
-        commitment.updated_at = datetime.utcnow()
+        commitment.updated_at = datetime.now(UTC)
 
         # Record idempotency
         await self._record_idempotency(idempotency_key, str(commitment.id))
@@ -498,7 +498,7 @@ class CommitmentService:
             old_state = str(commitment.state)
             commitment.state = CommitmentState.CANCELLED
             commitment.version += 1
-            commitment.updated_at = datetime.utcnow()
+            commitment.updated_at = datetime.now(UTC)
 
             self._session.add(
                 AuditLog(
@@ -529,7 +529,7 @@ class CommitmentService:
                 commitment.amount_paise = edits["amount_paise"]
 
             commitment.version += 1
-            commitment.updated_at = datetime.utcnow()
+            commitment.updated_at = datetime.now(UTC)
 
             self._session.add(
                 AuditLog(

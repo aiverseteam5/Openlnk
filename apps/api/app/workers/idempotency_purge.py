@@ -4,7 +4,7 @@ Runs on redis-jobs (durable). Purges idempotency keys older than 24h
 on a scheduled cadence (hourly via arq cron).
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import structlog
 from arq.cron import cron
@@ -25,7 +25,7 @@ async def purge_idempotency_keys(ctx: dict) -> dict:
     """
     from app.db import async_session
 
-    cutoff = datetime.utcnow() - timedelta(hours=RETENTION_HOURS)
+    cutoff = datetime.now(UTC) - timedelta(hours=RETENTION_HOURS)
 
     async with async_session() as session:
         result = await session.execute(

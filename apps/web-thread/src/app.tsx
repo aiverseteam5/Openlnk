@@ -327,6 +327,17 @@ export function App() {
                 {actionError}
               </p>
             )}
+            {/* UPI payment button (OL-010, OL-103) */}
+            {commitment.state === "accepted" &&
+              (commitment.class === "fee" || commitment.class === "payment") &&
+              commitment.amount_paise !== null && (
+                <a
+                  href={`upi://pay?am=${commitment.amount_paise / 100}&cu=${commitment.currency}&tn=${encodeURIComponent(commitment.title)}`}
+                  class="block w-full py-2.5 bg-accent text-white text-sm font-semibold font-mono text-center rounded-[4px] hover:bg-accent-hover no-underline my-3"
+                >
+                  Pay {formatAmount(commitment.amount_paise, commitment.currency)} via UPI
+                </a>
+              )}
             <InstallOffer threadCount={threadCount} />
           </>
         )}

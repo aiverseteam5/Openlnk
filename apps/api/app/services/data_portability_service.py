@@ -4,7 +4,7 @@ Data export and account deletion per ADR-002 §Erasure.
 Commitment graph anonymized, not destroyed, to preserve counterparty ledgers.
 """
 
-from datetime import datetime
+from datetime import UTC, datetime
 from uuid import UUID
 
 import structlog
@@ -28,7 +28,7 @@ class DataPortabilityService:
 
         return {
             "principal_id": str(principal_id),
-            "exported_at": datetime.utcnow().isoformat(),
+            "exported_at": datetime.now(UTC).isoformat(),
             "commitments": [],
             "consent_events": [],
             "contexts": [],

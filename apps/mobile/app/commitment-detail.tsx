@@ -271,6 +271,35 @@ export default function CommitmentDetailScreen() {
           </Text>
         )}
 
+        {/* UPI payment button (OL-010, OL-103) */}
+        {commitment.state === "accepted" &&
+          (commitment.class === "fee" || commitment.class === "payment") &&
+          commitment.amount_paise !== null && (
+            <Pressable
+              onPress={() => {
+                const url = `upi://pay?am=${commitment.amount_paise! / 100}&cu=${commitment.currency}&tn=${encodeURIComponent(commitment.title)}`;
+                import("expo-linking").then((Linking) => Linking.openURL(url));
+              }}
+              style={{
+                backgroundColor: "#1A4FBF",
+                borderRadius: 4,
+                paddingVertical: 12,
+                alignItems: "center",
+                marginBottom: 12,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "JetBrains Mono SemiBold",
+                  fontSize: 14,
+                  color: "#FFFFFF",
+                }}
+              >
+                Pay {formatAmount(commitment.amount_paise, commitment.currency)} via UPI
+              </Text>
+            </Pressable>
+          )}
+
         {/* Corrections — ≤2 taps (OL-026) */}
         {commitment.state === "proposed" && (
           <View className="border-t border-border pt-md">

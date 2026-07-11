@@ -4,7 +4,7 @@ The system shall graduate a (contact x class) pair one rung only after
 N clean actions over >= 14 days (N configurable, default 20).
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -26,7 +26,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.OBSERVE,
             clean_actions=10,
-            window_started=datetime.utcnow() - timedelta(days=20),
+            window_started=datetime.now(UTC) - timedelta(days=20),
         )
         assert result.eligible is False
 
@@ -36,7 +36,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.OBSERVE,
             clean_actions=25,
-            window_started=datetime.utcnow() - timedelta(days=5),
+            window_started=datetime.now(UTC) - timedelta(days=5),
         )
         assert result.eligible is False
 
@@ -46,7 +46,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.OBSERVE,
             clean_actions=20,
-            window_started=datetime.utcnow() - timedelta(days=15),
+            window_started=datetime.now(UTC) - timedelta(days=15),
         )
         assert result.eligible is True
         assert result.next_rung == AutonomyRung.PROPOSE
@@ -57,7 +57,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.PROPOSE,
             clean_actions=20,
-            window_started=datetime.utcnow() - timedelta(days=15),
+            window_started=datetime.now(UTC) - timedelta(days=15),
         )
         assert result.next_rung == AutonomyRung.BOUNDED_AUTO
 
@@ -66,7 +66,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.BOUNDED_AUTO,
             clean_actions=20,
-            window_started=datetime.utcnow() - timedelta(days=15),
+            window_started=datetime.now(UTC) - timedelta(days=15),
         )
         assert result.next_rung == AutonomyRung.TRUSTED_AUTO
 
@@ -76,7 +76,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.TRUSTED_AUTO,
             clean_actions=100,
-            window_started=datetime.utcnow() - timedelta(days=30),
+            window_started=datetime.now(UTC) - timedelta(days=30),
         )
         assert result.eligible is False
         assert result.next_rung is None
@@ -92,7 +92,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.OBSERVE,
             clean_actions=10,
-            window_started=datetime.utcnow() - timedelta(days=15),
+            window_started=datetime.now(UTC) - timedelta(days=15),
         )
         assert result.eligible is True
 
@@ -102,7 +102,7 @@ class TestGraduation:
         result = service.check_graduation(
             current_rung=AutonomyRung.OBSERVE,
             clean_actions=20,
-            window_started=datetime.utcnow() - timedelta(days=15),
+            window_started=datetime.now(UTC) - timedelta(days=15),
         )
         assert result.clean_actions == 20
         assert result.days_in_window >= 14

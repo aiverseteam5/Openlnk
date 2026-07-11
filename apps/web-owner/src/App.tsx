@@ -5,13 +5,16 @@
  * No dark mode, no avatars, no skeleton loaders.
  */
 
+import { useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import theme from "./theme/theme";
 import CommitmentsPage from "./pages/CommitmentsPage";
@@ -20,6 +23,7 @@ import CreateCommitmentPage from "./pages/CreateCommitmentPage";
 import DailyBriefPage from "./pages/DailyBriefPage";
 import { useContextSync } from "./hooks/useContextSync";
 import { useAppStore } from "./store/app";
+import { fetchContexts } from "./api/client";
 import { fonts } from "@openlnk/ui";
 
 const queryClient = new QueryClient({
@@ -32,6 +36,49 @@ const NAV_ITEMS = [
   { label: "Daily Brief", path: "/" },
   { label: "Commitments", path: "/commitments" },
 ];
+
+/** Context selector (OL-043): switch between household/business contexts. */
+function ContextSelector() {
+  const { principalId, selectedContextId, setSelectedContextId } = useAppStore();
+  const { data: contexts } = useQuery({
+    queryKey: ["contexts", principalId],
+    queryFn: () => fetchContexts(principalId),
+  });
+
+  if (!contexts || contexts.length <= 1) return null;
+
+  return (
+    <Box sx={{ px: 2, mb: 2 }}>
+      <Typography
+        sx={{
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: "0.08em",
+          color: "text.secondary",
+          mb: 0.5,
+        }}
+      >
+        CONTEXT
+      </Typography>
+      <Select
+        size="small"
+        fullWidth
+        value={selectedContextId ?? "all"}
+        onChange={(e) =>
+          setSelectedContextId(e.target.value === "all" ? null : e.target.value)
+        }
+        sx={{ fontSize: 13 }}
+      >
+        <MenuItem value="all">All contexts</MenuItem>
+        {contexts.map((ctx) => (
+          <MenuItem key={ctx.id} value={ctx.id}>
+            {ctx.label || ctx.kind}
+          </MenuItem>
+        ))}
+      </Select>
+    </Box>
+  );
+}
 
 function Sidebar() {
   return (
@@ -84,6 +131,98 @@ function Sidebar() {
           </ListItemButton>
         ))}
       </List>
+      <Box sx={{ mt: 2 }}>
+        <ContextSelector />
+      </Box>
+    </Box>
+  );
+}
+
+/** Mobile header — visible on xs only, no bottom tab bar (DESIGN.md). */
+function MobileHeader() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Box sx={{ display: { xs: "block", md: "none" } }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          px: 2,
+          py: 1.5,
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          bgcolor: "#FAFAF8",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: fonts.mono,
+            fontSize: 13,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            color: "primary.main",
+          }}
+        >
+          OPENLNK
+        </Typography>
+        <Box
+          onClick={() => setOpen(!open)}
+          sx={{
+            cursor: "pointer",
+            fontFamily: fonts.mono,
+            fontSize: 12,
+            color: "text.secondary",
+            px: 1,
+            py: 0.5,
+            border: "1px solid",
+            borderColor: "divider",
+            borderRadius: "2px",
+          }}
+        >
+          {open ? "CLOSE" : "MENU"}
+        </Box>
+      </Box>
+      {open && (
+        <Box
+          sx={{
+            bgcolor: "#FAFAF8",
+            borderBottom: "1px solid",
+            borderColor: "divider",
+            px: 2,
+            pb: 1.5,
+          }}
+        >
+          <List disablePadding>
+            {NAV_ITEMS.map((item) => (
+              <ListItemButton
+                key={item.path}
+                component={NavLink}
+                to={item.path}
+                onClick={() => setOpen(false)}
+                sx={{
+                  px: 1,
+                  py: 0.5,
+                  "&.active": {
+                    bgcolor: "primary.main",
+                    color: "primary.contrastText",
+                    "& .MuiListItemText-primary": {
+                      color: "primary.contrastText",
+                    },
+                  },
+                }}
+              >
+                <ListItemText
+                  primary={item.label}
+                  slotProps={{ primary: { sx: { fontSize: 14, fontWeight: 500 } } }}
+                />
+              </ListItemButton>
+            ))}
+          </List>
+          <ContextSelector />
+        </Box>
+      )}
     </Box>
   );
 }
@@ -97,10 +236,12 @@ function AppShell() {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           minHeight: "100vh",
           bgcolor: "background.default",
         }}
       >
+        <MobileHeader />
         <Sidebar />
         <Box
           component="main"

@@ -8,7 +8,7 @@ These tests use the ConnectionManager directly (no real DB) to verify
 the sync protocol mechanics in isolation.
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
 import pytest
@@ -154,7 +154,7 @@ class TestDeltaReplayBounds:
         ctx = uuid4()
 
         # Manually insert an old event into the buffer
-        old_ts = datetime.utcnow() - timedelta(days=REPLAY_MAX_DAYS + 1)
+        old_ts = datetime.now(UTC) - timedelta(days=REPLAY_MAX_DAYS + 1)
         old_event = DeltaEvent(event="old", context_id=str(ctx), subject_id=str(uuid4()), seq=1, data={})
         from collections import deque
         mgr._replay_buffer[ctx] = deque(maxlen=REPLAY_MAX_EVENTS)
@@ -162,7 +162,7 @@ class TestDeltaReplayBounds:
 
         # Add a recent event
         recent_event = DeltaEvent(event="recent", context_id=str(ctx), subject_id=str(uuid4()), seq=2, data={})
-        mgr._replay_buffer[ctx].append((datetime.utcnow(), recent_event))
+        mgr._replay_buffer[ctx].append((datetime.now(UTC), recent_event))
 
         replay = mgr.get_replay_events(ctx)
         assert len(replay) == 1

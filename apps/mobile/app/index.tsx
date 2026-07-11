@@ -13,6 +13,7 @@ import {
   FlatList,
   Pressable,
   RefreshControl,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -20,19 +21,94 @@ import { useQuery } from "@tanstack/react-query";
 import { CommitmentCard } from "@/components/CommitmentCard";
 import { StateFilter } from "@/components/StateFilter";
 import { DailyBrief } from "@/components/DailyBrief";
-import { fetchCommitments, type Commitment } from "@/api/client";
+import { fetchCommitments, fetchContexts, type Commitment } from "@/api/client";
 import { useAppStore } from "@/store/app";
 
+/** Context selector (OL-043): horizontal pills to switch context. */
+function ContextSelector() {
+  const { selectedContextId, setSelectedContextId } = useAppStore();
+  const { data: contexts } = useQuery({
+    queryKey: ["contexts"],
+    queryFn: () => fetchContexts(),
+  });
+
+  if (!contexts || contexts.length <= 1) return null;
+
+  return (
+    <View className="px-4 py-xs">
+      <Text
+        className="text-text-muted mb-xs"
+        style={{ fontFamily: "DM Sans SemiBold", fontSize: 11, letterSpacing: 0.88 }}
+      >
+        CONTEXT
+      </Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <Pressable
+          onPress={() => setSelectedContextId(null)}
+          className="mr-sm"
+          style={{
+            backgroundColor: selectedContextId === null ? "#1A4FBF" : "#F3F4F6",
+            borderRadius: 9999,
+            paddingHorizontal: 12,
+            paddingVertical: 4,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "JetBrains Mono SemiBold",
+              fontSize: 11,
+              letterSpacing: 1.1,
+              color: selectedContextId === null ? "#FFFFFF" : "#374151",
+            }}
+          >
+            ALL
+          </Text>
+        </Pressable>
+        {contexts.map((ctx) => {
+          const active = selectedContextId === ctx.id;
+          return (
+            <Pressable
+              key={ctx.id}
+              onPress={() => setSelectedContextId(active ? null : ctx.id)}
+              className="mr-sm"
+              style={{
+                backgroundColor: active ? "#1A4FBF" : "#F3F4F6",
+                borderRadius: 9999,
+                paddingHorizontal: 12,
+                paddingVertical: 4,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "JetBrains Mono SemiBold",
+                  fontSize: 11,
+                  letterSpacing: 1.1,
+                  color: active ? "#FFFFFF" : "#374151",
+                }}
+              >
+                {(ctx.label || ctx.type).toUpperCase()}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+}
+
 export default function HomeScreen() {
-  const { stateFilter } = useAppStore();
+  const { stateFilter, selectedContextId } = useAppStore();
 
   const { data, isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ["commitments", stateFilter],
-    queryFn: () => fetchCommitments({ state: stateFilter ?? undefined }),
+    queryKey: ["commitments", stateFilter, selectedContextId],
+    queryFn: () =>
+      fetchCommitments({
+        state: stateFilter ?? undefined,
+        contextId: selectedContextId ?? undefined,
+      }),
   });
 
   const commitments = data?.items ?? [];
-  const nextCursor = data?.next_cursor ?? null;
 
   const renderItem = useCallback(
     ({ item }: { item: Commitment }) => (
@@ -77,6 +153,7 @@ export default function HomeScreen() {
         ListHeaderComponent={
           <>
             <DailyBrief />
+            <ContextSelector />
             <StateFilter />
           </>
         }
@@ -97,9 +174,6 @@ export default function HomeScreen() {
             </Text>
           )
         }
-        onEndReached={() => {
-          if (nextCursor) setCursor(nextCursor);
-        }}
         onEndReachedThreshold={0.5}
         refreshControl={
           <RefreshControl

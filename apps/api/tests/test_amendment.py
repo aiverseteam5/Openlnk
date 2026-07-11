@@ -5,7 +5,7 @@ the system shall notify the counterparty; WHERE commitment class is fee or payme
 amendment SHALL require counterparty re-acceptance.
 """
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -23,7 +23,7 @@ class TestAmendmentSchema:
         assert amend.amount_paise is None
 
     def test_amend_partial_due_at(self):
-        future = datetime.utcnow() + timedelta(days=7)
+        future = datetime.now(UTC) + timedelta(days=7)
         amend = CommitmentAmend(due_at=future, version=1)
         assert amend.due_at == future
         assert amend.title is None

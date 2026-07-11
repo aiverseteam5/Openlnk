@@ -8,7 +8,7 @@ OL-064: Daily brief includes commitments, conflicts, at-risk.
 """
 
 from collections import defaultdict
-from datetime import datetime, time
+from datetime import UTC, datetime, time
 from uuid import UUID
 
 import structlog
@@ -70,7 +70,7 @@ class NotificationService:
     ) -> dict:
         """OL-063: Queue action to send after quiet hours end."""
         # In production, this creates an arq job scheduled for quiet_hours_end
-        send_after = datetime.combine(datetime.utcnow().date(), quiet_hours_end)
+        send_after = datetime.combine(datetime.now(UTC).date(), quiet_hours_end)
         logger.info(
             "action_queued_for_next_window",
             principal_id=str(principal_id),

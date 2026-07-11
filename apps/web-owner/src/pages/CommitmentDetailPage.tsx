@@ -245,6 +245,20 @@ export default function CommitmentDetailPage() {
         </Typography>
       )}
 
+      {/* UPI payment button (OL-010, OL-103) — fee/payment after accepted */}
+      {commitment.state === "accepted" &&
+        (commitment.class === "fee" || commitment.class === "payment") &&
+        commitment.amount_paise !== null && (
+          <Button
+            variant="contained"
+            fullWidth
+            href={`upi://pay?pa=&pn=OpenLnk&am=${commitment.amount_paise / 100}&cu=${commitment.currency}&tn=${encodeURIComponent(commitment.title)}`}
+            sx={{ mb: 2, fontFamily: fonts.mono, fontWeight: 600 }}
+          >
+            Pay {formatAmount(commitment.amount_paise, commitment.currency)} via UPI
+          </Button>
+        )}
+
       <Divider sx={{ my: 2 }} />
 
       {/* Corrections (OL-026) — ≤2 taps */}

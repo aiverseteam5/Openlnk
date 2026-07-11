@@ -6,7 +6,7 @@ Demotion drops one rung on user correction. Kill switch resets all.
 """
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 
 from app.models import AutonomyRung
 
@@ -64,7 +64,7 @@ class AutonomyService:
         Shows the user the track record at the moment of graduation.
         """
         idx = _RUNG_ORDER.index(current_rung)
-        days_in_window = (datetime.utcnow() - window_started).days
+        days_in_window = (datetime.now(UTC) - window_started).days
 
         # Already at top rung
         if idx >= len(_RUNG_ORDER) - 1:
