@@ -50,7 +50,7 @@ export default function CreateCommitmentScreen() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Principal-Id": principalId!,
+          "X-Principal-Id": principalId,
           "Idempotency-Key": `${Date.now()}-${Math.random().toString(36).slice(2)}`,
         },
         body: JSON.stringify(body),

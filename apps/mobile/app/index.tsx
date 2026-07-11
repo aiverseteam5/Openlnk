@@ -30,8 +30,7 @@ function ContextSelector() {
   const { principalId, selectedContextId, setSelectedContextId } = useAppStore();
   const { data: contexts } = useQuery({
     queryKey: ["contexts"],
-    queryFn: () => fetchContexts(principalId!),
-    enabled: !!principalId,
+    queryFn: () => fetchContexts(principalId),
   });
 
   if (!contexts || contexts.length <= 1) return null;
@@ -106,11 +105,10 @@ export default function HomeScreen() {
     queryKey: ["commitments", stateFilter, selectedContextId],
     queryFn: () =>
       fetchCommitments({
-        principalId: principalId!,
+        principalId,
         state: stateFilter ?? undefined,
         contextId: selectedContextId ?? undefined,
       }),
-    enabled: !!principalId,
   });
 
   const commitments = data?.items ?? [];

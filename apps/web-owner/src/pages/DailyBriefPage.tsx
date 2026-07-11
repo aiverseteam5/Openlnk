@@ -18,7 +18,7 @@ export default function DailyBriefPage() {
   const navigate = useNavigate();
   const { principalId } = useAppStore();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["commitments", principalId, "brief"],
     queryFn: () => fetchCommitments(principalId, { limit: 100 }),
   });
@@ -56,6 +56,12 @@ export default function DailyBriefPage() {
       {isLoading && (
         <Typography sx={{ color: "text.secondary" }}>
           {"\u2014"} Loading brief...
+        </Typography>
+      )}
+
+      {error && (
+        <Typography sx={{ color: "error.main", fontSize: 12, mb: 2 }}>
+          Failed to load daily brief.
         </Typography>
       )}
 

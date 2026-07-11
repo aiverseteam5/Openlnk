@@ -90,13 +90,13 @@ export default function CommitmentDetailScreen() {
 
   const { data: commitment, isLoading } = useQuery({
     queryKey: ["commitment", id],
-    queryFn: () => fetchCommitment(principalId!, id!),
-    enabled: !!id && !!principalId,
+    queryFn: () => fetchCommitment(principalId, id!),
+    enabled: !!id,
   });
 
   const transitionMutation = useMutation({
     mutationFn: ({ target, version }: { target: string; version: number }) =>
-      transitionState(principalId!, id!, target, version),
+      transitionState(principalId, id!, target, version),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["commitment", id] });
       void queryClient.invalidateQueries({ queryKey: ["commitments"] });
@@ -109,7 +109,7 @@ export default function CommitmentDetailScreen() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Principal-Id": principalId!,
+          "X-Principal-Id": principalId,
         },
         body: JSON.stringify(body),
       });

@@ -9,11 +9,11 @@ import { create } from "zustand";
 import type { CommitmentState } from "@openlnk/ui";
 
 interface AppState {
-  principalId: string | null;
+  principalId: string;
   selectedContextId: string | null;
   stateFilter: CommitmentState | null;
 
-  setPrincipalId: (id: string | null) => void;
+  setPrincipalId: (id: string) => void;
   setSelectedContextId: (id: string | null) => void;
   setStateFilter: (state: CommitmentState | null) => void;
 }

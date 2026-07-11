@@ -11,6 +11,7 @@ const STATES: CommitmentState[] = [
   "proposed",
   "accepted",
   "in_progress",
+  "done",
   "overdue",
   "broken",
   "fulfilled",
