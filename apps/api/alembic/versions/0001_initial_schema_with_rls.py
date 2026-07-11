@@ -45,6 +45,8 @@ def upgrade() -> None:
         phone_e164      text UNIQUE,
         display_name    text NOT NULL,
         kind            text NOT NULL CHECK (kind IN ('user','guest','agent')),
+        quiet_hours_start time,
+        quiet_hours_end   time,
         created_at      timestamptz NOT NULL DEFAULT now()
     );
     """)
@@ -253,31 +255,61 @@ def upgrade() -> None:
     );
     """)
 
+    # ── Staging, eval candidates, invite tokens ──
+    op.execute("""
+    CREATE TABLE staging_records (
+        id              bigserial PRIMARY KEY,
+        business_id     uuid NOT NULL REFERENCES businesses(id),
+        student_name    text NOT NULL,
+        parent_phone    text NOT NULL,
+        batch           text,
+        data            jsonb NOT NULL DEFAULT '{}'::jsonb,
+        consent_received boolean NOT NULL DEFAULT false,
+        created_at      timestamptz NOT NULL DEFAULT now()
+    );
+    """)
+
+    op.execute("""
+    CREATE TABLE eval_candidates (
+        id              bigserial PRIMARY KEY,
+        commitment_id   uuid NOT NULL REFERENCES commitments(id),
+        action          text NOT NULL CHECK (action IN ('reject','edit')),
+        edits           jsonb,
+        adjudicated     boolean NOT NULL DEFAULT false,
+        created_at      timestamptz NOT NULL DEFAULT now()
+    );
+    """)
+
+    op.execute("""
+    CREATE TABLE invite_tokens (
+        id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        commitment_id   uuid NOT NULL REFERENCES commitments(id),
+        inviter_id      uuid NOT NULL REFERENCES principals(id),
+        token           text UNIQUE NOT NULL,
+        phone_e164      text,
+        accepted        boolean NOT NULL DEFAULT false,
+        created_at      timestamptz NOT NULL DEFAULT now(),
+        expires_at      timestamptz NOT NULL
+    );
+    """)
+
     # ════════════════════════════════════════════════════
     # RLS POLICIES (eng review T2 — full set)
     # ════════════════════════════════════════════════════
 
-    # -- household_members: see your own memberships + co-members
+    # -- household_members: see only your own memberships
     op.execute("ALTER TABLE household_members ENABLE ROW LEVEL SECURITY;")
     op.execute("""
     CREATE POLICY hm_self ON household_members USING (
         principal_id = current_setting('app.principal_id')::uuid
-        OR household_id IN (
-            SELECT household_id FROM household_members hm2
-            WHERE hm2.principal_id = current_setting('app.principal_id')::uuid
-        )
     );
     """)
 
-    # -- business_members: see your own memberships + co-members
+    # -- business_members: see only your own memberships
     op.execute("ALTER TABLE business_members ENABLE ROW LEVEL SECURITY;")
     op.execute("""
     CREATE POLICY bm_self ON business_members USING (
         principal_id = current_setting('app.principal_id')::uuid
-        OR business_id IN (
-            SELECT business_id FROM business_members bm2
-            WHERE bm2.principal_id = current_setting('app.principal_id')::uuid
-        )
     );
     """)
 
@@ -308,15 +340,11 @@ def upgrade() -> None:
     );
     """)
 
-    # -- thread_participants: see participants of threads you can access
+    # -- thread_participants: see only your own participation
     op.execute("ALTER TABLE thread_participants ENABLE ROW LEVEL SECURITY;")
     op.execute("""
     CREATE POLICY tp_member ON thread_participants USING (
         principal_id = current_setting('app.principal_id')::uuid
-        OR thread_id IN (
-            SELECT thread_id FROM thread_participants tp2
-            WHERE tp2.principal_id = current_setting('app.principal_id')::uuid
-        )
     );
     """)
 
@@ -331,30 +359,21 @@ def upgrade() -> None:
     );
     """)
 
-    # -- commitments: owner, counterparty, participant, or context member
+    # -- commitments: owner, counterparty, or context member
     op.execute("ALTER TABLE commitments ENABLE ROW LEVEL SECURITY;")
     op.execute("""
     CREATE POLICY comm_member ON commitments USING (
         owner_id = current_setting('app.principal_id')::uuid
         OR counterparty_id = current_setting('app.principal_id')::uuid
-        OR id IN (
-            SELECT commitment_id FROM commitment_participants
-            WHERE principal_id = current_setting('app.principal_id')::uuid
-        )
         OR context_id IN (SELECT id FROM contexts)
     );
     """)
 
-    # -- commitment_participants: see if you're party to the commitment
+    # -- commitment_participants: see only your own participation
     op.execute("ALTER TABLE commitment_participants ENABLE ROW LEVEL SECURITY;")
     op.execute("""
     CREATE POLICY cp_member ON commitment_participants USING (
-        commitment_id IN (
-            SELECT id FROM commitments
-            WHERE owner_id = current_setting('app.principal_id')::uuid
-               OR counterparty_id = current_setting('app.principal_id')::uuid
-        )
-        OR principal_id = current_setting('app.principal_id')::uuid
+        principal_id = current_setting('app.principal_id')::uuid
     );
     """)
 
@@ -392,6 +411,33 @@ def upgrade() -> None:
     op.execute("""
     CREATE POLICY ce_self ON consent_events USING (
         principal_id = current_setting('app.principal_id')::uuid
+    );
+    """)
+
+    # -- staging_records: scoped to business membership
+    op.execute("ALTER TABLE staging_records ENABLE ROW LEVEL SECURITY;")
+    op.execute("""
+    CREATE POLICY sr_business ON staging_records USING (
+        business_id IN (
+            SELECT business_id FROM business_members
+            WHERE principal_id = current_setting('app.principal_id')::uuid
+        )
+    );
+    """)
+
+    # -- eval_candidates: scoped via commitment visibility
+    op.execute("ALTER TABLE eval_candidates ENABLE ROW LEVEL SECURITY;")
+    op.execute("""
+    CREATE POLICY ec_commitment ON eval_candidates USING (
+        commitment_id IN (SELECT id FROM commitments)
+    );
+    """)
+
+    # -- invite_tokens: inviter can see
+    op.execute("ALTER TABLE invite_tokens ENABLE ROW LEVEL SECURITY;")
+    op.execute("""
+    CREATE POLICY it_inviter ON invite_tokens USING (
+        inviter_id = current_setting('app.principal_id')::uuid
     );
     """)
 
@@ -435,11 +481,17 @@ def upgrade() -> None:
     GRANT SELECT, INSERT, UPDATE, DELETE ON consent_events TO openlnk_app;
     GRANT SELECT, INSERT, UPDATE, DELETE ON idempotency_keys TO openlnk_app;
     GRANT SELECT, INSERT, UPDATE, DELETE ON thread_tokens TO openlnk_app;
+    GRANT SELECT, INSERT, UPDATE, DELETE ON staging_records TO openlnk_app;
+    GRANT SELECT, INSERT, UPDATE, DELETE ON eval_candidates TO openlnk_app;
+    GRANT SELECT, INSERT, UPDATE, DELETE ON invite_tokens TO openlnk_app;
     GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO openlnk_app;
     """)
 
 
 def downgrade() -> None:
+    op.execute("DROP TABLE IF EXISTS invite_tokens CASCADE;")
+    op.execute("DROP TABLE IF EXISTS eval_candidates CASCADE;")
+    op.execute("DROP TABLE IF EXISTS staging_records CASCADE;")
     op.execute("DROP TABLE IF EXISTS thread_tokens CASCADE;")
     op.execute("DROP TABLE IF EXISTS idempotency_keys CASCADE;")
     op.execute("DROP TABLE IF EXISTS consent_events CASCADE;")

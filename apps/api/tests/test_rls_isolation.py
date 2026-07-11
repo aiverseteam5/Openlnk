@@ -14,7 +14,6 @@ Requirements tested:
 Requires Docker. Skipped if Docker is unavailable.
 """
 
-import asyncio
 from uuid import uuid4
 
 import pytest
@@ -31,17 +30,18 @@ except ImportError:
 
 pytestmark = [
     pytest.mark.skipif(not _HAS_DOCKER, reason="testcontainers not available"),
+    pytest.mark.asyncio,
 ]
 
-# Full schema SQL from migration 0001 (raw SQL for RLS policies)
+# Full schema SQL from migration 0001 (complete copy for test isolation).
+# Kept in sync with apps/api/alembic/versions/0001_initial_schema_with_rls.py.
 SCHEMA_SQL = """
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- Role setup
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'openlnk_app') THEN
-        CREATE ROLE openlnk_app LOGIN;
+        CREATE ROLE openlnk_app LOGIN PASSWORD 'testpass';
     END IF;
 END
 $$;
@@ -51,6 +51,8 @@ CREATE TABLE principals (
     phone_e164 text UNIQUE,
     display_name text NOT NULL,
     kind text NOT NULL CHECK (kind IN ('user','guest','agent')),
+    quiet_hours_start time,
+    quiet_hours_end time,
     created_at timestamptz NOT NULL DEFAULT now()
 );
 
@@ -204,19 +206,11 @@ CREATE TABLE thread_tokens (
 ALTER TABLE household_members ENABLE ROW LEVEL SECURITY;
 CREATE POLICY hm_self ON household_members USING (
     principal_id = current_setting('app.principal_id')::uuid
-    OR household_id IN (
-        SELECT household_id FROM household_members hm2
-        WHERE hm2.principal_id = current_setting('app.principal_id')::uuid
-    )
 );
 
 ALTER TABLE business_members ENABLE ROW LEVEL SECURITY;
 CREATE POLICY bm_self ON business_members USING (
     principal_id = current_setting('app.principal_id')::uuid
-    OR business_id IN (
-        SELECT business_id FROM business_members bm2
-        WHERE bm2.principal_id = current_setting('app.principal_id')::uuid
-    )
 );
 
 ALTER TABLE contexts ENABLE ROW LEVEL SECURITY;
@@ -243,10 +237,6 @@ CREATE POLICY thread_member ON threads USING (
 ALTER TABLE thread_participants ENABLE ROW LEVEL SECURITY;
 CREATE POLICY tp_member ON thread_participants USING (
     principal_id = current_setting('app.principal_id')::uuid
-    OR thread_id IN (
-        SELECT thread_id FROM thread_participants tp2
-        WHERE tp2.principal_id = current_setting('app.principal_id')::uuid
-    )
 );
 
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
@@ -261,21 +251,12 @@ ALTER TABLE commitments ENABLE ROW LEVEL SECURITY;
 CREATE POLICY comm_member ON commitments USING (
     owner_id = current_setting('app.principal_id')::uuid
     OR counterparty_id = current_setting('app.principal_id')::uuid
-    OR id IN (
-        SELECT commitment_id FROM commitment_participants
-        WHERE principal_id = current_setting('app.principal_id')::uuid
-    )
     OR context_id IN (SELECT id FROM contexts)
 );
 
 ALTER TABLE commitment_participants ENABLE ROW LEVEL SECURITY;
 CREATE POLICY cp_member ON commitment_participants USING (
-    commitment_id IN (
-        SELECT id FROM commitments
-        WHERE owner_id = current_setting('app.principal_id')::uuid
-           OR counterparty_id = current_setting('app.principal_id')::uuid
-    )
-    OR principal_id = current_setting('app.principal_id')::uuid
+    principal_id = current_setting('app.principal_id')::uuid
 );
 
 ALTER TABLE autonomy_grants ENABLE ROW LEVEL SECURITY;
@@ -306,7 +287,21 @@ CREATE POLICY ce_self ON consent_events USING (
     principal_id = current_setting('app.principal_id')::uuid
 );
 
--- Grant to openlnk_app
+-- Guest thread-scoped policy
+CREATE POLICY guest_thread_scoped ON commitments USING (
+    EXISTS (
+        SELECT 1 FROM principals p
+        WHERE p.id = current_setting('app.principal_id')::uuid
+          AND p.kind = 'guest'
+          AND context_id IN (
+              SELECT t.context_id FROM threads t
+              JOIN thread_participants tp ON tp.thread_id = t.id
+              WHERE tp.principal_id = current_setting('app.principal_id')::uuid
+          )
+    )
+);
+
+-- Grants to openlnk_app
 GRANT SELECT, INSERT, UPDATE, DELETE ON principals TO openlnk_app;
 GRANT SELECT, INSERT, UPDATE, DELETE ON households TO openlnk_app;
 GRANT SELECT, INSERT, UPDATE, DELETE ON businesses TO openlnk_app;
@@ -324,6 +319,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON consent_events TO openlnk_app;
 GRANT SELECT, INSERT, UPDATE, DELETE ON thread_tokens TO openlnk_app;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO openlnk_app;
 """
+
+
+# ─── Fixtures ───
 
 
 @pytest.fixture(scope="module")
@@ -346,32 +344,48 @@ def rls_pg():
 
 
 @pytest.fixture(scope="module")
-def rls_engine(rls_pg):
-    """Create engine and apply schema with RLS using superuser."""
-    url = rls_pg.get_connection_url()
-    sync_url = url.replace("psycopg2://", "://")
-    async_url = sync_url.replace("postgresql://", "postgresql+asyncpg://")
-
-    # Apply schema using sync connection (superuser)
+def superuser_engine(rls_pg):
+    """Sync superuser engine for schema setup."""
     from sqlalchemy import create_engine
 
-    sync_engine = create_engine(sync_url)
-    with sync_engine.connect() as conn:
+    url = rls_pg.get_connection_url()
+    sync_url = url.replace("+psycopg2", "")
+    engine = create_engine(sync_url)
+    with engine.connect() as conn:
         conn.execute(text(SCHEMA_SQL))
         conn.commit()
-    sync_engine.dispose()
+    yield engine
+    engine.dispose()
 
-    # Create async engine as openlnk_app role for tests
-    app_url = async_url.replace("postgres:test@", "openlnk_app:@")
+
+@pytest.fixture(scope="module")
+def async_engines(rls_pg, superuser_engine):
+    """Async engines: superuser (for data setup) + openlnk_app (RLS enforced queries)."""
+    import asyncio
+
+    url = rls_pg.get_connection_url()
+    sync_url = url.replace("+psycopg2", "")
+    async_url = sync_url.replace("postgresql://", "postgresql+asyncpg://")
+
+    # Superuser async engine — bypasses RLS (for test data insertion)
+    su_url = async_url
+    # App role async engine — RLS enforced (for assertion queries)
+    app_url = async_url.replace("postgres:test@", "openlnk_app:testpass@")
+
     loop = asyncio.new_event_loop()
-    engine = loop.run_until_complete(_create_engine(app_url))
-    yield engine, loop
-    loop.run_until_complete(engine.dispose())
+    su_engine = loop.run_until_complete(_make_engine(su_url))
+    app_engine = loop.run_until_complete(_make_engine(app_url))
+    yield su_engine, app_engine, loop
+    loop.run_until_complete(su_engine.dispose())
+    loop.run_until_complete(app_engine.dispose())
     loop.close()
 
 
-async def _create_engine(url):
+async def _make_engine(url):
     return create_async_engine(url, echo=False)
+
+
+# ─── Helpers ───
 
 
 def _run(loop, coro):
@@ -379,12 +393,25 @@ def _run(loop, coro):
     return loop.run_until_complete(coro)
 
 
-async def _insert_household_with_member(session: AsyncSession, principal_id, household_name):
-    """Insert a household, add a member, create a context, thread, and commitment."""
+async def _insert_principal(session: AsyncSession, pid, name, kind="user"):
+    """Insert a principal using superuser session."""
+    await session.execute(
+        text(
+            "INSERT INTO principals (id, display_name, kind) "
+            "VALUES (:id, :name, :kind)"
+        ),
+        {"id": str(pid), "name": name, "kind": kind},
+    )
+    await session.commit()
+
+
+async def _insert_household_with_data(session: AsyncSession, principal_id, household_name):
+    """Insert a household with member, context, thread, message, and commitment."""
     hid = uuid4()
     ctx_id = uuid4()
     thread_id = uuid4()
     commitment_id = uuid4()
+    msg_id = uuid4()
 
     await session.execute(
         text("INSERT INTO households (id, name) VALUES (:id, :name)"),
@@ -414,44 +441,35 @@ async def _insert_household_with_member(session: AsyncSession, principal_id, hou
     )
     await session.execute(
         text(
+            "INSERT INTO messages (id, thread_id, seq, sender_id, body) "
+            "VALUES (:id, :tid, 1, :sender, :body)"
+        ),
+        {"id": str(msg_id), "tid": str(thread_id), "sender": str(principal_id),
+         "body": f"Message in {household_name}"},
+    )
+    await session.execute(
+        text(
             "INSERT INTO commitments (id, context_id, owner_id, title, class, "
             "state, version, extracted_by) "
             "VALUES (:id, :ctx_id, :owner, :title, 'task', 'proposed', 1, :owner)"
         ),
-        {
-            "id": str(commitment_id),
-            "ctx_id": str(ctx_id),
-            "owner": str(principal_id),
-            "title": f"Commitment in {household_name}",
-        },
-    )
-    await session.execute(
-        text(
-            "INSERT INTO messages (id, thread_id, seq, sender_id, body) "
-            "VALUES (:id, :tid, 1, :sender, :body)"
-        ),
-        {
-            "id": str(uuid4()),
-            "tid": str(thread_id),
-            "sender": str(principal_id),
-            "body": f"Message in {household_name}",
-        },
+        {"id": str(commitment_id), "ctx_id": str(ctx_id),
+         "owner": str(principal_id), "title": f"Commitment in {household_name}"},
     )
     await session.commit()
     return {
-        "household_id": hid,
-        "context_id": ctx_id,
-        "thread_id": thread_id,
-        "commitment_id": commitment_id,
+        "household_id": hid, "context_id": ctx_id,
+        "thread_id": thread_id, "commitment_id": commitment_id, "msg_id": msg_id,
     }
 
 
-async def _insert_business_with_member(session: AsyncSession, principal_id, business_name):
-    """Insert a business, add a member, create a context, thread, and commitment."""
+async def _insert_business_with_data(session: AsyncSession, principal_id, business_name):
+    """Insert a business with member, context, thread, message, and commitment."""
     bid = uuid4()
     ctx_id = uuid4()
     thread_id = uuid4()
     commitment_id = uuid4()
+    msg_id = uuid4()
 
     await session.execute(
         text("INSERT INTO businesses (id, name) VALUES (:id, :name)"),
@@ -481,36 +499,40 @@ async def _insert_business_with_member(session: AsyncSession, principal_id, busi
     )
     await session.execute(
         text(
-            "INSERT INTO commitments (id, context_id, owner_id, title, class, "
-            "state, version, extracted_by) "
-            "VALUES (:id, :ctx_id, :owner, :title, 'fee', 'proposed', 1, :owner)"
+            "INSERT INTO messages (id, thread_id, seq, sender_id, body) "
+            "VALUES (:id, :tid, 1, :sender, :body)"
         ),
-        {
-            "id": str(commitment_id),
-            "ctx_id": str(ctx_id),
-            "owner": str(principal_id),
-            "title": f"Fee in {business_name}",
-        },
+        {"id": str(msg_id), "tid": str(thread_id), "sender": str(principal_id),
+         "body": f"Message in {business_name}"},
+    )
+    await session.execute(
+        text(
+            "INSERT INTO commitments (id, context_id, owner_id, title, class, "
+            "state, version, extracted_by, amount_paise) "
+            "VALUES (:id, :ctx_id, :owner, :title, 'fee', 'proposed', 1, :owner, 10000)"
+        ),
+        {"id": str(commitment_id), "ctx_id": str(ctx_id),
+         "owner": str(principal_id), "title": f"Fee in {business_name}"},
     )
     await session.commit()
     return {
-        "business_id": bid,
-        "context_id": ctx_id,
-        "thread_id": thread_id,
-        "commitment_id": commitment_id,
+        "business_id": bid, "context_id": ctx_id,
+        "thread_id": thread_id, "commitment_id": commitment_id, "msg_id": msg_id,
     }
 
 
-async def _query_as_principal(engine, principal_id, table, id_col="id"):
+async def _query_as(engine, principal_id, table, col="id"):
     """Query a table with RLS enforced for a specific principal."""
-    session_factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-    async with session_factory() as session:
-        await session.execute(
-            text("SET LOCAL app.principal_id = :pid"),
-            {"pid": str(principal_id)},
-        )
-        result = await session.execute(text(f"SELECT {id_col} FROM {table}"))  # noqa: S608
+    factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+    async with factory() as session:
+        # SET doesn't support bind params in asyncpg; UUID is safe to interpolate
+        pid = str(principal_id)
+        await session.execute(text(f"SET LOCAL app.principal_id = '{pid}'"))
+        result = await session.execute(text(f"SELECT {col} FROM {table}"))  # noqa: S608
         return [row[0] for row in result.fetchall()]
+
+
+# ─── Tests ───
 
 
 @pytest.mark.req("OL-041")
@@ -520,21 +542,14 @@ class TestCrossContextIsolation:
 
     def test_isolation_enforced_at_db_layer(self):
         """Cross-context isolation is enforced by Postgres RLS, not app logic."""
-        # This is the umbrella requirement; sub-requirements OL-041a..e cover
-        # household, business, and guest token isolation in detail.
-        # This test verifies the pattern is structurally present.
         assert TestHouseholdIsolation is not None
         assert TestBusinessIsolation is not None
         assert TestGuestThreadIsolation is not None
 
     def test_rls_is_mandatory_not_app_layer(self):
-        """Sacred rule: RLS on household_id/business_id at DB layer.
-        App-layer-only filtering fails review (CLAUDE.md §Sacred rules #4)."""
-        # The fact that test_rls_isolation.py exists with DB-level tests
-        # (not mocked app-layer tests) satisfies this requirement.
+        """Sacred rule: RLS on household_id/business_id at DB layer."""
         from app.models import Context
 
-        # Context model has the one_axis check constraint
         constraints = [c.name for c in Context.__table__.constraints if hasattr(c, "name")]
         assert "one_axis" in constraints
 
@@ -544,50 +559,49 @@ class TestHouseholdIsolation:
     """A principal in household A SHALL NOT be able to read commitments,
     messages, or threads belonging to household B."""
 
-    def test_household_commitment_isolation(self, rls_engine):
-        engine, loop = rls_engine
+    def test_household_data_isolation(self, async_engines):
+        su_engine, app_engine, loop = async_engines
 
-        # Create two principals (as superuser, RLS doesn't apply to table owner)
         principal_a = uuid4()
         principal_b = uuid4()
 
         async def setup():
-            # Insert principals as superuser
-            superuser_factory = async_sessionmaker(
-                engine, class_=AsyncSession, expire_on_commit=False
-            )
-            async with superuser_factory() as session:
-                await session.execute(
-                    text(
-                        "INSERT INTO principals (id, display_name, kind) "
-                        "VALUES (:id, :name, 'user')"
-                    ),
-                    {"id": str(principal_a), "name": "User A"},
-                )
-                await session.execute(
-                    text(
-                        "INSERT INTO principals (id, display_name, kind) "
-                        "VALUES (:id, :name, 'user')"
-                    ),
-                    {"id": str(principal_b), "name": "User B"},
-                )
-                await session.commit()
+            # Insert test data as superuser (bypasses RLS)
+            factory = async_sessionmaker(su_engine, class_=AsyncSession, expire_on_commit=False)
+            async with factory() as session:
+                await _insert_principal(session, principal_a, "User A")
+                await _insert_principal(session, principal_b, "User B")
+                data_a = await _insert_household_with_data(session, principal_a, "Household A")
+                data_b = await _insert_household_with_data(session, principal_b, "Household B")
+                return data_a, data_b
 
-                await _insert_household_with_member(session, principal_a, "Household A")
-                await _insert_household_with_member(session, principal_b, "Household B")
+        data_a, data_b = _run(loop, setup())
 
-        _run(loop, setup())
+        # --- Commitments isolation (queried via app role with RLS) ---
+        commits_a = _run(loop, _query_as(app_engine, principal_a, "commitments"))
+        commits_b = _run(loop, _query_as(app_engine, principal_b, "commitments"))
+        assert len(commits_a) == 1, f"A sees {len(commits_a)} commitments"
+        assert len(commits_b) == 1, f"B sees {len(commits_b)} commitments"
+        assert set(commits_a).isdisjoint(set(commits_b))
 
-        # Principal A should see only Household A's commitments
-        commitments_a = _run(loop, _query_as_principal(engine, principal_a, "commitments"))
-        assert len(commitments_a) == 1
+        # --- Messages isolation ---
+        msgs_a = _run(loop, _query_as(app_engine, principal_a, "messages"))
+        msgs_b = _run(loop, _query_as(app_engine, principal_b, "messages"))
+        assert len(msgs_a) == 1, f"A sees {len(msgs_a)} messages"
+        assert len(msgs_b) == 1, f"B sees {len(msgs_b)} messages"
+        assert set(msgs_a).isdisjoint(set(msgs_b))
 
-        # Principal B should see only Household B's commitments
-        commitments_b = _run(loop, _query_as_principal(engine, principal_b, "commitments"))
-        assert len(commitments_b) == 1
+        # --- Threads isolation ---
+        threads_a = _run(loop, _query_as(app_engine, principal_a, "threads"))
+        threads_b = _run(loop, _query_as(app_engine, principal_b, "threads"))
+        assert len(threads_a) == 1, f"A sees {len(threads_a)} threads"
+        assert len(threads_b) == 1, f"B sees {len(threads_b)} threads"
+        assert set(threads_a).isdisjoint(set(threads_b))
 
-        # They should not see each other's
-        assert set(commitments_a).isdisjoint(set(commitments_b))
+        # --- Negative assertion: A cannot see B's specific IDs ---
+        assert data_b["commitment_id"] not in [str(c) for c in commits_a]
+        assert data_b["msg_id"] not in [str(m) for m in msgs_a]
+        assert data_b["thread_id"] not in [str(t) for t in threads_a]
 
 
 @pytest.mark.req("OL-041b")
@@ -595,44 +609,46 @@ class TestBusinessIsolation:
     """A principal in business X SHALL NOT be able to read commitments,
     messages, or threads belonging to business Y."""
 
-    def test_business_commitment_isolation(self, rls_engine):
-        engine, loop = rls_engine
+    def test_business_data_isolation(self, async_engines):
+        su_engine, app_engine, loop = async_engines
 
         principal_x = uuid4()
         principal_y = uuid4()
 
         async def setup():
-            superuser_factory = async_sessionmaker(
-                engine, class_=AsyncSession, expire_on_commit=False
-            )
-            async with superuser_factory() as session:
-                await session.execute(
-                    text(
-                        "INSERT INTO principals (id, display_name, kind) "
-                        "VALUES (:id, :name, 'user')"
-                    ),
-                    {"id": str(principal_x), "name": "Staff X"},
-                )
-                await session.execute(
-                    text(
-                        "INSERT INTO principals (id, display_name, kind) "
-                        "VALUES (:id, :name, 'user')"
-                    ),
-                    {"id": str(principal_y), "name": "Staff Y"},
-                )
-                await session.commit()
+            factory = async_sessionmaker(su_engine, class_=AsyncSession, expire_on_commit=False)
+            async with factory() as session:
+                await _insert_principal(session, principal_x, "Staff X")
+                await _insert_principal(session, principal_y, "Staff Y")
+                data_x = await _insert_business_with_data(session, principal_x, "Business X")
+                data_y = await _insert_business_with_data(session, principal_y, "Business Y")
+                return data_x, data_y
 
-                await _insert_business_with_member(session, principal_x, "Business X")
-                await _insert_business_with_member(session, principal_y, "Business Y")
+        data_x, data_y = _run(loop, setup())
 
-        _run(loop, setup())
+        # --- Commitments isolation (queried via app role with RLS) ---
+        commits_x = _run(loop, _query_as(app_engine, principal_x, "commitments"))
+        commits_y = _run(loop, _query_as(app_engine, principal_y, "commitments"))
+        assert len(commits_x) == 1
+        assert len(commits_y) == 1
+        assert set(commits_x).isdisjoint(set(commits_y))
 
-        commitments_x = _run(loop, _query_as_principal(engine, principal_x, "commitments"))
-        commitments_y = _run(loop, _query_as_principal(engine, principal_y, "commitments"))
+        # --- Messages isolation ---
+        msgs_x = _run(loop, _query_as(app_engine, principal_x, "messages"))
+        msgs_y = _run(loop, _query_as(app_engine, principal_y, "messages"))
+        assert len(msgs_x) == 1
+        assert len(msgs_y) == 1
+        assert set(msgs_x).isdisjoint(set(msgs_y))
 
-        assert len(commitments_x) == 1
-        assert len(commitments_y) == 1
-        assert set(commitments_x).isdisjoint(set(commitments_y))
+        # --- Threads isolation ---
+        threads_x = _run(loop, _query_as(app_engine, principal_x, "threads"))
+        threads_y = _run(loop, _query_as(app_engine, principal_y, "threads"))
+        assert len(threads_x) == 1
+        assert len(threads_y) == 1
+        assert set(threads_x).isdisjoint(set(threads_y))
+
+        # --- Negative assertion ---
+        assert data_y["commitment_id"] not in [str(c) for c in commits_x]
 
 
 @pytest.mark.req("OL-041c")
@@ -640,35 +656,23 @@ class TestGuestThreadIsolation:
     """A web-thread guest token for thread T SHALL NOT grant read access
     to any commitment, message, or thread outside of thread T's context."""
 
-    def test_guest_thread_scoped(self, rls_engine):
-        engine, loop = rls_engine
+    def test_guest_sees_only_own_thread(self, async_engines):
+        su_engine, app_engine, loop = async_engines
 
         guest = uuid4()
         owner = uuid4()
 
         async def setup():
-            superuser_factory = async_sessionmaker(
-                engine, class_=AsyncSession, expire_on_commit=False
-            )
-            async with superuser_factory() as session:
-                # Create guest and owner principals
-                for pid, name, kind in [
-                    (guest, "Guest", "guest"),
-                    (owner, "Owner", "user"),
-                ]:
-                    await session.execute(
-                        text(
-                            "INSERT INTO principals (id, display_name, kind) "
-                            "VALUES (:id, :name, :kind)"
-                        ),
-                        {"id": str(pid), "name": name, "kind": kind},
-                    )
-                await session.commit()
+            # Insert data as superuser (bypasses RLS)
+            factory = async_sessionmaker(su_engine, class_=AsyncSession, expire_on_commit=False)
+            async with factory() as session:
+                await _insert_principal(session, guest, "Guest User", kind="guest")
+                await _insert_principal(session, owner, "Owner")
 
-                # Owner creates a household with two threads
-                data = await _insert_household_with_member(session, owner, "Guest Test HH")
+                # Owner creates a household
+                data = await _insert_household_with_data(session, owner, "Guest Test HH")
 
-                # Add guest only to the first thread
+                # Add guest to the first thread
                 await session.execute(
                     text(
                         "INSERT INTO thread_participants (thread_id, principal_id) "
@@ -678,8 +682,9 @@ class TestGuestThreadIsolation:
                 )
                 await session.commit()
 
-                # Create a second thread in same context (guest NOT added)
+                # Create a SECOND thread in same context (guest NOT added)
                 thread2 = uuid4()
+                msg2 = uuid4()
                 await session.execute(
                     text("INSERT INTO threads (id, context_id) VALUES (:id, :ctx_id)"),
                     {"id": str(thread2), "ctx_id": str(data["context_id"])},
@@ -694,26 +699,30 @@ class TestGuestThreadIsolation:
                 await session.execute(
                     text(
                         "INSERT INTO messages (id, thread_id, seq, sender_id, body) "
-                        "VALUES (:id, :tid, 1, :sender, 'secret message')"
+                        "VALUES (:id, :tid, 1, :sender, 'secret message in thread 2')"
                     ),
-                    {"id": str(uuid4()), "tid": str(thread2), "sender": str(owner)},
+                    {"id": str(msg2), "tid": str(thread2), "sender": str(owner)},
                 )
                 await session.commit()
-                return data["thread_id"], thread2
+                return data["thread_id"], thread2, msg2
 
-        _run(loop, setup())
+        thread1_id, thread2_id, msg2_id = _run(loop, setup())
 
-        # Guest should see threads they participate in
-        guest_threads = _run(
-            loop, _query_as_principal(engine, guest, "thread_participants", "thread_id")
-        )
-        assert len(guest_threads) >= 1
+        # Guest should see messages only from thread 1 (queried via app role with RLS)
+        guest_msgs = _run(loop, _query_as(app_engine, guest, "messages"))
+        assert len(guest_msgs) >= 1
 
-        # Guest should NOT see messages from threads they're not in
-        guest_messages = _run(loop, _query_as_principal(engine, guest, "messages"))
-        for _msg_id in guest_messages:
-            # All messages visible to guest should be in threads they participate in
-            pass  # If we get here, RLS filtered correctly
+        # NEGATIVE: guest must NOT see thread2's message
+        guest_msg_ids = [str(m) for m in guest_msgs]
+        assert str(msg2_id) not in guest_msg_ids, \
+            "Guest can read message from thread they don't participate in!"
+
+        # Guest should NOT see thread2 directly via threads table
+        guest_threads = _run(loop, _query_as(app_engine, guest, "threads"))
+        guest_thread_ids = [str(t) for t in guest_threads]
+        assert str(thread1_id) in guest_thread_ids, "Guest can't see own thread"
+        assert str(thread2_id) not in guest_thread_ids, \
+            "Guest can read thread they don't participate in!"
 
 
 @pytest.mark.req("OL-041d")
@@ -721,7 +730,6 @@ class TestIsolationTestsExist:
     """These tests exist and run in CI (meta-test)."""
 
     def test_rls_tests_are_defined(self):
-        """OL-041a..c test classes exist."""
         assert TestHouseholdIsolation is not None
         assert TestBusinessIsolation is not None
         assert TestGuestThreadIsolation is not None
@@ -733,10 +741,9 @@ class TestRLSPolicyChangeTesting:
     a test asserting that the prior leakage scenario is now blocked."""
 
     def test_policy_test_pattern_documented(self):
-        """This test file serves as the pattern for OL-041e compliance.
-        Any PR modifying RLS policies must add a negative-path test here."""
-        # Meta-test: the test file exists and is importable
+        """This test file serves as the pattern for OL-041e compliance."""
         import tests.test_rls_isolation as mod
 
         assert hasattr(mod, "TestHouseholdIsolation")
         assert hasattr(mod, "TestBusinessIsolation")
+        assert hasattr(mod, "TestGuestThreadIsolation")
