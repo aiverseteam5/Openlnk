@@ -211,7 +211,7 @@ async def _run_extraction(
                 "confidence": extracted.confidence,
             },
         )
-        await sync_manager.broadcast(str(thread.context_id), delta)
+        await sync_manager.broadcast_to_context(thread.context_id, delta)
 
         created_count += 1
 
