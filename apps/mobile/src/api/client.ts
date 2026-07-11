@@ -21,6 +21,8 @@ export interface Commitment {
   version: number;
   context_id: string;
   created_at: string;
+  provenance_kind?: string;
+  extraction_confidence?: number | null;
 }
 
 export interface CursorPage {
@@ -36,6 +38,7 @@ export interface Context {
 }
 
 export async function fetchCommitments(params: {
+  principalId: string;
   state?: string;
   contextId?: string;
   cursor?: string;
@@ -47,33 +50,46 @@ export async function fetchCommitments(params: {
   if (params.cursor) url.searchParams.set("cursor", params.cursor);
   if (params.limit) url.searchParams.set("limit", String(params.limit));
 
-  const res = await fetch(url.toString());
+  const res = await fetch(url.toString(), {
+    headers: { "X-Principal-Id": params.principalId },
+  });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<CursorPage>;
 }
 
-export async function fetchCommitment(id: string): Promise<Commitment> {
-  const res = await fetch(`${API_BASE}/v1/commitments/${id}`);
+export async function fetchCommitment(
+  principalId: string,
+  id: string,
+): Promise<Commitment> {
+  const res = await fetch(`${API_BASE}/v1/commitments/${id}`, {
+    headers: { "X-Principal-Id": principalId },
+  });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<Commitment>;
 }
 
 export async function transitionState(
+  principalId: string,
   id: string,
   newState: string,
   version: number,
 ): Promise<Commitment> {
   const res = await fetch(`${API_BASE}/v1/commitments/${id}/transition`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-Principal-Id": principalId,
+    },
     body: JSON.stringify({ state: newState, version }),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<Commitment>;
 }
 
-export async function fetchContexts(): Promise<Context[]> {
-  const res = await fetch(`${API_BASE}/v1/contexts`);
+export async function fetchContexts(principalId: string): Promise<Context[]> {
+  const res = await fetch(`${API_BASE}/v1/contexts`, {
+    headers: { "X-Principal-Id": principalId },
+  });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<Context[]>;
 }

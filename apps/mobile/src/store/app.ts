@@ -19,7 +19,8 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set) => ({
-  principalId: null,
+  // Placeholder — replaced by auth at Gate 2
+  principalId: "00000000-0000-0000-0000-000000000001",
   selectedContextId: null,
   stateFilter: null,
 

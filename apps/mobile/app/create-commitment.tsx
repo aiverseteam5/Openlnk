@@ -17,12 +17,14 @@ import {
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAppStore } from "@/store/app";
 
 const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:8000";
 
 const CLASSES = ["fee", "schedule", "task", "payment", "custom"] as const;
 
 export default function CreateCommitmentScreen() {
+  const { principalId, selectedContextId } = useAppStore();
   const queryClient = useQueryClient();
 
   const [title, setTitle] = useState("");
@@ -38,8 +40,8 @@ export default function CreateCommitmentScreen() {
         title,
         class: commitmentClass,
         currency: "INR",
-        owner_id: "00000000-0000-0000-0000-000000000001",
-        context_id: "00000000-0000-0000-0000-000000000001",
+        owner_id: principalId,
+        context_id: selectedContextId ?? principalId,
       };
       if (amount) body.amount_paise = Math.round(parseFloat(amount) * 100);
       if (dueAt) body.due_at = new Date(dueAt).toISOString();
@@ -48,6 +50,7 @@ export default function CreateCommitmentScreen() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-Principal-Id": principalId!,
           "Idempotency-Key": `${Date.now()}-${Math.random().toString(36).slice(2)}`,
         },
         body: JSON.stringify(body),

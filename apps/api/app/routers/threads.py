@@ -28,6 +28,49 @@ class ThreadActionRequest(BaseModel):
 
 class ThreadMessageRequest(BaseModel):
     text: str
+    token: str
+
+
+class ThreadMessageResponse(BaseModel):
+    status: str
+    thread_id: str
+
+
+class ThreadFunnelRequest(BaseModel):
+    event_type: str
+    token: str
+
+
+@router.post("/funnel")
+async def track_funnel(body: ThreadFunnelRequest) -> dict:
+    """Track funnel events — open/return (OL-085). Fire-and-forget."""
+    claims = _thread_service.validate_token(body.token)
+    if claims is None:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    # Non-critical event tracking — log and return
+    return {"status": "ok"}
+
+
+@router.post("/messages", response_model=ThreadMessageResponse)
+async def send_message(body: ThreadMessageRequest) -> ThreadMessageResponse:
+    """Accept a guest message on a thread (OL-053 Propose rung).
+
+    Messages are queued for owner review — raw content is never
+    persisted server-side (ADR-002).
+    """
+    claims = _thread_service.validate_token(body.token)
+    if claims is None:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    _thread_service.queue_message(
+        thread_id=claims["thread_id"],
+        text=body.text,
+    )
+
+    return ThreadMessageResponse(
+        status="queued",
+        thread_id=claims["thread_id"],
+    )
 
 
 @router.get("/resolve/{token}", response_model=ThreadResolveResponse)

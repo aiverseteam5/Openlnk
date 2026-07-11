@@ -23,13 +23,15 @@ import { StateFilter } from "@/components/StateFilter";
 import { DailyBrief } from "@/components/DailyBrief";
 import { fetchCommitments, fetchContexts, type Commitment } from "@/api/client";
 import { useAppStore } from "@/store/app";
+import { useContextSync } from "@/hooks/useContextSync";
 
 /** Context selector (OL-043): horizontal pills to switch context. */
 function ContextSelector() {
-  const { selectedContextId, setSelectedContextId } = useAppStore();
+  const { principalId, selectedContextId, setSelectedContextId } = useAppStore();
   const { data: contexts } = useQuery({
     queryKey: ["contexts"],
-    queryFn: () => fetchContexts(),
+    queryFn: () => fetchContexts(principalId!),
+    enabled: !!principalId,
   });
 
   if (!contexts || contexts.length <= 1) return null;
@@ -97,15 +99,18 @@ function ContextSelector() {
 }
 
 export default function HomeScreen() {
-  const { stateFilter, selectedContextId } = useAppStore();
+  const { principalId, stateFilter, selectedContextId } = useAppStore();
+  useContextSync(selectedContextId);
 
   const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["commitments", stateFilter, selectedContextId],
     queryFn: () =>
       fetchCommitments({
+        principalId: principalId!,
         state: stateFilter ?? undefined,
         contextId: selectedContextId ?? undefined,
       }),
+    enabled: !!principalId,
   });
 
   const commitments = data?.items ?? [];

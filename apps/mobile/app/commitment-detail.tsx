@@ -21,8 +21,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   fetchCommitment,
   transitionState,
-  type Commitment,
 } from "@/api/client";
+import { useAppStore } from "@/store/app";
 import { stateColors, type CommitmentState } from "@openlnk/ui";
 
 const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:8000";
@@ -81,6 +81,7 @@ function DataRow({ label, value, mono }: { label: string; value: string; mono?: 
 
 export default function CommitmentDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { principalId } = useAppStore();
   const queryClient = useQueryClient();
 
   const [correctionMode, setCorrectionMode] = useState<"edit" | null>(null);
@@ -89,13 +90,13 @@ export default function CommitmentDetailScreen() {
 
   const { data: commitment, isLoading } = useQuery({
     queryKey: ["commitment", id],
-    queryFn: () => fetchCommitment(id!),
-    enabled: !!id,
+    queryFn: () => fetchCommitment(principalId!, id!),
+    enabled: !!id && !!principalId,
   });
 
   const transitionMutation = useMutation({
     mutationFn: ({ target, version }: { target: string; version: number }) =>
-      transitionState(id!, target, version),
+      transitionState(principalId!, id!, target, version),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["commitment", id] });
       void queryClient.invalidateQueries({ queryKey: ["commitments"] });
@@ -106,7 +107,10 @@ export default function CommitmentDetailScreen() {
     mutationFn: async (body: { action: string; edits?: Record<string, unknown> }) => {
       const res = await fetch(`${API_BASE}/v1/commitments/${id}/correct`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Principal-Id": principalId!,
+        },
         body: JSON.stringify(body),
       });
       if (!res.ok) throw new Error(`API ${res.status}`);

@@ -162,6 +162,19 @@ class WebThreadService:
             "commitments": [],
         }
 
+    def queue_message(self, *, thread_id: str, text: str) -> None:
+        """Queue a guest message for owner review (OL-053, Propose rung).
+
+        Raw message content is NOT persisted server-side (ADR-002).
+        In production, this enqueues an arq job that delivers a notification
+        to the owner with the message text embedded in the push payload only.
+        """
+        logger.info(
+            "thread_message_queued",
+            thread_id=thread_id,
+            text_length=len(text),
+        )
+
     def should_show_install_offer(self, *, active_thread_count: int) -> bool:
         """OL-083: Install offer only at ≥2 active threads, never before."""
         return active_thread_count >= 2

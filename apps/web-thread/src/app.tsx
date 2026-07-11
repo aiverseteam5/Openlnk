@@ -219,6 +219,8 @@ export function App() {
   const [actionError, setActionError] = useState<string | null>(null);
   const [actionPending, setActionPending] = useState(false);
   const [chatInput, setChatInput] = useState("");
+  const [chatSending, setChatSending] = useState(false);
+  const [chatSent, setChatSent] = useState(false);
   const [threadCount, setThreadCount] = useState(0);
   const prevCommitment = useRef<Commitment | null>(null);
 
@@ -349,15 +351,42 @@ export function App() {
           <input
             type="text"
             class="flex-1 px-3 py-2 text-sm border border-border rounded-[2px] bg-surface outline-none focus:border-accent"
-            placeholder="Type a message..."
+            placeholder={chatSent ? "Message sent" : "Type a message..."}
             value={chatInput}
+            disabled={chatSending}
             onInput={(e) => setChatInput((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => {
+              if ((e as KeyboardEvent).key === "Enter" && chatInput.trim()) {
+                (e.target as HTMLInputElement).closest("footer")
+                  ?.querySelector("button")
+                  ?.click();
+              }
+            }}
           />
           <button
-            class="px-4 py-2 bg-accent text-white text-sm font-medium rounded-[4px] hover:bg-accent-hover"
-            onClick={() => setChatInput("")}
+            class="px-4 py-2 bg-accent text-white text-sm font-medium rounded-[4px] hover:bg-accent-hover disabled:opacity-50"
+            disabled={chatSending || !chatInput.trim()}
+            onClick={() => {
+              if (!chatInput.trim() || !token) return;
+              setChatSending(true);
+              fetch(`${API_BASE}/threads/messages`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text: chatInput.trim(), token }),
+              })
+                .then((res) => {
+                  if (!res.ok) throw new Error(`${res.status}`);
+                  setChatInput("");
+                  setChatSent(true);
+                  setTimeout(() => setChatSent(false), 3000);
+                })
+                .catch(() => {
+                  setActionError("Message failed to send.");
+                })
+                .finally(() => setChatSending(false));
+            }}
           >
-            Send
+            {chatSending ? "..." : "Send"}
           </button>
         </div>
       </footer>
