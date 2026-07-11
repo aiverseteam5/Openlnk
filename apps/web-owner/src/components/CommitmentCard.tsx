@@ -120,7 +120,7 @@ export default function CommitmentCard({
           {commitment.title}
         </Typography>
 
-        {/* Row 3: Class + Amount */}
+        {/* Row 3: Counterparty · Class + Amount */}
         <Box
           sx={{
             display: "flex",
@@ -131,7 +131,9 @@ export default function CommitmentCard({
           <Typography
             sx={{ fontSize: 12, color: "text.secondary" }}
           >
-            {commitment.class}
+            {commitment.counterparty_id
+              ? `${commitment.counterparty_id.slice(0, 8)} \u00B7 ${commitment.class}`
+              : commitment.class}
           </Typography>
           {commitment.amount_paise !== null && (
             <Typography

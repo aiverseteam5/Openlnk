@@ -259,6 +259,20 @@ export default function CommitmentDetailPage() {
           </Button>
         )}
 
+      {/* WhatsApp share CTA (OL-103a) — only when state is done */}
+      {commitment.state === "done" && (
+        <Button
+          variant="outlined"
+          fullWidth
+          href={`https://wa.me/?text=${encodeURIComponent(`${commitment.title} — confirmed on ${formatDate(commitment.updated_at ?? commitment.created_at)}`)}`}
+          target="_blank"
+          rel="noopener"
+          sx={{ mb: 2 }}
+        >
+          Share confirmation to WhatsApp
+        </Button>
+      )}
+
       <Divider sx={{ my: 2 }} />
 
       {/* Corrections (OL-026) — ≤2 taps */}

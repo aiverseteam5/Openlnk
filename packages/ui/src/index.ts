@@ -29,6 +29,7 @@ export type CommitmentState =
   | "proposed"
   | "accepted"
   | "in_progress"
+  | "done"
   | "overdue"
   | "broken"
   | "fulfilled"
@@ -71,6 +72,12 @@ export const stateColors: Record<CommitmentState, StateColors> = {
     background: "#FEF2F2",
     leftBar: "#B91C1C",
     label: "BROKEN",
+  },
+  done: {
+    text: "#1A6B3C",
+    background: "#EAF4EE",
+    leftBar: "#1A6B3C",
+    label: "DONE",
   },
   fulfilled: {
     text: "#1A6B3C",

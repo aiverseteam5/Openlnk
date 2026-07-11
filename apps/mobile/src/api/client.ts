@@ -21,8 +21,9 @@ export interface Commitment {
   version: number;
   context_id: string;
   created_at: string;
-  provenance_kind?: string;
-  extraction_confidence?: number | null;
+  updated_at: string;
+  provenance_kind: string | null;
+  extraction_confidence: number | null;
 }
 
 export interface CursorPage {

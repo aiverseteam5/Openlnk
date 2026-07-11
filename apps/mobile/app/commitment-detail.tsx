@@ -304,6 +304,35 @@ export default function CommitmentDetailScreen() {
             </Pressable>
           )}
 
+        {/* WhatsApp share CTA (OL-103a) — only when state is done */}
+        {commitment.state === "done" && (
+          <Pressable
+            onPress={() => {
+              const msg = `${commitment.title} — confirmed on ${formatDate(commitment.created_at)}`;
+              const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+              import("expo-linking").then((Linking) => Linking.openURL(url));
+            }}
+            style={{
+              borderWidth: 1,
+              borderColor: "#1A4FBF",
+              borderRadius: 4,
+              paddingVertical: 12,
+              alignItems: "center",
+              marginBottom: 12,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "DM Sans Medium",
+                fontSize: 14,
+                color: "#1A4FBF",
+              }}
+            >
+              Share confirmation to WhatsApp
+            </Text>
+          </Pressable>
+        )}
+
         {/* Corrections — ≤2 taps (OL-026) */}
         {commitment.state === "proposed" && (
           <View className="border-t border-border pt-md">

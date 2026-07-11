@@ -3,8 +3,8 @@
  *
  * [3px STATE BAR] | [ID in mono, muted]           [STATE BADGE in mono]
  *                 | [COMMITMENT TITLE in DM Sans 600]
- *                 | [Class]                         [AMOUNT in mono]
- *                 |                                 [DUE DATE in mono]
+ *                 | [Counterparty · Class]          [AMOUNT in mono]
+ *                 | [Provenance tag]                [DUE DATE in mono]
  *
  * No shadows (DESIGN.md). Borders instead. 2px border radius.
  */
@@ -89,13 +89,15 @@ export function CommitmentCard({ commitment: c }: { commitment: Commitment }) {
             {c.title}
           </Text>
 
-          {/* Class + Amount */}
+          {/* Counterparty · Class + Amount */}
           <View className="flex-row justify-between items-center">
             <Text
               className="text-text-muted"
               style={{ fontFamily: "DM Sans", fontSize: 12 }}
             >
-              {c.class}
+              {c.counterparty_id
+                ? `${c.counterparty_id.slice(0, 8)} \u00B7 ${c.class}`
+                : c.class}
             </Text>
             {c.amount_paise !== null && (
               <Text
@@ -111,17 +113,27 @@ export function CommitmentCard({ commitment: c }: { commitment: Commitment }) {
             )}
           </View>
 
-          {/* Due date */}
-          {c.due_at && (
-            <View className="flex-row justify-end mt-xs">
+          {/* Provenance + Due date */}
+          <View className="flex-row justify-between items-center mt-xs">
+            {c.provenance_kind ? (
+              <Text
+                className="text-text-muted"
+                style={{ fontFamily: "DM Sans", fontSize: 11 }}
+              >
+                {c.provenance_kind}
+              </Text>
+            ) : (
+              <View />
+            )}
+            {c.due_at ? (
               <Text
                 className="text-text-muted"
                 style={{ fontFamily: "JetBrains Mono", fontSize: 11 }}
               >
                 Due {formatDue(c.due_at)}
               </Text>
-            </View>
-          )}
+            ) : null}
+          </View>
         </View>
       </View>
     </Pressable>

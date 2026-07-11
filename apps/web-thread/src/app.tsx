@@ -19,6 +19,7 @@ const STATE_COLORS: Record<
   proposed: { text: "#374151", bg: "#F3F4F6", bar: "#374151", label: "PROPOSED" },
   accepted: { text: "#1A6B3C", bg: "#EAF4EE", bar: "#1A6B3C", label: "ACCEPTED" },
   in_progress: { text: "#1A6B3C", bg: "#EAF4EE", bar: "#1A6B3C", label: "IN PROGRESS" },
+  done: { text: "#1A6B3C", bg: "#EAF4EE", bar: "#1A6B3C", label: "DONE" },
   overdue: { text: "#92600A", bg: "#FDF4E3", bar: "#92600A", label: "OVERDUE" },
   broken: { text: "#B91C1C", bg: "#FEF2F2", bar: "#B91C1C", label: "BROKEN" },
   fulfilled: { text: "#1A6B3C", bg: "#EAF4EE", bar: "#1A6B3C", label: "FULFILLED" },
