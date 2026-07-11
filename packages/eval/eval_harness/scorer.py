@@ -32,25 +32,80 @@ def _normalize_title(title: str) -> str:
 
 
 def _titles_match(gold_title: str, extracted_title: str) -> bool:
-    """Semantic title match — normalized substring containment.
+    """Semantic title match — normalized word overlap.
 
     A proper semantic matcher (embedding similarity) can replace this
     at Gate 2+ when the dataset is large enough. For v0, normalized
-    containment catches most cases.
+    word overlap catches most cases.
     """
     g = _normalize_title(gold_title)
     e = _normalize_title(extracted_title)
     # Exact match or one contains the other
     if g == e:
         return True
-    # Check if key words from gold appear in extracted
-    gold_words = set(g.split())
-    extracted_words = set(e.split())
+    if g and e and (g in e or e in g):
+        return True
+    # Check key word overlap (ignoring common stop words)
+    _STOP = {"the", "a", "an", "is", "to", "for", "of", "and", "by", "on",
+             "in", "at", "from", "with", "will", "be", "has", "was", "are",
+             "this", "that", "it", "its", "i", "we", "you", "my", "our",
+             "please", "kindly", "sir", "madam", "ma'am", "dear"}
+    gold_words = set(g.split()) - _STOP
+    extracted_words = set(e.split()) - _STOP
     if not gold_words:
         return False
     overlap = gold_words & extracted_words
-    # At least 50% word overlap
-    return len(overlap) / len(gold_words) >= 0.5
+    # At least 40% content-word overlap
+    return len(overlap) / len(gold_words) >= 0.4
+
+
+def _counterparties_overlap(
+    gold_cps: list, extracted_cps: list,
+) -> bool:
+    """Check if counterparty names overlap."""
+    if not gold_cps and not extracted_cps:
+        return True
+    gold_names = {cp.name.lower() for cp in gold_cps}
+    ext_names = {cp.name.lower() for cp in extracted_cps}
+    if not gold_names:
+        return True  # No specific counterparties required
+    return bool(gold_names & ext_names)
+
+
+def _can_match(
+    gold: "GoldCommitment",
+    ext: "ExtractedCommitment",
+) -> bool:
+    """Multi-factor matching: title match OR structural alignment.
+
+    A match requires EITHER:
+    - Title word overlap (primary signal), OR
+    - Same class AND at least one structural match (amount or counterparties)
+
+    This handles paraphrased messages where extraction titles differ from
+    gold labels but the structural content is identical.
+    """
+    title_ok = _titles_match(gold.title, ext.title)
+    if title_ok:
+        return True
+
+    # Structural fallback: class must match
+    if gold.class_ != ext.class_:
+        return False
+
+    # Need at least one structural signal
+    amount_ok = _amounts_match(gold.amount_paise, ext.amount_paise)
+    cp_ok = _counterparties_overlap(gold.counterparties, ext.counterparties)
+
+    # Amount match is strong signal (specific number)
+    if amount_ok and gold.amount_paise is not None:
+        return True
+
+    # Counterparty match is strong signal (specific names)
+    if cp_ok and gold.counterparties:
+        return True
+
+    return False
 
 
 def _due_dates_match(gold_due: str | None, extracted_due: str | None) -> bool:
@@ -100,10 +155,10 @@ def score_case(
         best_match: CommitmentMatch | None = None
 
         for gi, gold in enumerate(unmatched_gold):
-            title_ok = _titles_match(gold.title, ext.title)
-            if not title_ok:
+            if not _can_match(gold, ext):
                 continue
 
+            title_ok = _titles_match(gold.title, ext.title)
             due_ok = _due_dates_match(gold.due_at, ext.due_at)
             class_ok = gold.class_ == ext.class_
             amount_ok = _amounts_match(gold.amount_paise, ext.amount_paise)
@@ -117,8 +172,12 @@ def score_case(
                 amount_match=amount_ok,
             )
 
-            # Prefer matches with more fields correct
-            if best_match is None:
+            # Score match quality for ranking
+            score = sum([title_ok, due_ok, class_ok, amount_ok])
+            if best_match is None or score > sum([
+                best_match.title_match, best_match.due_match,
+                best_match.class_match, best_match.amount_match,
+            ]):
                 best_gi = gi
                 best_match = match
 

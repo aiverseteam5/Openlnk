@@ -320,9 +320,8 @@ class TestDatasetModel:
         path = Path(__file__).parent.parent / "data" / "v0" / "dataset.json"
         raw = json.loads(path.read_text())
         ds = EvalDataset.model_validate(raw)
-        assert len(ds.cases) == 15
-        assert ds.total_gold > 0
-        assert ds.adversarial_count >= 4  # At least 4 adversarial cases
+        assert len(ds.cases) >= 500  # Gate 1 entry: ≥500 cases
+        assert ds.total_gold >= 60  # Gate 1 entry: ≥60 gold commitments
         assert ds.adversarial_pct >= 0.15  # ≥15% adversarial (EVAL-HARNESS.md)
 
     def test_multi_counterparty_cases_exist(self):

@@ -1,0 +1,1263 @@
+{
+  "version": "v0",
+  "frozen_at": "2026-07-11T00:00:00",
+  "cases": [
+    {
+      "id": "seed-001",
+      "message": "Hi, please pay the tuition fee of Rs 2000 by July 15th.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Pay tuition fee Rs 2000",
+          "class": "fee",
+          "amount_paise": 200000,
+          "due_at": "2026-07-15T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "tags": ["fee", "due-date", "amount"]
+    },
+    {
+      "id": "seed-002",
+      "message": "Class is rescheduled to Thursday 5pm. Please note the timing change.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Class rescheduled to Thursday 5pm",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule"]
+    },
+    {
+      "id": "seed-003",
+      "message": "Good morning! Hope you had a great weekend. The weather has been lovely lately.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "greeting"]
+    },
+    {
+      "id": "seed-004",
+      "message": "We should catch up sometime soon. It's been ages!",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "vague-plan"]
+    },
+    {
+      "id": "seed-005",
+      "message": "I'll pick up all three kids — Arjun, Priya, and Kavya — from school at 3pm tomorrow.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Pick up kids from school at 3pm",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Arjun", "role": "counterparty"},
+            {"name": "Priya", "role": "counterparty"},
+            {"name": "Kavya", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "task"]
+    },
+    {
+      "id": "seed-006",
+      "message": "Payment of Rs 1500 received for July month fees. Thank you!",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Payment received Rs 1500 July fees",
+          "class": "payment",
+          "amount_paise": 150000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["payment", "amount"]
+    },
+    {
+      "id": "seed-007",
+      "message": "Check out our new batch starting soon! Early bird discount available. Limited seats.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "marketing"]
+    },
+    {
+      "id": "seed-008",
+      "message": "If it rains tomorrow, I'll pick up Rohan from class instead of him taking the bus.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Pick up Rohan from class if it rains",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Rohan", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["conditional", "task"]
+    },
+    {
+      "id": "seed-009",
+      "message": "Can we do the parent-teacher meeting on Thursday at 5pm?",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Parent-teacher meeting Thursday 5pm",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["proposed", "schedule"]
+    },
+    {
+      "id": "seed-010",
+      "message": "Forwarded: 😂😂 This joke is hilarious! Share with everyone in the group.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "forwarded-joke"]
+    },
+    {
+      "id": "seed-011",
+      "message": "Please submit the science project report by next Monday. Both Ananya and Vikram need to work on it together.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Submit science project report by Monday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Ananya", "role": "counterparty"},
+            {"name": "Vikram", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "task", "due-date"]
+    },
+    {
+      "id": "seed-012",
+      "message": "Last month's fee was already paid on the 5th, just confirming. No pending balance.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "past-event"]
+    },
+    {
+      "id": "seed-013",
+      "message": "Monthly fee for August is Rs 2500. Due by August 5th. Also, extra class on Saturday at 10am for board exam prep.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Monthly fee August Rs 2500",
+          "class": "fee",
+          "amount_paise": 250000,
+          "due_at": "2026-08-05T00:00:00",
+          "counterparties": []
+        },
+        {
+          "title": "Extra class Saturday 10am board exam prep",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["multi-commitment", "fee", "schedule"]
+    },
+    {
+      "id": "seed-014",
+      "message": "Let me know if you need anything else. Happy to help!",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "rhetorical-offer"]
+    },
+    {
+      "id": "seed-015",
+      "message": "I'll send the study materials for the mid-term exam by Wednesday evening.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Send study materials for mid-term by Wednesday evening",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-016",
+      "message": "Fees for this quarter: Meera Rs 3000, Sanjay Rs 3000, Lakshmi Rs 2500. Please pay by August 10th.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Quarterly fees Meera Rs 3000",
+          "class": "fee",
+          "amount_paise": 300000,
+          "due_at": "2026-08-10T00:00:00",
+          "counterparties": [{"name": "Meera", "role": "counterparty"}]
+        },
+        {
+          "title": "Quarterly fees Sanjay Rs 3000",
+          "class": "fee",
+          "amount_paise": 300000,
+          "due_at": "2026-08-10T00:00:00",
+          "counterparties": [{"name": "Sanjay", "role": "counterparty"}]
+        },
+        {
+          "title": "Quarterly fees Lakshmi Rs 2500",
+          "class": "fee",
+          "amount_paise": 250000,
+          "due_at": "2026-08-10T00:00:00",
+          "counterparties": [{"name": "Lakshmi", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+    },
+    {
+      "id": "seed-017",
+      "message": "Tomorrow's maths class is cancelled due to teacher's health. Will reschedule.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Maths class cancelled, will reschedule",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule"]
+    },
+    {
+      "id": "seed-018",
+      "message": "The kids really enjoyed the field trip last week. Such a lovely experience!",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "past-event"]
+    },
+    {
+      "id": "seed-019",
+      "message": "Please collect the hall ticket from the office before Friday. Bring a passport photo along with it.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Collect hall ticket from office before Friday with passport photo",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-020",
+      "message": "I think Ravi is doing really well in science. Very proud of his progress.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "opinion"]
+    },
+    {
+      "id": "seed-021",
+      "message": "Reminder: annual day rehearsal every Saturday 9am to 12pm for the next 3 weeks. All students Karthik, Deepa, and Suresh must attend.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Annual day rehearsal Saturday 9am-12pm for 3 weeks",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Karthik", "role": "counterparty"},
+            {"name": "Deepa", "role": "counterparty"},
+            {"name": "Suresh", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "schedule"]
+    },
+    {
+      "id": "seed-022",
+      "message": "Rs 1000 advance received from Arun's parent for the science kit. Balance Rs 500 due on delivery.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Advance Rs 1000 received for science kit",
+          "class": "payment",
+          "amount_paise": 100000,
+          "due_at": null,
+          "counterparties": [{"name": "Arun", "role": "counterparty"}]
+        },
+        {
+          "title": "Balance Rs 500 due on delivery for science kit",
+          "class": "fee",
+          "amount_paise": 50000,
+          "due_at": null,
+          "counterparties": [{"name": "Arun", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["multi-commitment", "payment", "fee", "amount"]
+    },
+    {
+      "id": "seed-023",
+      "message": "Happy Diwali to all parents and students! 🪔 Wishing you joy and prosperity.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "greeting"]
+    },
+    {
+      "id": "seed-024",
+      "message": "Could you bring the textbook to class tomorrow? Priya forgot hers today.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Bring textbook to class tomorrow",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [{"name": "Priya", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["task"]
+    },
+    {
+      "id": "seed-025",
+      "message": "We might plan a picnic next month if the weather is good. Will confirm later.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "vague-plan"]
+    },
+    {
+      "id": "seed-026",
+      "message": "Exam fee ₹750 per student. Please pay for both Nisha and Rahul by next Wednesday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Exam fee Rs 750 for Nisha",
+          "class": "fee",
+          "amount_paise": 75000,
+          "due_at": null,
+          "counterparties": [{"name": "Nisha", "role": "counterparty"}]
+        },
+        {
+          "title": "Exam fee Rs 750 for Rahul",
+          "class": "fee",
+          "amount_paise": 75000,
+          "due_at": null,
+          "counterparties": [{"name": "Rahul", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+    },
+    {
+      "id": "seed-027",
+      "message": "I'll drop off the completed homework notebooks at the center by 4pm today.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Drop off homework notebooks at center by 4pm",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-028",
+      "message": "Madam, my son Arjun has been sick this week. He'll be absent till Monday.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "information"]
+    },
+    {
+      "id": "seed-029",
+      "message": "Special batch for board exam starts from August 1st. Timing: Mon/Wed/Fri 6pm-8pm. Fee is Rs 4000/month.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Board exam batch starts August 1st Mon/Wed/Fri 6pm-8pm",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": "2026-08-01T00:00:00",
+          "counterparties": []
+        },
+        {
+          "title": "Board exam batch fee Rs 4000/month",
+          "class": "fee",
+          "amount_paise": 400000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["multi-commitment", "schedule", "fee"]
+    },
+    {
+      "id": "seed-030",
+      "message": "Saw the new Rajinikanth movie? It was amazing! 🎬",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "casual"]
+    },
+    {
+      "id": "seed-031",
+      "message": "Please ensure Divya completes the maths worksheet and brings it to class on Thursday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Complete maths worksheet and bring to class Thursday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [{"name": "Divya", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-032",
+      "message": "Thank you for the wonderful feedback about our teaching. We appreciate your support!",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "gratitude"]
+    },
+    {
+      "id": "seed-033",
+      "message": "Bus pickup for Adyar students: 7:30am from the main road stop. Driver's number shared separately.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Bus pickup 7:30am from Adyar main road stop",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule"]
+    },
+    {
+      "id": "seed-034",
+      "message": "If Sneha scores above 90 in the unit test, I'll waive the extra class fee for this month.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Waive extra class fee if Sneha scores above 90",
+          "class": "fee",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [{"name": "Sneha", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["conditional", "fee"]
+    },
+    {
+      "id": "seed-035",
+      "message": "All 8th std students — Aarav, Ishaan, Diya, Neha — must attend the career guidance session this Saturday 10am.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Career guidance session Saturday 10am",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Aarav", "role": "counterparty"},
+            {"name": "Ishaan", "role": "counterparty"},
+            {"name": "Diya", "role": "counterparty"},
+            {"name": "Neha", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "schedule"]
+    },
+    {
+      "id": "seed-036",
+      "message": "Uniforms are available at Pothys, T Nagar. You can buy them anytime.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "information"]
+    },
+    {
+      "id": "seed-037",
+      "message": "I'll transfer the pending Rs 3500 to your GPay by end of today.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Transfer pending Rs 3500 via GPay by end of today",
+          "class": "payment",
+          "amount_paise": 350000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["payment", "amount", "due-date"]
+    },
+    {
+      "id": "seed-038",
+      "message": "The chart paper and colour pens for the project — I'll buy them and send with Kavitha on Monday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Buy chart paper and colour pens, send with Kavitha on Monday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [{"name": "Kavitha", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["task"]
+    },
+    {
+      "id": "seed-039",
+      "message": "Does anyone have the phone number of the Besant Nagar center? Looking for a good tuition for my nephew.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "question"]
+    },
+    {
+      "id": "seed-040",
+      "message": "Registration fee for the summer camp is Rs 1200. Non-refundable. Last date to register: July 20th.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Summer camp registration fee Rs 1200 by July 20th",
+          "class": "fee",
+          "amount_paise": 120000,
+          "due_at": "2026-07-20T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "tags": ["fee", "amount", "due-date"]
+    },
+    {
+      "id": "seed-041",
+      "message": "Hmm I'm not sure if we should continue with the current textbook or switch. What do other parents think?",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "opinion"]
+    },
+    {
+      "id": "seed-042",
+      "message": "I need both Rithika and Aditya to stay back after class on Wednesday for extra practice.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Stay back after class Wednesday for extra practice",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Rithika", "role": "counterparty"},
+            {"name": "Aditya", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "schedule"]
+    },
+    {
+      "id": "seed-043",
+      "message": "Sent Rs 2000 via PhonePe just now for September tuition. Transaction ID: TXN12345.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Payment Rs 2000 sent via PhonePe for September tuition",
+          "class": "payment",
+          "amount_paise": 200000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["payment", "amount"]
+    },
+    {
+      "id": "seed-044",
+      "message": "The water purifier at the center is broken. Told them to fix it, but who knows when they'll come.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "complaint"]
+    },
+    {
+      "id": "seed-045",
+      "message": "Model exam on 15th August. Syllabus: chapters 1-8. Bring your own calculator.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Model exam on August 15th, chapters 1-8",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": "2026-08-15T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule", "due-date"]
+    },
+    {
+      "id": "seed-046",
+      "message": "Already submitted the forms yesterday. No need to bring anything else.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "past-event"]
+    },
+    {
+      "id": "seed-047",
+      "message": "I'll handle the transportation for all five students — Arun, Bhavya, Chitra, Dinesh, and Esha — for the inter-school competition on Saturday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Handle transportation for inter-school competition Saturday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Arun", "role": "counterparty"},
+            {"name": "Bhavya", "role": "counterparty"},
+            {"name": "Chitra", "role": "counterparty"},
+            {"name": "Dinesh", "role": "counterparty"},
+            {"name": "Esha", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "task"]
+    },
+    {
+      "id": "seed-048",
+      "message": "Reminder: no class on August 15th (Independence Day). Classes resume August 16th.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "No class August 15th, classes resume August 16th",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule"]
+    },
+    {
+      "id": "seed-049",
+      "message": "LOL that's so funny 😂 who sent this?",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "casual"]
+    },
+    {
+      "id": "seed-050",
+      "message": "Late fee of Rs 200 will be charged if payment is not received by the 10th. This applies to all pending accounts.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Late fee Rs 200 if payment not received by 10th",
+          "class": "fee",
+          "amount_paise": 20000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["conditional", "fee", "amount"]
+    },
+    {
+      "id": "seed-051",
+      "message": "Can you share the syllabus portions for the upcoming unit test? Want to help my daughter prepare.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "question"]
+    },
+    {
+      "id": "seed-052",
+      "message": "PTM schedule changed: now on Saturday 3pm instead of Thursday. Please confirm your attendance.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "PTM rescheduled to Saturday 3pm",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule"]
+    },
+    {
+      "id": "seed-053",
+      "message": "My daughter did great in the last test! So happy with her improvement.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "opinion"]
+    },
+    {
+      "id": "seed-054",
+      "message": "Each student needs to bring Rs 150 for the lab materials. Collect from Harini, Prasad, and Varun.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Lab materials fee Rs 150 each",
+          "class": "fee",
+          "amount_paise": 15000,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Harini", "role": "counterparty"},
+            {"name": "Prasad", "role": "counterparty"},
+            {"name": "Varun", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "fee", "amount"]
+    },
+    {
+      "id": "seed-055",
+      "message": "I will personally call each parent who hasn't paid this month's fee by Friday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Call parents with unpaid fees by Friday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-056",
+      "message": "Traffic was terrible today on OMR. Took me an hour to reach the center!",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "casual"]
+    },
+    {
+      "id": "seed-057",
+      "message": "Quarterly assessment marks will be shared by next week. Don't worry, overall performance is good.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Share quarterly assessment marks by next week",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-058",
+      "message": "🙏 Thank you so much for your patience with my son. Really grateful.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "gratitude"]
+    },
+    {
+      "id": "seed-059",
+      "message": "Scholarship test for top 3 students on August 20th at 10am. Winners get 50% fee waiver.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Scholarship test August 20th at 10am",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": "2026-08-20T10:00:00",
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule", "due-date"]
+    },
+    {
+      "id": "seed-060",
+      "message": "Sure ma'am, will try to come on time from tomorrow.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "vague-plan"]
+    },
+    {
+      "id": "seed-061",
+      "message": "Please arrange Rs 500 for the educational trip to Mahabalipuram. Deadline: this Friday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Educational trip fee Rs 500 by Friday",
+          "class": "fee",
+          "amount_paise": 50000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["fee", "amount", "due-date"]
+    },
+    {
+      "id": "seed-062",
+      "message": "Our WhatsApp group is only for class updates. Please don't share forwards or memes here.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "admin"]
+    },
+    {
+      "id": "seed-063",
+      "message": "I'll get the projector repaired and bring it back by Thursday. The science class needs it.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Get projector repaired and return by Thursday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-064",
+      "message": "Has anyone seen Arun's water bottle? He left it in the classroom yesterday.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "question"]
+    },
+    {
+      "id": "seed-065",
+      "message": "Competition entry fee Rs 300 per team. Teams: Anu+Ravi, Deepika+Kiran, Meena+Sunil. All entries due by July 25th.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Competition entry fee Rs 300 for team Anu and Ravi",
+          "class": "fee",
+          "amount_paise": 30000,
+          "due_at": "2026-07-25T00:00:00",
+          "counterparties": [
+            {"name": "Anu", "role": "counterparty"},
+            {"name": "Ravi", "role": "counterparty"}
+          ]
+        },
+        {
+          "title": "Competition entry fee Rs 300 for team Deepika and Kiran",
+          "class": "fee",
+          "amount_paise": 30000,
+          "due_at": "2026-07-25T00:00:00",
+          "counterparties": [
+            {"name": "Deepika", "role": "counterparty"},
+            {"name": "Kiran", "role": "counterparty"}
+          ]
+        },
+        {
+          "title": "Competition entry fee Rs 300 for team Meena and Sunil",
+          "class": "fee",
+          "amount_paise": 30000,
+          "due_at": "2026-07-25T00:00:00",
+          "counterparties": [
+            {"name": "Meena", "role": "counterparty"},
+            {"name": "Sunil", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+    },
+    {
+      "id": "seed-066",
+      "message": "Can we shift the Wednesday batch to 5:30pm instead of 5pm? The school bus reaches late.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Shift Wednesday batch to 5:30pm",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["proposed", "schedule"]
+    },
+    {
+      "id": "seed-067",
+      "message": "I already told them about it last week. They know.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "past-event"]
+    },
+    {
+      "id": "seed-068",
+      "message": "Special Pongal holiday homework: complete the Tamil essay and English grammar exercises. Submit by January 20th.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Complete Tamil essay and English grammar exercises by January 20th",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-069",
+      "message": "Forwarded: 10 tips for your child's exam preparation! 📚 #StudyTips #ExamSeason",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "forwarded"]
+    },
+    {
+      "id": "seed-070",
+      "message": "I'll pay the remaining balance of Rs 1800 when I come to pick up Shalini tomorrow evening.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Pay remaining balance Rs 1800 tomorrow evening",
+          "class": "payment",
+          "amount_paise": 180000,
+          "due_at": null,
+          "counterparties": [{"name": "Shalini", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["payment", "amount"]
+    },
+    {
+      "id": "seed-071",
+      "message": "The AC in room 2 isn't working properly. It's so hot inside!",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "complaint"]
+    },
+    {
+      "id": "seed-072",
+      "message": "Madam, please give extra attention to Pooja in maths. She's struggling with algebra.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "request-no-commitment"]
+    },
+    {
+      "id": "seed-073",
+      "message": "Book fair at the center next Saturday 10am-4pm. All parents and students welcome. Entry free.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Book fair next Saturday 10am-4pm",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule"]
+    },
+    {
+      "id": "seed-074",
+      "message": "Got it, thanks for letting me know.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "acknowledgement"]
+    },
+    {
+      "id": "seed-075",
+      "message": "If the rain stops by 4pm, we'll conduct the outdoor sports practice as planned. Otherwise it's cancelled.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Outdoor sports practice at 4pm if rain stops",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["conditional", "schedule"]
+    },
+    {
+      "id": "seed-076",
+      "message": "The CBSE board exam date sheet is out. Check the official website for details.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "information"]
+    },
+    {
+      "id": "seed-077",
+      "message": "I need Gopal, Lakshmi, and Ramesh to prepare charts on Indian history for the exhibition next Friday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Prepare Indian history charts for exhibition Friday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Gopal", "role": "counterparty"},
+            {"name": "Lakshmi", "role": "counterparty"},
+            {"name": "Ramesh", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "task", "due-date"]
+    },
+    {
+      "id": "seed-078",
+      "message": "Paid the building rent for this month, no worries on that front.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "past-event"]
+    },
+    {
+      "id": "seed-079",
+      "message": "New batch timings from August: Monday 4pm, Wednesday 4pm, Friday 4pm. Same fee structure continues.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "New batch timings from August Mon/Wed/Fri 4pm",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule"]
+    },
+    {
+      "id": "seed-080",
+      "message": "Hmm ok let me think about it and get back to you.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "vague-plan"]
+    },
+    {
+      "id": "seed-081",
+      "message": "Fees outstanding for 3 months: Aadhira owes Rs 6000, Karthi owes Rs 4500. Please clear by month end.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Outstanding fees Rs 6000 for Aadhira by month end",
+          "class": "fee",
+          "amount_paise": 600000,
+          "due_at": null,
+          "counterparties": [{"name": "Aadhira", "role": "counterparty"}]
+        },
+        {
+          "title": "Outstanding fees Rs 4500 for Karthi by month end",
+          "class": "fee",
+          "amount_paise": 450000,
+          "due_at": null,
+          "counterparties": [{"name": "Karthi", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["multi-commitment", "multi-cp", "fee", "amount"]
+    },
+    {
+      "id": "seed-082",
+      "message": "I spoke to the principal about the issue. They said they will look into it.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "past-event"]
+    },
+    {
+      "id": "seed-083",
+      "message": "Science lab practical: bring lab coat, goggles, and notebook on Monday. Rs 100 lab fee per session.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Bring lab coat, goggles and notebook for practical Monday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        },
+        {
+          "title": "Lab fee Rs 100 per session",
+          "class": "fee",
+          "amount_paise": 10000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["multi-commitment", "task", "fee"]
+    },
+    {
+      "id": "seed-084",
+      "message": "Why is no one responding in this group? 😤",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "complaint"]
+    },
+    {
+      "id": "seed-085",
+      "message": "I'll coordinate with Sundar's and Preethi's parents to arrange the carpool for the field trip on Saturday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Coordinate carpool for field trip Saturday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": [
+            {"name": "Sundar", "role": "counterparty"},
+            {"name": "Preethi", "role": "counterparty"}
+          ]
+        }
+      ],
+      "tags": ["multi-cp", "task"]
+    },
+    {
+      "id": "seed-086",
+      "message": "That's a good idea, let's discuss it at the next meeting.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "vague-plan"]
+    },
+    {
+      "id": "seed-087",
+      "message": "Confirmed: received Rs 5000 from Vishal's mother for October and November fees combined.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Received Rs 5000 from Vishal's mother for Oct-Nov fees",
+          "class": "payment",
+          "amount_paise": 500000,
+          "due_at": null,
+          "counterparties": [{"name": "Vishal", "role": "counterparty"}]
+        }
+      ],
+      "tags": ["payment", "amount"]
+    },
+    {
+      "id": "seed-088",
+      "message": "Maybe we can do a parents' day event sometime. Would be nice for the children.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "vague-plan"]
+    },
+    {
+      "id": "seed-089",
+      "message": "Reminder: bring signed consent form for the school trip. Without it, students cannot participate.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Bring signed consent form for school trip",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task"]
+    },
+    {
+      "id": "seed-090",
+      "message": "Just sharing — the education minister announced new exam pattern changes. Nothing confirmed yet.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "information"]
+    },
+    {
+      "id": "seed-091",
+      "message": "The photocopy charges for the question papers will be Rs 50 per student. Collect from everyone by Thursday.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Photocopy charges Rs 50 per student by Thursday",
+          "class": "fee",
+          "amount_paise": 5000,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["fee", "amount", "due-date"]
+    },
+    {
+      "id": "seed-092",
+      "message": "Test results were shared last Wednesday. Those who missed can collect from the office.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "past-event"]
+    },
+    {
+      "id": "seed-093",
+      "message": "I'll prepare the question paper for the mid-term and share it with all teachers by next Monday for review.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Prepare mid-term question paper and share with teachers by Monday",
+          "class": "task",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["task", "due-date"]
+    },
+    {
+      "id": "seed-094",
+      "message": "👍",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "emoji-only"]
+    },
+    {
+      "id": "seed-095",
+      "message": "Can you check if the library has the NCERT reference guide? I want to borrow it for Tanvi.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "question"]
+    },
+    {
+      "id": "seed-096",
+      "message": "I'll give a 10% discount on next month's fee for students who scored above 95% in the quarterly exam.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "10% fee discount for students scoring above 95% in quarterly exam",
+          "class": "fee",
+          "amount_paise": null,
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "tags": ["conditional", "fee"]
+    },
+    {
+      "id": "seed-097",
+      "message": "Sending the attendance report for this week. All looks fine except 3 absences.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "information"]
+    },
+    {
+      "id": "seed-098",
+      "message": "The annual sports day is scheduled for September 15th. More details to follow.",
+      "provenance_kind": "message",
+      "gold_commitments": [
+        {
+          "title": "Annual sports day September 15th",
+          "class": "schedule",
+          "amount_paise": null,
+          "due_at": "2026-09-15T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "tags": ["schedule", "due-date"]
+    },
+    {
+      "id": "seed-099",
+      "message": "Ok",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "acknowledgement"]
+    },
+    {
+      "id": "seed-100",
+      "message": "Please note: from next month, fee payment only via UPI or bank transfer. No cash accepted at the center.",
+      "provenance_kind": "message",
+      "gold_commitments": [],
+      "tags": ["adversarial", "policy"]
+    }
+  ]
+}
