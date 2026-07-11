@@ -1,0 +1,49 @@
+{
+  "dataset_version": "v0",
+  "run_at": "2026-07-11T09:05:13.324484",
+  "model_id": "claude-sonnet-4-6",
+  "prompt_hash": "d297c5a266f38cbe",
+  "overall_precision": 0.9090909090909091,
+  "overall_recall": 1.0,
+  "overall_trust_score": 0.7692307692307693,
+  "per_route": [
+    {
+      "route": "message",
+      "precision": 0.9090909090909091,
+      "recall": 1.0,
+      "trust_score": 0.7692307692307693,
+      "tp_count": 10,
+      "fp_count": 1,
+      "fn_count": 0,
+      "case_count": 15
+    }
+  ],
+  "total_cases": 15,
+  "total_tp": 10,
+  "total_fp": 1,
+  "total_fn": 0,
+  "latency_p50_ms": 2220.670252107084,
+  "latency_p95_ms": 5857.161150081083,
+  "cost_per_1k_msgs": null,
+  "confusion_samples": [
+    {
+      "case_id": "seed-012",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [
+        {
+          "title": "Last month's fee payment confirmed",
+          "class_": "payment",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [],
+          "confidence": 0.88
+        }
+      ],
+      "false_negatives": [],
+      "latency_ms": 2061.1623709555715
+    }
+  ],
+  "gate_passed": false
+}

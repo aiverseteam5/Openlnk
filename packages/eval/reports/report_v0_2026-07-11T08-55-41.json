@@ -1,0 +1,219 @@
+{
+  "dataset_version": "v0",
+  "run_at": "2026-07-11T08:55:41.547353",
+  "model_id": "claude-sonnet-4-6",
+  "prompt_hash": "d297c5a266f38cbe",
+  "overall_precision": 1.0,
+  "overall_recall": 0.0,
+  "overall_trust_score": 1.0,
+  "per_route": [
+    {
+      "route": "message",
+      "precision": 1.0,
+      "recall": 0.0,
+      "trust_score": 1.0,
+      "tp_count": 0,
+      "fp_count": 0,
+      "fn_count": 10,
+      "case_count": 15
+    }
+  ],
+  "total_cases": 15,
+  "total_tp": 0,
+  "total_fp": 0,
+  "total_fn": 10,
+  "latency_p50_ms": 284.19135604053736,
+  "latency_p95_ms": 960.3382190689445,
+  "cost_per_1k_msgs": null,
+  "confusion_samples": [
+    {
+      "case_id": "seed-001",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Pay tuition fee Rs 2000",
+          "class_": "fee",
+          "amount_paise": 200000,
+          "currency": "INR",
+          "due_at": "2026-07-15T00:00:00",
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 301.5354310628027
+    },
+    {
+      "case_id": "seed-002",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Class rescheduled to Thursday 5pm",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 287.8152411431074
+    },
+    {
+      "case_id": "seed-005",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Pick up kids from school at 3pm",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Arjun",
+              "role": "counterparty"
+            },
+            {
+              "name": "Priya",
+              "role": "counterparty"
+            },
+            {
+              "name": "Kavya",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 280.6743970140815
+    },
+    {
+      "case_id": "seed-006",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Payment received Rs 1500 July fees",
+          "class_": "payment",
+          "amount_paise": 150000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 280.7991779409349
+    },
+    {
+      "case_id": "seed-008",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Pick up Rohan from class if it rains",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Rohan",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 276.9315850455314
+    },
+    {
+      "case_id": "seed-009",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Parent-teacher meeting Thursday 5pm",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 284.1034638695419
+    },
+    {
+      "case_id": "seed-011",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Submit science project report by Monday",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": [
+            {
+              "name": "Ananya",
+              "role": "counterparty"
+            },
+            {
+              "name": "Vikram",
+              "role": "counterparty"
+            }
+          ]
+        }
+      ],
+      "latency_ms": 290.4913940001279
+    },
+    {
+      "case_id": "seed-013",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Monthly fee August Rs 2500",
+          "class_": "fee",
+          "amount_paise": 250000,
+          "currency": "INR",
+          "due_at": "2026-08-05T00:00:00",
+          "counterparties": []
+        },
+        {
+          "title": "Extra class Saturday 10am board exam prep",
+          "class_": "schedule",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 284.19135604053736
+    },
+    {
+      "case_id": "seed-015",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Send study materials for mid-term by Wednesday evening",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 450.45326091349125
+    }
+  ],
+  "gate_passed": false
+}

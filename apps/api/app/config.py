@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     """Environment-based settings. Loaded from .env or Infisical in prod."""
 
     # Database (Supabase Mumbai — DB-only, ADR-007)
-    database_url: str = "postgresql+asyncpg://openlnk_app:dev_password@localhost:5432/openlnk_dev"
+    database_url: str = "postgresql+asyncpg://openlnk_app:dev_password@localhost:5433/openlnk_dev"
 
     # Redis — two instances per eng review A1 decision
     redis_jobs_url: str = "redis://localhost:6379/0"  # AOF on, durable arq

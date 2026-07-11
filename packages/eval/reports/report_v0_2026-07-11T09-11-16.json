@@ -1,0 +1,48 @@
+{
+  "dataset_version": "v0",
+  "run_at": "2026-07-11T09:11:16.440977",
+  "model_id": "claude-sonnet-4-6",
+  "prompt_hash": "d3f82234f3cb32de",
+  "overall_precision": 1.0,
+  "overall_recall": 0.9,
+  "overall_trust_score": 1.0,
+  "per_route": [
+    {
+      "route": "message",
+      "precision": 1.0,
+      "recall": 0.9,
+      "trust_score": 1.0,
+      "tp_count": 9,
+      "fp_count": 0,
+      "fn_count": 1,
+      "case_count": 15
+    }
+  ],
+  "total_cases": 15,
+  "total_tp": 9,
+  "total_fp": 0,
+  "total_fn": 1,
+  "latency_p50_ms": 2217.01464895159,
+  "latency_p95_ms": 7018.920302158222,
+  "cost_per_1k_msgs": null,
+  "confusion_samples": [
+    {
+      "case_id": "seed-006",
+      "provenance_kind": "message",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        {
+          "title": "Payment received Rs 1500 July fees",
+          "class_": "payment",
+          "amount_paise": 150000,
+          "currency": "INR",
+          "due_at": null,
+          "counterparties": []
+        }
+      ],
+      "latency_ms": 1265.1947799604386
+    }
+  ],
+  "gate_passed": true
+}

@@ -1,0 +1,113 @@
+{
+  "dataset_version": "v0",
+  "run_at": "2026-07-11T09:06:17.203883",
+  "model_id": "claude-sonnet-4-6",
+  "prompt_hash": "679b90177d060877",
+  "overall_precision": 0.8333333333333334,
+  "overall_recall": 1.0,
+  "overall_trust_score": 0.625,
+  "per_route": [
+    {
+      "route": "message",
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "trust_score": 0.625,
+      "tp_count": 10,
+      "fp_count": 2,
+      "fn_count": 0,
+      "case_count": 15
+    }
+  ],
+  "total_cases": 15,
+  "total_tp": 10,
+  "total_fp": 2,
+  "total_fn": 0,
+  "latency_p50_ms": 2307.811303064227,
+  "latency_p95_ms": 4483.206338947639,
+  "cost_per_1k_msgs": null,
+  "confusion_samples": [
+    {
+      "case_id": "seed-005",
+      "provenance_kind": "message",
+      "true_positives": [
+        {
+          "gold": {
+            "title": "Pick up kids from school at 3pm",
+            "class_": "task",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": null,
+            "counterparties": [
+              {
+                "name": "Arjun",
+                "role": "counterparty"
+              },
+              {
+                "name": "Priya",
+                "role": "counterparty"
+              },
+              {
+                "name": "Kavya",
+                "role": "counterparty"
+              }
+            ]
+          },
+          "extracted": {
+            "title": "Pick up Arjun from school at 3pm tomorrow",
+            "class_": "task",
+            "amount_paise": null,
+            "currency": "INR",
+            "due_at": "2025-07-23T15:00:00",
+            "counterparties": [
+              {
+                "name": "Arjun",
+                "phone_e164": null,
+                "role": "counterparty"
+              }
+            ],
+            "confidence": 0.95
+          },
+          "title_match": true,
+          "due_match": false,
+          "class_match": true,
+          "amount_match": true
+        }
+      ],
+      "false_positives": [
+        {
+          "title": "Pick up Priya from school at 3pm tomorrow",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2025-07-23T15:00:00",
+          "counterparties": [
+            {
+              "name": "Priya",
+              "phone_e164": null,
+              "role": "counterparty"
+            }
+          ],
+          "confidence": 0.95
+        },
+        {
+          "title": "Pick up Kavya from school at 3pm tomorrow",
+          "class_": "task",
+          "amount_paise": null,
+          "currency": "INR",
+          "due_at": "2025-07-23T15:00:00",
+          "counterparties": [
+            {
+              "name": "Kavya",
+              "phone_e164": null,
+              "role": "counterparty"
+            }
+          ],
+          "confidence": 0.95
+        }
+      ],
+      "false_negatives": [],
+      "latency_ms": 4483.206338947639
+    }
+  ],
+  "gate_passed": false
+}

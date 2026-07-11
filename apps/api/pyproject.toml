@@ -20,6 +20,7 @@ dependencies = [
     "cryptography>=44.0",
     "PyJWT>=2.10",
     "pydantic-settings>=2.14.2",
+    "psycopg2-binary>=2.9.12",
 ]
 
 [project.optional-dependencies]
@@ -41,6 +42,7 @@ select = ["E", "F", "W", "I", "N", "UP", "B", "A", "S", "T20", "RUF"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "S106", "RUF002"]
+"app/routers/**" = ["B008"]  # FastAPI uses Depends/Header in defaults by design
 
 [tool.ruff.format]
 quote-style = "double"
