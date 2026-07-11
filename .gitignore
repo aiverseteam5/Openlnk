@@ -65,3 +65,4 @@ packages/eval/reports/
 
 # Root-level ADR duplicates (canonical copies in adr/)
 /ADR-*.md
+test-results/

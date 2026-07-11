@@ -42,11 +42,15 @@ db-verify table:
 
 # Run all Python tests
 test:
-    cd apps/api && PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest -v -p asyncio
+    cd apps/api && uv run pytest -v --ignore=tests/test_rls_isolation.py
 
 # Run tests with requirement marker
 test-req req:
-    cd apps/api && PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest -v -p asyncio -m "req('{{req}}')"
+    cd apps/api && uv run pytest -v -m "req('{{req}}')"
+
+# Run Playwright E2E tests (web-owner + web-thread)
+test-e2e:
+    pnpm --filter web-owner build && pnpm --filter web-thread build && npx playwright test
 
 # Run RLS isolation tests (OL-041 — Gate 1 exit blocker)
 test-rls:
