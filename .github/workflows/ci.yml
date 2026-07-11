@@ -1,0 +1,144 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+  NODE_VERSION: "20"
+
+jobs:
+  # ── Python tests (apps/api) ──
+  api-tests:
+    name: API tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: openlnk_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        working-directory: apps/api
+        run: uv sync
+
+      - name: Run tests
+        working-directory: apps/api
+        run: |
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+          uv run pytest -v -p asyncio \
+            --tb=short \
+            -q
+
+  # ── Python lint + typecheck ──
+  api-lint:
+    name: API lint + typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        working-directory: apps/api
+        run: uv sync
+
+      - name: Ruff lint
+        working-directory: apps/api
+        run: uv run ruff check .
+
+      - name: Ruff format check
+        working-directory: apps/api
+        run: uv run ruff format --check .
+
+  # ── Eval gate (OL-092) ──
+  # Runs on changes to prompts, extraction pipeline, or eval harness.
+  # Blocks merge if precision < 97% or recall < 85%.
+  eval-gate:
+    name: Eval gate (OL-092)
+    runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.message, 'prompt') ||
+      contains(github.event.head_commit.message, 'extract') ||
+      contains(github.event.head_commit.message, 'eval') ||
+      github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install eval dependencies
+        working-directory: packages/eval
+        run: uv sync
+
+      - name: Install API dependencies (for LLM adapter)
+        working-directory: apps/api
+        run: uv sync
+
+      - name: Run eval harness
+        working-directory: packages/eval
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: uv run python -m eval_harness
+
+  # ── Eval scorer tests ──
+  eval-tests:
+    name: Eval scorer tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        working-directory: packages/eval
+        run: uv sync
+
+      - name: Run scorer tests
+        working-directory: packages/eval
+        run: uv run pytest -v

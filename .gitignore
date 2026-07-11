@@ -60,5 +60,8 @@ design-audit-*/
 # Claude Code local state
 .claude/
 
+# Eval reports (generated, contain run timestamps)
+packages/eval/reports/
+
 # Root-level ADR duplicates (canonical copies in adr/)
 /ADR-*.md
