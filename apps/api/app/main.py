@@ -7,7 +7,7 @@ import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import commitments, contexts, extraction, health, sync, threads
+from app.routers import auth, commitments, contexts, extraction, health, sync, threads
 
 logger = structlog.get_logger()
 
@@ -36,6 +36,7 @@ app.add_middleware(
 
 # /v1 prefix from day one (CLAUDE.md)
 app.include_router(health.router)
+app.include_router(auth.router, prefix="/v1")
 app.include_router(commitments.router, prefix="/v1")
 app.include_router(contexts.router, prefix="/v1")
 app.include_router(extraction.router, prefix="/v1")

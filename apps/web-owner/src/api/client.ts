@@ -46,12 +46,42 @@ async function apiFetch<T>(
   opts: RequestInit = {},
   principalId?: string,
 ): Promise<T> {
+  // Prefer Bearer token from localStorage, fall back to X-Principal-Id header
+  const accessToken = localStorage.getItem("openlnk_access_token");
+  const authHeader: Record<string, string> = accessToken
+    ? { Authorization: `Bearer ${accessToken}` }
+    : principalId
+      ? { "X-Principal-Id": principalId }
+      : {};
+
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    ...(principalId ? { "X-Principal-Id": principalId } : {}),
+    ...authHeader,
     ...((opts.headers as Record<string, string>) ?? {}),
   };
   const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+
+  // On 401, try refreshing the token once
+  if (res.status === 401 && accessToken) {
+    const { useAppStore } = await import("../store/app");
+    const refreshed = await useAppStore.getState().refreshAccessToken();
+    if (refreshed) {
+      // Retry with new token
+      const newToken = localStorage.getItem("openlnk_access_token");
+      const retryHeaders: Record<string, string> = {
+        "Content-Type": "application/json",
+        ...(newToken ? { Authorization: `Bearer ${newToken}` } : {}),
+        ...((opts.headers as Record<string, string>) ?? {}),
+      };
+      const retryRes = await fetch(`${API_BASE}${path}`, { ...opts, headers: retryHeaders });
+      if (!retryRes.ok) {
+        const body = await retryRes.text();
+        throw new Error(`API ${retryRes.status}: ${body}`);
+      }
+      return retryRes.json();
+    }
+  }
+
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`API ${res.status}: ${body}`);

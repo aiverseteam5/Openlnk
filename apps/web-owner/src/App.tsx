@@ -27,6 +27,7 @@ const CommitmentsPage = lazy(() => import("./pages/CommitmentsPage"));
 const CreateCommitmentPage = lazy(() => import("./pages/CreateCommitmentPage"));
 const CommitmentDetailPage = lazy(() => import("./pages/CommitmentDetailPage"));
 const ExtractionInboxPage = lazy(() => import("./pages/ExtractionInboxPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -84,6 +85,8 @@ function ContextSelector() {
 }
 
 function Sidebar() {
+  const { logout } = useAppStore();
+
   return (
     <Box
       sx={{
@@ -94,48 +97,65 @@ function Sidebar() {
         borderColor: "divider",
         py: 2,
         display: { xs: "none", md: "block" },
+        justifyContent: "space-between",
+        flexDirection: "column",
       }}
     >
-      <Typography
-        sx={{
-          fontFamily: fonts.mono,
-          fontSize: 13,
-          fontWeight: 600,
-          letterSpacing: "0.08em",
-          color: "primary.main",
-          px: 2,
-          mb: 2,
-        }}
-      >
-        OPENLNK
-      </Typography>
-      <List disablePadding>
-        {NAV_ITEMS.map((item) => (
-          <ListItemButton
-            key={item.path}
-            component={NavLink}
-            to={item.path}
-            sx={{
-              px: 2,
-              py: 0.75,
-              "&.active": {
-                bgcolor: "primary.main",
-                color: "primary.contrastText",
-                "& .MuiListItemText-primary": {
+      <Box>
+        <Typography
+          sx={{
+            fontFamily: fonts.mono,
+            fontSize: 13,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            color: "primary.main",
+            px: 2,
+            mb: 2,
+          }}
+        >
+          OPENLNK
+        </Typography>
+        <List disablePadding>
+          {NAV_ITEMS.map((item) => (
+            <ListItemButton
+              key={item.path}
+              component={NavLink}
+              to={item.path}
+              sx={{
+                px: 2,
+                py: 0.75,
+                "&.active": {
+                  bgcolor: "primary.main",
                   color: "primary.contrastText",
+                  "& .MuiListItemText-primary": {
+                    color: "primary.contrastText",
+                  },
                 },
-              },
+              }}
+            >
+              <ListItemText
+                primary={item.label}
+                slotProps={{ primary: { sx: { fontSize: 14, fontWeight: 500 } } }}
+              />
+            </ListItemButton>
+          ))}
+        </List>
+        <Box sx={{ mt: 2 }}>
+          <ContextSelector />
+        </Box>
+      </Box>
+      <Box sx={{ px: 2, mt: 3 }}>
+        <ListItemButton
+          onClick={logout}
+          sx={{ px: 1, py: 0.5, borderRadius: "2px" }}
+        >
+          <ListItemText
+            primary="Sign out"
+            slotProps={{
+              primary: { sx: { fontSize: 12, color: "text.secondary" } },
             }}
-          >
-            <ListItemText
-              primary={item.label}
-              slotProps={{ primary: { sx: { fontSize: 14, fontWeight: 500 } } }}
-            />
-          </ListItemButton>
-        ))}
-      </List>
-      <Box sx={{ mt: 2 }}>
-        <ContextSelector />
+          />
+        </ListItemButton>
       </Box>
     </Box>
   );
@@ -231,42 +251,56 @@ function MobileHeader() {
 }
 
 function AppShell() {
-  const { selectedContextId } = useAppStore();
+  const { selectedContextId, isAuthenticated } = useAppStore();
   useContextSync(selectedContextId);
 
   return (
     <BrowserRouter>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          minHeight: "100vh",
-          bgcolor: "background.default",
-        }}
+      <Suspense
+        fallback={
+          <Typography sx={{ color: "text.secondary", py: 4, textAlign: "center" }}>
+            {"\u2014"}
+          </Typography>
+        }
       >
-        <MobileHeader />
-        <Sidebar />
-        <Box
-          component="main"
-          sx={{ flex: 1, p: { xs: 2, md: 3 } }}
-        >
-          <Suspense
-            fallback={
-              <Typography sx={{ color: "text.secondary", py: 4 }}>
-                {"\u2014"}
-              </Typography>
-            }
+        {!isAuthenticated ? (
+          <Routes>
+            <Route path="*" element={<LoginPage />} />
+          </Routes>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              minHeight: "100vh",
+              bgcolor: "background.default",
+            }}
           >
-            <Routes>
-              <Route path="/" element={<DailyBriefPage />} />
-              <Route path="/inbox" element={<ExtractionInboxPage />} />
-              <Route path="/commitments" element={<CommitmentsPage />} />
-              <Route path="/commitments/new" element={<CreateCommitmentPage />} />
-              <Route path="/commitments/:id" element={<CommitmentDetailPage />} />
-            </Routes>
-          </Suspense>
-        </Box>
-      </Box>
+            <MobileHeader />
+            <Sidebar />
+            <Box
+              component="main"
+              sx={{ flex: 1, p: { xs: 2, md: 3 } }}
+            >
+              <Suspense
+                fallback={
+                  <Typography sx={{ color: "text.secondary", py: 4 }}>
+                    {"\u2014"}
+                  </Typography>
+                }
+              >
+                <Routes>
+                  <Route path="/" element={<DailyBriefPage />} />
+                  <Route path="/inbox" element={<ExtractionInboxPage />} />
+                  <Route path="/commitments" element={<CommitmentsPage />} />
+                  <Route path="/commitments/new" element={<CreateCommitmentPage />} />
+                  <Route path="/commitments/:id" element={<CommitmentDetailPage />} />
+                </Routes>
+              </Suspense>
+            </Box>
+          </Box>
+        )}
+      </Suspense>
     </BrowserRouter>
   );
 }

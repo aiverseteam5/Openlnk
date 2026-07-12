@@ -38,6 +38,17 @@ export interface Context {
   label: string;
 }
 
+function getAuthHeaders(principalId: string): Record<string, string> {
+  // Try SecureStore token via store; fall back to X-Principal-Id
+  // Note: actual token is read synchronously from store state
+  const { useAppStore } = require("@/store/app");
+  const accessToken = useAppStore.getState().accessToken;
+  if (accessToken) {
+    return { Authorization: `Bearer ${accessToken}` };
+  }
+  return { "X-Principal-Id": principalId };
+}
+
 export async function fetchCommitments(params: {
   principalId: string;
   state?: string;
@@ -52,7 +63,7 @@ export async function fetchCommitments(params: {
   if (params.limit) url.searchParams.set("limit", String(params.limit));
 
   const res = await fetch(url.toString(), {
-    headers: { "X-Principal-Id": params.principalId },
+    headers: getAuthHeaders(params.principalId),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<CursorPage>;
@@ -63,7 +74,7 @@ export async function fetchCommitment(
   id: string,
 ): Promise<Commitment> {
   const res = await fetch(`${API_BASE}/v1/commitments/${id}`, {
-    headers: { "X-Principal-Id": principalId },
+    headers: getAuthHeaders(principalId),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<Commitment>;
@@ -79,7 +90,7 @@ export async function transitionState(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Principal-Id": principalId,
+      ...getAuthHeaders(principalId),
     },
     body: JSON.stringify({ state: newState, version }),
   });
@@ -89,7 +100,7 @@ export async function transitionState(
 
 export async function fetchContexts(principalId: string): Promise<Context[]> {
   const res = await fetch(`${API_BASE}/v1/contexts`, {
-    headers: { "X-Principal-Id": principalId },
+    headers: getAuthHeaders(principalId),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<Context[]>;
@@ -104,7 +115,7 @@ export async function correctCommitment(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Principal-Id": principalId,
+      ...getAuthHeaders(principalId),
     },
     body: JSON.stringify(body),
   });
@@ -125,7 +136,7 @@ export async function fetchCommitmentHistory(
   id: string,
 ): Promise<AuditEntry[]> {
   const res = await fetch(`${API_BASE}/v1/commitments/${id}/history`, {
-    headers: { "X-Principal-Id": principalId },
+    headers: getAuthHeaders(principalId),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<AuditEntry[]>;
