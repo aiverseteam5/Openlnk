@@ -1,11 +1,17 @@
 """LLM adapter — single provider interface for extraction.
 
 All LLM calls go through this adapter. Structured outputs → Pydantic.
-Uses httpx to call the Anthropic Messages API with tool_use for structured output.
+Supports three ingestion routes:
+- Text: direct text → Claude extraction
+- Camera (OL-022): base64 image → Claude Vision → extraction
+- Voice (OL-021): base64 audio → Whisper ASR → text → Claude extraction
+
 Prompts are versioned files in apps/api/prompts/, referenced by hash in audit log.
 """
 
+import base64
 import hashlib
+import tempfile
 from pathlib import Path
 
 import httpx
@@ -112,10 +118,7 @@ class ExtractionFailedError(Exception):
 class LLMAdapter:
     """Single LLM provider adapter — Anthropic Messages API via httpx.
 
-    Pydantic ValidationError handling (eng review T12):
-    - On ValidationError: retry once with a clarifying prompt
-    - On second failure: raise ExtractionFailedError (visible to user)
-    - Never silently swallow a parse error
+    Supports text, vision (camera/image), and audio (voice via Whisper ASR).
     """
 
     def __init__(self) -> None:
@@ -128,7 +131,7 @@ class LLMAdapter:
             },
             timeout=httpx.Timeout(
                 connect=10.0,
-                read=settings.extraction_timeout_text_secs,
+                read=settings.extraction_timeout_media_secs,
                 write=10.0,
                 pool=10.0,
             ),
@@ -144,33 +147,139 @@ class LLMAdapter:
         *,
         prompt_hash: str | None = None,
     ) -> ExtractionResult:
-        """Send text to LLM for commitment extraction.
+        """Extract commitments from text (OL-020).
 
         Returns a Pydantic ExtractionResult parsed from the LLM response.
         Raises ExtractionFailedError if the LLM response cannot be parsed
         after one retry.
         """
         used_hash = prompt_hash or self._prompt_hash
+        user_content: list[dict] = [{"type": "text", "text": text}]
 
+        return await self._extract_with_retry(user_content, used_hash)
+
+    async def extract_from_image(
+        self,
+        image_base64: str,
+        *,
+        media_type: str = "image/jpeg",
+    ) -> ExtractionResult:
+        """Extract commitments from an image via Claude Vision (OL-022).
+
+        Sends the image directly to Claude — no separate OCR step needed.
+        Claude reads circulars, notices, receipts, and fee schedules natively.
+        """
+        user_content: list[dict] = [
+            {
+                "type": "image",
+                "source": {
+                    "type": "base64",
+                    "media_type": media_type,
+                    "data": image_base64,
+                },
+            },
+            {
+                "type": "text",
+                "text": (
+                    "Extract all commitments from this document/image. "
+                    "This may be a school circular, fee notice, receipt, "
+                    "schedule, or any document containing obligations."
+                ),
+            },
+        ]
+
+        logger.info("extraction_vision_start", image_size_kb=len(image_base64) * 3 // 4 // 1024)
+
+        return await self._extract_with_retry(user_content, self._prompt_hash)
+
+    async def transcribe_audio(self, audio_base64: str) -> str:
+        """Transcribe audio via OpenAI Whisper API (OL-021).
+
+        Returns the transcribed text. Raises ExtractionFailedError on failure.
+        Content is ephemeral — audio is not persisted (ADR-002).
+        """
+        whisper_key = settings.llm_api_key  # Reuse key if OpenAI; otherwise set WHISPER_API_KEY
+
+        # Decode base64 to temp file (Whisper needs a file upload)
+        audio_bytes = base64.b64decode(audio_base64)
+
+        logger.info("asr_whisper_start", audio_size_kb=len(audio_bytes) // 1024)
+
+        # Use Claude's own audio understanding if available,
+        # otherwise fall back to a simple approach: send as text description
+        # For now, use httpx to call OpenAI Whisper API
+        try:
+            async with httpx.AsyncClient(timeout=60.0) as whisper_client:
+                # Write to temp file (Whisper API requires multipart file upload)
+                with tempfile.NamedTemporaryFile(suffix=".m4a", delete=True) as tmp:
+                    tmp.write(audio_bytes)
+                    tmp.flush()
+                    tmp.seek(0)
+
+                    response = await whisper_client.post(
+                        "https://api.openai.com/v1/audio/transcriptions",
+                        headers={"Authorization": f"Bearer {settings.whisper_api_key}"},
+                        files={"file": ("audio.m4a", tmp, "audio/m4a")},
+                        data={"model": "whisper-1", "language": "en"},
+                    )
+
+            if response.status_code != 200:
+                logger.warning("asr_whisper_failed", status=response.status_code, body=response.text[:200])
+                raise ExtractionFailedError(
+                    f"Whisper ASR returned {response.status_code}"
+                )
+
+            transcript = response.json().get("text", "")
+            if not transcript.strip():
+                raise ExtractionFailedError("Whisper returned empty transcript")
+
+            logger.info("asr_whisper_complete", transcript_len=len(transcript))
+            return transcript
+
+        except httpx.TimeoutException:
+            raise ExtractionFailedError("Audio transcription timed out")
+        except ExtractionFailedError:
+            raise
+        except Exception as e:
+            raise ExtractionFailedError(f"ASR failed: {e}") from e
+
+    async def extract_from_audio(self, audio_base64: str) -> ExtractionResult:
+        """Extract commitments from audio: ASR → text → extraction (OL-021).
+
+        Two-step: Whisper transcribes audio, then Claude extracts commitments.
+        """
+        transcript = await self.transcribe_audio(audio_base64)
+        return await self.extract_commitments(
+            f"[Transcribed from voice note]\n\n{transcript}"
+        )
+
+    # ── Internal methods ──
+
+    async def _extract_with_retry(
+        self,
+        user_content: list[dict],
+        prompt_hash: str,
+    ) -> ExtractionResult:
+        """Call LLM with retry on ValidationError (eng review T12)."""
         # First attempt
         try:
-            return await self._call_and_parse(text, used_hash)
+            return await self._call_and_parse(user_content, prompt_hash)
         except ValidationError as e:
-            logger.warning(
-                "extraction_parse_error_retry",
-                error=str(e),
-                attempt=1,
-            )
+            logger.warning("extraction_parse_error_retry", error=str(e), attempt=1)
 
-        # Retry once with clarifying instruction (eng review T12)
+        # Retry once with clarifying instruction
         try:
-            return await self._call_and_parse(
-                text,
-                used_hash,
-                retry_hint="Your previous response could not be parsed. "
-                "Use the extract_commitments tool with valid JSON. "
-                "Ensure all required fields are present.",
-            )
+            retry_content = user_content + [
+                {
+                    "type": "text",
+                    "text": (
+                        "Your previous response could not be parsed. "
+                        "Use the extract_commitments tool with valid JSON. "
+                        "Ensure all required fields are present."
+                    ),
+                },
+            ]
+            return await self._call_and_parse(retry_content, prompt_hash)
         except ValidationError as e:
             raise ExtractionFailedError(
                 "LLM output failed schema validation after retry",
@@ -179,21 +288,15 @@ class LLMAdapter:
 
     async def _call_and_parse(
         self,
-        text: str,
+        user_content: list[dict],
         prompt_hash: str,
-        retry_hint: str | None = None,
     ) -> ExtractionResult:
         """Make the API call and parse the tool_use response into Pydantic."""
-        messages = [{"role": "user", "content": text}]
-        if retry_hint:
-            messages.append({"role": "assistant", "content": retry_hint})
-            messages.append({"role": "user", "content": text})
-
         payload = {
             "model": self._model,
             "max_tokens": 4096,
             "system": self._system_prompt,
-            "messages": messages,
+            "messages": [{"role": "user", "content": user_content}],
             "tools": [_EXTRACTION_TOOL],
             "tool_choice": {"type": "tool", "name": "extract_commitments"},
         }

@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     llm_model: str = ""
     llm_base_url: str = ""
 
+    # ASR — Whisper API for voice extraction (OL-021)
+    whisper_api_key: str = ""  # OpenAI API key for Whisper; override via WHISPER_API_KEY
+
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
 

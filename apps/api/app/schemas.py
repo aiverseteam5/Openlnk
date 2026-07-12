@@ -154,10 +154,23 @@ class AuditEntryResponse(BaseModel):
 
 
 class ExtractionRequest(BaseModel):
-    """Request to extract commitments from a message."""
+    """Request to extract commitments from text, voice, or camera input.
 
-    message_id: UUID
-    thread_id: UUID
+    Supports three ingestion routes (OL-020, OL-021, OL-022):
+    - text: direct text content (paste from WhatsApp, etc.)
+    - voice: base64-encoded audio for ASR → extraction
+    - camera: base64-encoded image for vision → extraction
+
+    message_id/thread_id are optional — used when extracting from
+    an existing message in the DB. For direct input, use text/audio/image.
+    """
+
+    message_id: UUID | None = None
+    thread_id: UUID | None = None
+    text: str | None = None
+    audio_base64: str | None = None
+    image_base64: str | None = None
+    provenance_kind: str = Field(default="message", pattern="^(message|voice|camera)$")
 
 
 class ExtractionResponse(BaseModel):

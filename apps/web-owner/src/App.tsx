@@ -28,6 +28,7 @@ const CreateCommitmentPage = lazy(() => import("./pages/CreateCommitmentPage"));
 const CommitmentDetailPage = lazy(() => import("./pages/CommitmentDetailPage"));
 const ExtractionInboxPage = lazy(() => import("./pages/ExtractionInboxPage"));
 const ConsolePage = lazy(() => import("./pages/ConsolePage"));
+const ExtractPage = lazy(() => import("./pages/ExtractPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ const queryClient = new QueryClient({
 
 const NAV_ITEMS = [
   { label: "Daily Brief", path: "/" },
+  { label: "AI Extract", path: "/extract" },
   { label: "Inbox", path: "/inbox" },
   { label: "Commitments", path: "/commitments" },
   { label: "Console", path: "/console" },
@@ -293,7 +295,8 @@ function AppShell() {
               >
                 <Routes>
                   <Route path="/" element={<DailyBriefPage />} />
-                  <Route path="/inbox" element={<ExtractionInboxPage />} />
+                  <Route path="/extract" element={<ExtractPage />} />
+              <Route path="/inbox" element={<ExtractionInboxPage />} />
                   <Route path="/commitments" element={<CommitmentsPage />} />
               <Route path="/console" element={<ConsolePage />} />
                   <Route path="/commitments/new" element={<CreateCommitmentPage />} />
