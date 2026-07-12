@@ -9,4 +9,12 @@ export default defineConfig({
     headers: { "Cache-Control": "no-store" },
   },
   appType: "spa",
+  server: {
+    proxy: {
+      "/v1": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
+  },
 })
