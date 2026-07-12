@@ -7,6 +7,8 @@ Key invariants:
 - Audit log entry for every state change
 """
 
+from __future__ import annotations
+
 from datetime import UTC, datetime
 from uuid import UUID
 
@@ -16,6 +18,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import AuditLog, Commitment, CommitmentState, EvalCandidate, IdempotencyKey
 from app.schemas import (
+    AuditEntryResponse,
     CommitmentAmend,
     CommitmentCreate,
     CommitmentResponse,
@@ -556,3 +559,21 @@ class CommitmentService:
             action=action,
         )
         return _to_response(commitment)
+
+    async def get_history(self, commitment_id: UUID) -> list[AuditEntryResponse]:
+        """Get audit trail for a commitment (OL-004). Ordered newest-first."""
+        commitment = await self._session.get(Commitment, commitment_id)
+        if commitment is None:
+            from fastapi import HTTPException
+
+            raise HTTPException(status_code=404, detail="Commitment not found")
+
+        stmt = (
+            select(AuditLog)
+            .where(AuditLog.subject_id == commitment_id)
+            .order_by(AuditLog.at.desc())
+            .limit(50)
+        )
+        result = await self._session.execute(stmt)
+        entries = result.scalars().all()
+        return [AuditEntryResponse.model_validate(e) for e in entries]

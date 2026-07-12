@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db, get_principal_id
 from app.schemas import (
+    AuditEntryResponse,
     CommitmentAmend,
     CommitmentCreate,
     CommitmentResponse,
@@ -107,3 +108,15 @@ async def correct_commitment(
     Corrections enter the eval-candidate queue (OL-090).
     """
     return await service.correct(commitment_id, body.action, body.edits)
+
+
+@router.get("/{commitment_id}/history", response_model=list[AuditEntryResponse])
+async def get_commitment_history(
+    commitment_id: UUID,
+    service: CommitmentService = Depends(get_commitment_service),  # noqa: B008
+) -> list[AuditEntryResponse]:
+    """Get audit trail for a commitment (OL-004).
+
+    Returns timestamped, permanent audit entries — not toasts (DESIGN.md).
+    """
+    return await service.get_history(commitment_id)

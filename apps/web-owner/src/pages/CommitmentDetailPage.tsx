@@ -16,7 +16,9 @@ import Typography from "@mui/material/Typography";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   fetchCommitment,
+  fetchCommitmentHistory,
   transitionState,
+  type AuditEntry,
 } from "../api/client";
 import { useAppStore } from "../store/app";
 import { stateColors, fonts, type CommitmentState } from "@openlnk/ui";
@@ -376,6 +378,79 @@ export default function CommitmentDetailPage() {
           )}
         </Box>
       )}
+
+      {/* Audit trail (OL-004) — timestamped permanent entries, not toasts */}
+      <AuditTrail commitmentId={id!} principalId={principalId} />
     </Box>
   );
+}
+
+function AuditTrail({ commitmentId, principalId }: { commitmentId: string; principalId: string }) {
+  const { data: history } = useQuery({
+    queryKey: ["commitment-history", commitmentId],
+    queryFn: () => fetchCommitmentHistory(principalId, commitmentId),
+  });
+
+  if (!history || history.length === 0) return null;
+
+  return (
+    <Box sx={{ mt: 2 }}>
+      <Typography
+        sx={{
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: "0.08em",
+          color: "text.secondary",
+          mb: 1,
+        }}
+      >
+        AUDIT TRAIL
+      </Typography>
+      {history.map((entry: AuditEntry) => (
+        <Box
+          key={entry.id}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+            py: 0.5,
+            borderBottom: "1px solid",
+            borderColor: "divider",
+          }}
+        >
+          <Typography sx={{ fontSize: 12, color: "text.primary" }}>
+            {formatEvent(entry.event, entry.detail)}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: 11,
+              fontFamily: fonts.mono,
+              color: "text.secondary",
+              flexShrink: 0,
+              ml: 2,
+            }}
+          >
+            {formatDate(entry.at)}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
+  );
+}
+
+function formatEvent(event: string, detail: Record<string, unknown>): string {
+  switch (event) {
+    case "commitment.created":
+      return `Created as ${(detail.state as string) ?? "proposed"}`;
+    case "commitment.state_changed":
+      return `${(detail.old_state as string) ?? "?"} \u2192 ${(detail.new_state as string) ?? "?"}`;
+    case "commitment.amended":
+      return `Amended: ${(detail.changes as string[])?.join(", ") ?? "fields updated"}`;
+    case "commitment.corrected":
+      return "Extraction corrected";
+    case "commitment.rejected":
+      return "Extraction rejected";
+    default:
+      return event.replace("commitment.", "");
+  }
 }

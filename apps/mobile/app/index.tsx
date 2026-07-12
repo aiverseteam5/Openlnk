@@ -132,19 +132,51 @@ export default function HomeScreen() {
         >
           OPENLNK
         </Text>
-        <Pressable
-          onPress={() => router.push("/create-commitment")}
-          style={{
-            backgroundColor: "#1A4FBF",
-            borderRadius: 4,
-            paddingHorizontal: 12,
-            paddingVertical: 6,
-          }}
-        >
-          <Text style={{ fontFamily: "DM Sans Medium", fontSize: 13, color: "#FFFFFF" }}>
-            Create
-          </Text>
-        </Pressable>
+        <View className="flex-row gap-sm items-center">
+          {/* Voice capture (OL-021) */}
+          <Pressable
+            onPress={() => router.push("/capture-voice")}
+            style={{
+              borderWidth: 1,
+              borderColor: "#D6D0C4",
+              borderRadius: 4,
+              paddingHorizontal: 10,
+              paddingVertical: 6,
+            }}
+          >
+            <Text style={{ fontFamily: "JetBrains Mono SemiBold", fontSize: 11, color: "#1A1814" }}>
+              MIC
+            </Text>
+          </Pressable>
+          {/* Camera capture (OL-022) */}
+          <Pressable
+            onPress={() => router.push("/capture-camera")}
+            style={{
+              borderWidth: 1,
+              borderColor: "#D6D0C4",
+              borderRadius: 4,
+              paddingHorizontal: 10,
+              paddingVertical: 6,
+            }}
+          >
+            <Text style={{ fontFamily: "JetBrains Mono SemiBold", fontSize: 11, color: "#1A1814" }}>
+              CAM
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/create-commitment")}
+            style={{
+              backgroundColor: "#1A4FBF",
+              borderRadius: 4,
+              paddingHorizontal: 12,
+              paddingVertical: 6,
+            }}
+          >
+            <Text style={{ fontFamily: "DM Sans Medium", fontSize: 13, color: "#FFFFFF" }}>
+              Create
+            </Text>
+          </Pressable>
+        </View>
       </View>
 
       <FlatList

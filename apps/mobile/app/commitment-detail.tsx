@@ -20,7 +20,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   fetchCommitment,
+  fetchCommitmentHistory,
   transitionState,
+  type AuditEntry,
 } from "@/api/client";
 import { useAppStore } from "@/store/app";
 import { stateColors, type CommitmentState } from "@openlnk/ui";
@@ -333,6 +335,9 @@ export default function CommitmentDetailScreen() {
           </Pressable>
         )}
 
+        {/* Audit trail (OL-004) — timestamped permanent entries */}
+        <AuditTrailSection commitmentId={id!} principalId={principalId} />
+
         {/* Corrections — ≤2 taps (OL-026) */}
         {commitment.state === "proposed" && (
           <View className="border-t border-border pt-md">
@@ -460,5 +465,62 @@ export default function CommitmentDetailScreen() {
         )}
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function formatAuditEvent(event: string, detail: Record<string, unknown>): string {
+  switch (event) {
+    case "commitment.created":
+      return `Created as ${(detail.state as string) ?? "proposed"}`;
+    case "commitment.state_changed":
+      return `${(detail.old_state as string) ?? "?"} \u2192 ${(detail.new_state as string) ?? "?"}`;
+    case "commitment.amended":
+      return "Amended";
+    case "commitment.corrected":
+      return "Extraction corrected";
+    case "commitment.rejected":
+      return "Extraction rejected";
+    default:
+      return event.replace("commitment.", "");
+  }
+}
+
+function AuditTrailSection({ commitmentId, principalId }: { commitmentId: string; principalId: string }) {
+  const { data: history } = useQuery({
+    queryKey: ["commitment-history", commitmentId],
+    queryFn: () => fetchCommitmentHistory(principalId, commitmentId),
+  });
+
+  if (!history || history.length === 0) return null;
+
+  return (
+    <View className="border-t border-border pt-md mb-md">
+      <Text
+        className="text-text-muted mb-sm"
+        style={{
+          fontFamily: "DM Sans SemiBold",
+          fontSize: 11,
+          letterSpacing: 0.88,
+        }}
+      >
+        AUDIT TRAIL
+      </Text>
+      {history.map((entry: AuditEntry) => (
+        <View key={entry.id} className="flex-row justify-between py-[4px] border-b border-border">
+          <Text style={{ fontFamily: "DM Sans", fontSize: 12, color: "#1A1814" }}>
+            {formatAuditEvent(entry.event, entry.detail)}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "JetBrains Mono",
+              fontSize: 10,
+              color: "#6B6456",
+            }}
+          >
+            {formatDate(entry.at)}
+          </Text>
+        </View>
+      ))}
+    </View>
   );
 }

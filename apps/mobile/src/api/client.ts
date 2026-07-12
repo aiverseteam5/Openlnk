@@ -94,3 +94,22 @@ export async function fetchContexts(principalId: string): Promise<Context[]> {
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json() as Promise<Context[]>;
 }
+
+export interface AuditEntry {
+  id: number;
+  at: string;
+  actor_kind: string;
+  event: string;
+  detail: Record<string, unknown>;
+}
+
+export async function fetchCommitmentHistory(
+  principalId: string,
+  id: string,
+): Promise<AuditEntry[]> {
+  const res = await fetch(`${API_BASE}/v1/commitments/${id}/history`, {
+    headers: { "X-Principal-Id": principalId },
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json() as Promise<AuditEntry[]>;
+}

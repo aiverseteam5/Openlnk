@@ -5,7 +5,7 @@
  * No dark mode, no avatars, no skeleton loaders.
  */
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { ThemeProvider, CssBaseline } from "@mui/material";
@@ -17,14 +17,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import theme from "./theme/theme";
-import CommitmentsPage from "./pages/CommitmentsPage";
-import CommitmentDetailPage from "./pages/CommitmentDetailPage";
-import CreateCommitmentPage from "./pages/CreateCommitmentPage";
-import DailyBriefPage from "./pages/DailyBriefPage";
 import { useContextSync } from "./hooks/useContextSync";
 import { useAppStore } from "./store/app";
 import { fetchContexts } from "./api/client";
 import { fonts } from "@openlnk/ui";
+
+const DailyBriefPage = lazy(() => import("./pages/DailyBriefPage"));
+const CommitmentsPage = lazy(() => import("./pages/CommitmentsPage"));
+const CreateCommitmentPage = lazy(() => import("./pages/CreateCommitmentPage"));
+const CommitmentDetailPage = lazy(() => import("./pages/CommitmentDetailPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -247,12 +248,20 @@ function AppShell() {
           component="main"
           sx={{ flex: 1, p: { xs: 2, md: 3 } }}
         >
-          <Routes>
-            <Route path="/" element={<DailyBriefPage />} />
-            <Route path="/commitments" element={<CommitmentsPage />} />
-            <Route path="/commitments/new" element={<CreateCommitmentPage />} />
-            <Route path="/commitments/:id" element={<CommitmentDetailPage />} />
-          </Routes>
+          <Suspense
+            fallback={
+              <Typography sx={{ color: "text.secondary", py: 4 }}>
+                {"\u2014"}
+              </Typography>
+            }
+          >
+            <Routes>
+              <Route path="/" element={<DailyBriefPage />} />
+              <Route path="/commitments" element={<CommitmentsPage />} />
+              <Route path="/commitments/new" element={<CreateCommitmentPage />} />
+              <Route path="/commitments/:id" element={<CommitmentDetailPage />} />
+            </Routes>
+          </Suspense>
         </Box>
       </Box>
     </BrowserRouter>

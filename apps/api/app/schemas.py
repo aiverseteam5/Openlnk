@@ -141,6 +141,18 @@ class CorrectionAction(BaseModel):
     edits: dict | None = None
 
 
+class AuditEntryResponse(BaseModel):
+    """Single audit log entry for commitment history (OL-004)."""
+
+    id: int
+    at: datetime
+    actor_kind: str
+    event: str
+    detail: dict
+
+    model_config = {"from_attributes": True}
+
+
 class ExtractionRequest(BaseModel):
     """Request to extract commitments from a message."""
 

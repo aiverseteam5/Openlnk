@@ -107,4 +107,19 @@ export async function transitionState(
   );
 }
 
+export interface AuditEntry {
+  id: number;
+  at: string;
+  actor_kind: string;
+  event: string;
+  detail: Record<string, unknown>;
+}
+
+export async function fetchCommitmentHistory(
+  principalId: string,
+  id: string,
+): Promise<AuditEntry[]> {
+  return apiFetch(`/commitments/${id}/history`, {}, principalId);
+}
+
 export type { Commitment, CursorPage, Context };
