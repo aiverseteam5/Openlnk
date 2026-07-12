@@ -131,7 +131,7 @@ export async function transitionState(
     {
       method: "PATCH",
       body: JSON.stringify({ new_state: newState, version }),
-      headers: { "Idempotency-Key": crypto.randomUUID() },
+      headers: { "Idempotency-Key": self.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}` },
     },
     principalId,
   );

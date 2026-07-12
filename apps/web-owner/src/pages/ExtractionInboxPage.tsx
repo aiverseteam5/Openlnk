@@ -56,7 +56,8 @@ function ExtractionCard({
 }) {
   const navigate = useNavigate();
   const sc = stateColors.proposed;
-  const confidence = commitment.extraction_confidence ?? 0;
+  const confidence = commitment.extraction_confidence;
+  const hasConfidence = confidence !== null && confidence !== undefined && confidence > 0;
 
   return (
     <Box
@@ -93,16 +94,18 @@ function ExtractionCard({
           >
             {commitment.provenance_kind}
           </Typography>
-          <Typography
-            sx={{
-              fontFamily: fonts.mono,
-              fontSize: 11,
-              fontWeight: 600,
-              color: confidenceColor(confidence),
-            }}
-          >
-            {(confidence * 100).toFixed(0)}% confidence
-          </Typography>
+          {hasConfidence && (
+            <Typography
+              sx={{
+                fontFamily: fonts.mono,
+                fontSize: 11,
+                fontWeight: 600,
+                color: confidenceColor(confidence),
+              }}
+            >
+              {(confidence * 100).toFixed(0)}% confidence
+            </Typography>
+          )}
         </Box>
 
         {/* Row 2: Title (clickable to detail) */}

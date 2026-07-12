@@ -57,7 +57,7 @@ export default function ExtractPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Idempotency-Key": crypto.randomUUID(),
+          "Idempotency-Key": self.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
           ...getAuthHeaders(),
         },
         body: JSON.stringify(body),

@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     extraction_timeout_media_secs: int = 120  # voice/camera — eng review tension resolution
 
     # Extraction confidence threshold (OL-029a — versioned, not hardcoded)
-    extraction_confidence_threshold: float = 0.85
+    extraction_confidence_threshold: float = 0.70
 
     # LLM (provider TBD — TODOS T-001 DPDP review)
     llm_api_key: str = ""

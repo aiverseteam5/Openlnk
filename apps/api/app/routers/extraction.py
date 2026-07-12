@@ -97,6 +97,14 @@ async def extract(
 
         # Create commitments from extraction results
         threshold = settings.extraction_confidence_threshold
+        for c in extraction.commitments:
+            logger.info(
+                "extraction_candidate",
+                title=c.title,
+                confidence=c.confidence,
+                threshold=threshold,
+                passes=c.confidence >= threshold,
+            )
         confident = [c for c in extraction.commitments if c.confidence >= threshold]
         created_count = 0
 
