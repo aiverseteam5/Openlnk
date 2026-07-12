@@ -13,12 +13,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchCommitments, transitionState } from "../api/client";
+import { fetchCommitments, transitionState, correctCommitment } from "../api/client";
 import type { Commitment } from "../api/client";
 import { useAppStore } from "../store/app";
 import { stateColors, fonts } from "@openlnk/ui";
-
-const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000/v1";
 
 function formatAmount(paise: number | null, currency: string): string {
   if (paise === null) return "";
@@ -227,18 +225,8 @@ export default function ExtractionInboxPage() {
   });
 
   const rejectMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const res = await fetch(`${API_BASE}/commitments/${id}/correct`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Principal-Id": principalId,
-        },
-        body: JSON.stringify({ action: "reject" }),
-      });
-      if (!res.ok) throw new Error(`API ${res.status}`);
-      return res.json();
-    },
+    mutationFn: (id: string) =>
+      correctCommitment(principalId, id, { action: "reject" }),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["commitments"] });
     },

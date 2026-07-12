@@ -18,12 +18,11 @@ import {
   fetchCommitment,
   fetchCommitmentHistory,
   transitionState,
+  correctCommitment,
   type AuditEntry,
 } from "../api/client";
 import { useAppStore } from "../store/app";
 import { stateColors, fonts, type CommitmentState } from "@openlnk/ui";
-
-const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000/v1";
 
 // Valid transitions per current state
 const TRANSITIONS: Record<string, { label: string; target: string }[]> = {
@@ -106,18 +105,8 @@ export default function CommitmentDetailPage() {
   });
 
   const correctMutation = useMutation({
-    mutationFn: async (body: { action: string; edits?: Record<string, unknown> }) => {
-      const res = await fetch(`${API_BASE}/commitments/${id}/correct`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Principal-Id": principalId,
-        },
-        body: JSON.stringify(body),
-      });
-      if (!res.ok) throw new Error(`API ${res.status}`);
-      return res.json();
-    },
+    mutationFn: (body: { action: string; edits?: Record<string, unknown> }) =>
+      correctCommitment(principalId, id!, body),
     onSuccess: () => {
       setCorrectionMode(null);
       void queryClient.invalidateQueries({ queryKey: ["commitment", id] });

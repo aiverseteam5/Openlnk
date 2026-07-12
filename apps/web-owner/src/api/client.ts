@@ -152,4 +152,19 @@ export async function fetchCommitmentHistory(
   return apiFetch(`/commitments/${id}/history`, {}, principalId);
 }
 
+export async function correctCommitment(
+  principalId: string,
+  id: string,
+  body: { action: string; edits?: Record<string, unknown> },
+): Promise<Commitment> {
+  return apiFetch(
+    `/commitments/${id}/correct`,
+    {
+      method: "POST",
+      body: JSON.stringify(body),
+    },
+    principalId,
+  );
+}
+
 export type { Commitment, CursorPage, Context };

@@ -5,6 +5,8 @@ These run without a database.
 """
 
 from datetime import UTC, datetime, timedelta
+
+from app.models import _utc_now
 from uuid import uuid4
 
 import pytest
@@ -40,7 +42,7 @@ class TestCommitmentModel:
             class_=CommitmentClass.FEE,
             amount_paise=150000,
             currency="INR",
-            due_at=datetime.now(UTC),
+            due_at=_utc_now(),
             state=CommitmentState.PROPOSED,
             version=1,
             provenance_kind="message",
@@ -268,35 +270,35 @@ class TestAtRisk:
     def test_at_risk_when_overdue_and_not_terminal(self):
         c = self._make_commitment(
             CommitmentState.IN_PROGRESS,
-            datetime.now(UTC) - timedelta(hours=1),
+            _utc_now() - timedelta(hours=1),
         )
         assert _is_at_risk(c) is True
 
     def test_not_at_risk_when_overdue_but_done(self):
         c = self._make_commitment(
             CommitmentState.DONE,
-            datetime.now(UTC) - timedelta(hours=1),
+            _utc_now() - timedelta(hours=1),
         )
         assert _is_at_risk(c) is False
 
     def test_not_at_risk_when_overdue_but_cancelled(self):
         c = self._make_commitment(
             CommitmentState.CANCELLED,
-            datetime.now(UTC) - timedelta(hours=1),
+            _utc_now() - timedelta(hours=1),
         )
         assert _is_at_risk(c) is False
 
     def test_not_at_risk_when_overdue_but_broken(self):
         c = self._make_commitment(
             CommitmentState.BROKEN,
-            datetime.now(UTC) - timedelta(hours=1),
+            _utc_now() - timedelta(hours=1),
         )
         assert _is_at_risk(c) is False
 
     def test_not_at_risk_when_not_yet_due(self):
         c = self._make_commitment(
             CommitmentState.IN_PROGRESS,
-            datetime.now(UTC) + timedelta(hours=24),
+            _utc_now() + timedelta(hours=24),
         )
         assert _is_at_risk(c) is False
 
@@ -307,7 +309,7 @@ class TestAtRisk:
     def test_at_risk_proposed_overdue(self):
         c = self._make_commitment(
             CommitmentState.PROPOSED,
-            datetime.now(UTC) - timedelta(days=1),
+            _utc_now() - timedelta(days=1),
         )
         assert _is_at_risk(c) is True
 

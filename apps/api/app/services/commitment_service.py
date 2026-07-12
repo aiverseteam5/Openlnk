@@ -9,14 +9,14 @@ Key invariants:
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import datetime
 from uuid import UUID
 
 import structlog
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import AuditLog, Commitment, CommitmentState, EvalCandidate, IdempotencyKey
+from app.models import AuditLog, Commitment, CommitmentState, EvalCandidate, IdempotencyKey, _utc_now
 from app.schemas import (
     AuditEntryResponse,
     CommitmentAmend,
@@ -46,7 +46,7 @@ def _is_at_risk(commitment: Commitment) -> bool:
     if commitment.due_at is None:
         return False
     terminal = {CommitmentState.DONE, CommitmentState.BROKEN, CommitmentState.CANCELLED}
-    return commitment.due_at < datetime.now(UTC) and commitment.state not in terminal
+    return commitment.due_at < _utc_now() and commitment.state not in terminal
 
 
 def _to_response(commitment: Commitment) -> CommitmentResponse:
@@ -309,7 +309,7 @@ class CommitmentService:
         old_state = current_state
         commitment.state = CommitmentState(data.new_state)
         commitment.version += 1
-        commitment.updated_at = datetime.now(UTC)
+        commitment.updated_at = _utc_now()
 
         # Record idempotency
         await self._record_idempotency(idempotency_key, str(commitment.id))
@@ -428,7 +428,7 @@ class CommitmentService:
             }
 
         commitment.version += 1
-        commitment.updated_at = datetime.now(UTC)
+        commitment.updated_at = _utc_now()
 
         # Record idempotency
         await self._record_idempotency(idempotency_key, str(commitment.id))
@@ -501,7 +501,7 @@ class CommitmentService:
             old_state = str(commitment.state)
             commitment.state = CommitmentState.CANCELLED
             commitment.version += 1
-            commitment.updated_at = datetime.now(UTC)
+            commitment.updated_at = _utc_now()
 
             self._session.add(
                 AuditLog(
@@ -532,7 +532,7 @@ class CommitmentService:
                 commitment.amount_paise = edits["amount_paise"]
 
             commitment.version += 1
-            commitment.updated_at = datetime.now(UTC)
+            commitment.updated_at = _utc_now()
 
             self._session.add(
                 AuditLog(

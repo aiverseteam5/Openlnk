@@ -10,18 +10,19 @@ from uuid import UUID, uuid4
 
 
 def _utc_now() -> datetime:
-    """Naive UTC datetime for TIMESTAMP WITHOUT TIME ZONE columns.
+    """Timezone-aware UTC datetime for TIMESTAMPTZ columns.
 
-    asyncpg rejects timezone-aware datetimes for TIMESTAMP WITHOUT TIME ZONE.
-    All times are UTC by convention; timezone is not stored in the column.
+    DB-SCHEMA.sql uses timestamptz for all timestamp columns.
+    asyncpg handles timezone-aware datetimes correctly with timestamptz.
     """
-    return datetime.utcnow()  # noqa: DTZ003 — intentionally naive for asyncpg
+    return datetime.now(UTC)
 
 
 from sqlalchemy import (
     BigInteger,
     Boolean,
     CheckConstraint,
+    DateTime,
     ForeignKey,
     Index,
     Numeric,
@@ -30,6 +31,10 @@ from sqlalchemy import (
     UniqueConstraint,
     text,
 )
+
+# All timestamp columns in DB-SCHEMA.sql are timestamptz.
+# SQLAlchemy needs DateTime(timezone=True) to match.
+TZDateTime = DateTime(timezone=True)
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -94,7 +99,7 @@ class Principal(Base):
     kind: Mapped[PrincipalKind] = mapped_column(String(10), nullable=False)
     quiet_hours_start: Mapped[time | None] = mapped_column()  # OL-054, OL-063
     quiet_hours_end: Mapped[time | None] = mapped_column()
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
 
 class Household(Base):
@@ -102,7 +107,7 @@ class Household(Base):
 
     id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), primary_key=True, default=uuid4)
     name: Mapped[str] = mapped_column(Text, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
 
 class Business(Base):
@@ -114,7 +119,7 @@ class Business(Base):
     upi_vpa: Mapped[str | None] = mapped_column(Text)
     whatsapp_number: Mapped[str | None] = mapped_column(Text)
     subscription_state: Mapped[str] = mapped_column(String(20), default="trial")
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
 
 class HouseholdMember(Base):
@@ -127,7 +132,7 @@ class HouseholdMember(Base):
         PG_UUID(as_uuid=True), ForeignKey("principals.id"), primary_key=True
     )
     role: Mapped[str] = mapped_column(String(20), default="member")
-    guardian_consent_at: Mapped[datetime | None] = mapped_column()
+    guardian_consent_at: Mapped[datetime | None] = mapped_column(TZDateTime)
 
 
 class BusinessMember(Base):
@@ -154,7 +159,7 @@ class Context(Base):
         PG_UUID(as_uuid=True), ForeignKey("businesses.id")
     )
     label: Mapped[str] = mapped_column(Text, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
     __table_args__ = (
         CheckConstraint(
@@ -173,7 +178,7 @@ class Thread(Base):
         PG_UUID(as_uuid=True), ForeignKey("contexts.id"), nullable=False
     )
     seq: Mapped[int] = mapped_column(BigInteger, default=0)
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
 
 class ThreadParticipant(Base):
@@ -200,7 +205,7 @@ class Message(Base):
     )
     body: Mapped[str | None] = mapped_column(Text)
     media_ref: Mapped[str | None] = mapped_column(Text)
-    sent_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    sent_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
     __table_args__ = (UniqueConstraint("thread_id", "seq"),)
 
@@ -228,7 +233,7 @@ class Commitment(Base):
     class_: Mapped[CommitmentClass] = mapped_column("class", String(20), nullable=False)
     amount_paise: Mapped[int | None] = mapped_column(BigInteger)
     currency: Mapped[str] = mapped_column(Text, default="INR")
-    due_at: Mapped[datetime | None] = mapped_column()
+    due_at: Mapped[datetime | None] = mapped_column(TZDateTime)
     state: Mapped[CommitmentState] = mapped_column(String(20), default=CommitmentState.PROPOSED)
     version: Mapped[int] = mapped_column(default=1)
     provenance_kind: Mapped[str | None] = mapped_column(String(20))
@@ -239,8 +244,8 @@ class Commitment(Base):
     extracted_by: Mapped[UUID] = mapped_column(
         PG_UUID(as_uuid=True), ForeignKey("principals.id"), nullable=False
     )
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
-    updated_at: Mapped[datetime] = mapped_column(default=_utc_now, onupdate=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
+    updated_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now, onupdate=_utc_now)
 
     __table_args__ = (
         CheckConstraint(
@@ -285,7 +290,7 @@ class AutonomyGrant(Base):
     commitment_class: Mapped[str] = mapped_column(Text, nullable=False)
     rung: Mapped[AutonomyRung] = mapped_column(String(20), default=AutonomyRung.OBSERVE)
     clean_actions: Mapped[int] = mapped_column(default=0)
-    window_started: Mapped[datetime] = mapped_column(default=_utc_now)
+    window_started: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
     __table_args__ = (
         UniqueConstraint("granter_id", "contact_id", "context_id", "commitment_class"),
@@ -298,7 +303,7 @@ class AuditLog(Base):
     __tablename__ = "audit_log"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
-    at: Mapped[datetime] = mapped_column(default=_utc_now)
+    at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
     actor_id: Mapped[UUID] = mapped_column(
         PG_UUID(as_uuid=True), ForeignKey("principals.id"), nullable=False
     )
@@ -330,14 +335,14 @@ class StagingRecord(Base):
     batch: Mapped[str | None] = mapped_column(Text)
     data: Mapped[dict] = mapped_column(JSONB, default=dict)  # type: ignore[assignment]
     consent_received: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
 
 class ConsentEvent(Base):
     __tablename__ = "consent_events"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
-    at: Mapped[datetime] = mapped_column(default=_utc_now)
+    at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
     principal_id: Mapped[UUID] = mapped_column(
         PG_UUID(as_uuid=True), ForeignKey("principals.id"), nullable=False
     )
@@ -352,7 +357,7 @@ class IdempotencyKey(Base):
     key: Mapped[str] = mapped_column(Text, primary_key=True)
     principal_id: Mapped[UUID] = mapped_column(PG_UUID(as_uuid=True), nullable=False)
     response_hash: Mapped[str] = mapped_column(Text, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
 
 class EvalCandidate(Base):
@@ -371,7 +376,7 @@ class EvalCandidate(Base):
     action: Mapped[str] = mapped_column(String(10), nullable=False)  # reject | edit
     edits: Mapped[dict | None] = mapped_column(JSONB)
     adjudicated: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
 
 
 class InviteToken(Base):
@@ -393,8 +398,8 @@ class InviteToken(Base):
     token: Mapped[str] = mapped_column(Text, unique=True, nullable=False)
     phone_e164: Mapped[str | None] = mapped_column(Text)
     accepted: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(default=_utc_now)
-    expires_at: Mapped[datetime] = mapped_column(nullable=False)
+    created_at: Mapped[datetime] = mapped_column(TZDateTime, default=_utc_now)
+    expires_at: Mapped[datetime] = mapped_column(TZDateTime, nullable=False)
 
 
 class ThreadToken(Base):
@@ -413,5 +418,5 @@ class ThreadToken(Base):
     principal_id: Mapped[UUID] = mapped_column(
         PG_UUID(as_uuid=True), ForeignKey("principals.id"), nullable=False
     )
-    expires_at: Mapped[datetime] = mapped_column(nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(TZDateTime, nullable=False)
     revoked: Mapped[bool] = mapped_column(Boolean, default=False)
