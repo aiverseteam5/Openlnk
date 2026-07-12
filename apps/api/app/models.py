@@ -10,8 +10,12 @@ from uuid import UUID, uuid4
 
 
 def _utc_now() -> datetime:
-    """UTC-aware datetime factory for SQLAlchemy defaults."""
-    return datetime.now(UTC)
+    """Naive UTC datetime for TIMESTAMP WITHOUT TIME ZONE columns.
+
+    asyncpg rejects timezone-aware datetimes for TIMESTAMP WITHOUT TIME ZONE.
+    All times are UTC by convention; timezone is not stored in the column.
+    """
+    return datetime.utcnow()  # noqa: DTZ003 — intentionally naive for asyncpg
 
 
 from sqlalchemy import (

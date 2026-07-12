@@ -115,9 +115,9 @@ class AuthService:
         Access token: 15-min TTL, contains principal_id.
         Refresh token: 90-day TTL, rotated on use.
         """
-        now = datetime.now(timezone.utc)
+        now = datetime.now(timezone.utc)  # JWT needs tz-aware for iat/exp
 
-        # Access token (JWT)
+        # Access token (JWT — uses tz-aware datetimes per RFC 7519)
         access_payload = {
             "sub": str(principal_id),
             "iat": now,
