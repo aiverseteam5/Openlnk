@@ -95,6 +95,23 @@ export async function fetchContexts(principalId: string): Promise<Context[]> {
   return res.json() as Promise<Context[]>;
 }
 
+export async function correctCommitment(
+  principalId: string,
+  id: string,
+  body: { action: string; edits?: Record<string, unknown> },
+): Promise<Commitment> {
+  const res = await fetch(`${API_BASE}/v1/commitments/${id}/correct`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Principal-Id": principalId,
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json() as Promise<Commitment>;
+}
+
 export interface AuditEntry {
   id: number;
   at: string;

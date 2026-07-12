@@ -133,6 +133,21 @@ export default function HomeScreen() {
           OPENLNK
         </Text>
         <View className="flex-row gap-sm items-center">
+          {/* Extraction inbox (OL-020/21/22) */}
+          <Pressable
+            onPress={() => router.push("/extraction-inbox")}
+            style={{
+              borderWidth: 1,
+              borderColor: "#D6D0C4",
+              borderRadius: 4,
+              paddingHorizontal: 10,
+              paddingVertical: 6,
+            }}
+          >
+            <Text style={{ fontFamily: "JetBrains Mono SemiBold", fontSize: 11, color: "#1A1814" }}>
+              INBOX
+            </Text>
+          </Pressable>
           {/* Voice capture (OL-021) */}
           <Pressable
             onPress={() => router.push("/capture-voice")}

@@ -84,6 +84,137 @@ jobs:
         working-directory: apps/api
         run: uv run ruff format --check .
 
+  # ── Python typecheck (mypy --strict) ──
+  api-typecheck:
+    name: API typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        working-directory: apps/api
+        run: uv sync
+
+      - name: mypy strict
+        working-directory: apps/api
+        run: uv run mypy --strict .
+
+  # ── RLS isolation tests (OL-041 — Gate 1 exit blocker) ──
+  rls-isolation:
+    name: RLS isolation tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: openlnk_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        working-directory: apps/api
+        run: uv sync
+
+      - name: Run RLS isolation tests
+        working-directory: apps/api
+        run: |
+          uv run pytest -v -k "test_rls" --tb=short
+
+  # ── Playwright E2E (web-owner + web-thread) ──
+  e2e:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build web-owner & web-thread
+        run: |
+          pnpm --filter web-owner build
+          pnpm --filter web-thread build
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+  # ── web-thread bundle size (OL-084: ≤120KB gzip) ──
+  bundle-size:
+    name: web-thread bundle size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build web-thread
+        working-directory: apps/web-thread
+        run: pnpm run build
+
+      - name: Check bundle size (≤120KB gzip)
+        working-directory: apps/web-thread
+        run: |
+          TOTAL=$(find dist/assets -name '*.js' -o -name '*.css' | xargs gzip -c | wc -c)
+          TOTAL_KB=$((TOTAL / 1024))
+          echo "Total gzipped size: ${TOTAL_KB}KB"
+          if [ "$TOTAL" -gt 122880 ]; then
+            echo "::error::Bundle size ${TOTAL_KB}KB exceeds 120KB gzip budget (OL-084)"
+            exit 1
+          fi
+          echo "✓ Bundle within 120KB budget"
+
   # ── Eval gate (OL-092) ──
   # Runs on changes to prompts, extraction pipeline, or eval harness.
   # Blocks merge if precision < 97% or recall < 85%.

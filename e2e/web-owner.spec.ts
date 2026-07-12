@@ -58,4 +58,13 @@ test.describe("web-owner smoke tests", () => {
     await expect(page.getByText("PROPOSED")).toBeVisible();
     await expect(page.getByText("ACCEPTED")).toBeVisible();
   });
+
+  test("extraction inbox page renders", async ({ page }) => {
+    await page.goto("/");
+    await page.getByText("Inbox").first().click();
+    await expect(page.getByText("Extraction Inbox")).toBeVisible();
+    await expect(
+      page.getByText("AI-extracted commitments awaiting your review"),
+    ).toBeVisible();
+  });
 });
