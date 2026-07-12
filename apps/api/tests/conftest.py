@@ -71,7 +71,7 @@ async def db_session(db_engine) -> AsyncGenerator[AsyncSession]:
     async with session_factory() as session:
         test_principal = uuid4()
         await session.execute(
-            text("SET LOCAL app.principal_id = :pid"),
+            text("SELECT set_config('app.principal_id', :pid, true)"),
             {"pid": str(test_principal)},
         )
         yield session

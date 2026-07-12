@@ -51,8 +51,10 @@ async def get_db(
     """
     async with async_session() as session:
         # Set the principal GUC for RLS (CLAUDE.md sacred rule #4)
+        # Use set_config() instead of SET LOCAL — asyncpg doesn't support
+        # parameterized SET statements ($1 syntax error).
         await session.execute(
-            text("SET LOCAL app.principal_id = :pid"),
+            text("SELECT set_config('app.principal_id', :pid, true)"),
             {"pid": str(principal_id)},
         )
         yield session
