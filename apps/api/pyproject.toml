@@ -21,6 +21,7 @@ dependencies = [
     "PyJWT>=2.10",
     "pydantic-settings>=2.14.2",
     "psycopg2-binary>=2.9.12",
+    "python-multipart>=0.0.32",
 ]
 
 [project.optional-dependencies]
