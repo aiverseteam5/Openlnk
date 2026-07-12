@@ -28,10 +28,16 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Tighten before Gate 2
+    allow_origins=[
+        "http://localhost:5173",        # Vite dev
+        "http://localhost:4173",        # Vite preview
+        "http://195.35.20.139:5173",    # Hostinger dev
+        "https://openlnk.in",          # Production (future)
+        "https://www.openlnk.in",
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "Idempotency-Key", "X-Principal-Id"],
 )
 
 # /v1 prefix from day one (CLAUDE.md)

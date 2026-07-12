@@ -15,7 +15,7 @@ class Settings(BaseSettings):
 
     # Auth (MSG91 OTP — ADR-007)
     msg91_auth_key: str = ""
-    jwt_secret: str = "dev-secret-change-in-prod"  # noqa: S105
+    jwt_secret: str = "wHefmt0xcWEZPwi4TshwkkhzdnuwYwSz3Gpq9BW4x-kXOjmAVcJ_kEXQnWBsIHLw"  # noqa: S105 — dev default; override via JWT_SECRET env var in prod
     jwt_algorithm: str = "HS256"
 
     # Extraction (ADR-002)
