@@ -197,11 +197,89 @@ function DashboardTab({ businessId }: { businessId: string }) {
   );
 }
 
-// ── Roster Tab ──
+// ── Roster Tab with Consent Flow (OL-100a, OL-120) ──
+
+function ConsentOtpDialog({
+  record,
+  businessId,
+  onClose,
+}: {
+  record: StagingRecord;
+  businessId: string;
+  onClose: () => void;
+}) {
+  const queryClient = useQueryClient();
+  const [otp, setOtp] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const verifyMutation = useMutation({
+    mutationFn: () =>
+      apiFetch<{ consent_received: boolean }>("/consent/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          staging_record_id: record.id,
+          business_id: businessId,
+          otp,
+        }),
+      }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["roster", businessId] });
+      void queryClient.invalidateQueries({ queryKey: ["dashboard", businessId] });
+      onClose();
+    },
+    onError: (e) => setError(e instanceof Error ? e.message : "Verification failed"),
+  });
+
+  return (
+    <Box
+      sx={{
+        border: "1px solid",
+        borderColor: "primary.main",
+        borderRadius: "2px",
+        bgcolor: "background.paper",
+        p: 2,
+        mb: 1,
+      }}
+    >
+      <Typography sx={{ fontSize: 13, fontWeight: 600, mb: 0.5 }}>
+        Verify consent for {record.student_name}
+      </Typography>
+      <Typography sx={{ fontSize: 12, color: "text.secondary", mb: 1.5 }}>
+        Enter the 6-digit OTP sent to {record.parent_phone}
+      </Typography>
+      <Box sx={{ display: "flex", gap: 1 }}>
+        <TextField
+          size="small"
+          value={otp}
+          onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+          placeholder="123456"
+          slotProps={{ htmlInput: { inputMode: "numeric", maxLength: 6, autoFocus: true } }}
+          sx={{ width: 120 }}
+        />
+        <Button
+          variant="contained"
+          size="small"
+          disabled={otp.length !== 6 || verifyMutation.isPending}
+          onClick={() => verifyMutation.mutate()}
+        >
+          {verifyMutation.isPending ? "..." : "Verify"}
+        </Button>
+        <Button variant="text" size="small" onClick={onClose}>
+          Cancel
+        </Button>
+      </Box>
+      {error && (
+        <Typography sx={{ color: "error.main", fontSize: 12, mt: 1 }}>{error}</Typography>
+      )}
+    </Box>
+  );
+}
 
 function RosterTab({ businessId }: { businessId: string }) {
   const queryClient = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
+  const [consentTarget, setConsentTarget] = useState<StagingRecord | null>(null);
 
   const { data: records, isLoading } = useQuery({
     queryKey: ["roster", businessId],
@@ -230,12 +308,35 @@ function RosterTab({ businessId }: { businessId: string }) {
     },
   });
 
+  const sendConsentMutation = useMutation({
+    mutationFn: (record: StagingRecord) =>
+      apiFetch<{ sent: boolean }>("/consent/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          staging_record_id: record.id,
+          business_id: businessId,
+        }),
+      }),
+    onSuccess: (_, record) => setConsentTarget(record),
+  });
+
+  const consentedCount = records?.filter((r) => r.consent_received).length ?? 0;
+  const pendingCount = (records?.length ?? 0) - consentedCount;
+
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-        <Typography sx={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", color: "text.secondary" }}>
-          STUDENT ROSTER ({records?.length ?? 0})
-        </Typography>
+        <Box>
+          <Typography sx={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", color: "text.secondary" }}>
+            STUDENT ROSTER ({records?.length ?? 0})
+          </Typography>
+          {records && records.length > 0 && (
+            <Typography sx={{ fontSize: 11, color: "text.secondary" }}>
+              {consentedCount} consented &middot; {pendingCount} pending
+            </Typography>
+          )}
+        </Box>
         <Box>
           <input
             ref={fileRef}
@@ -259,9 +360,7 @@ function RosterTab({ businessId }: { businessId: string }) {
       </Box>
 
       {importMutation.isError && (
-        <Typography sx={{ color: "error.main", fontSize: 12, mb: 1 }}>
-          Import failed.
-        </Typography>
+        <Typography sx={{ color: "error.main", fontSize: 12, mb: 1 }}>Import failed.</Typography>
       )}
 
       {importMutation.isSuccess && importMutation.data && (
@@ -271,6 +370,21 @@ function RosterTab({ businessId }: { businessId: string }) {
             {importMutation.data.errors.length > 0 && ` ${importMutation.data.errors.length} errors.`}
           </Typography>
         </Box>
+      )}
+
+      {/* Consent OTP verification inline */}
+      {consentTarget && (
+        <ConsentOtpDialog
+          record={consentTarget}
+          businessId={businessId}
+          onClose={() => setConsentTarget(null)}
+        />
+      )}
+
+      {sendConsentMutation.isError && (
+        <Typography sx={{ color: "error.main", fontSize: 12, mb: 1 }}>
+          Failed to send consent OTP.
+        </Typography>
       )}
 
       {isLoading && <Typography sx={{ color: "text.secondary" }}>{"\u2014"} Loading...</Typography>}
@@ -310,6 +424,7 @@ function RosterTab({ businessId }: { businessId: string }) {
               <th>Phone</th>
               <th>Batch</th>
               <th>Consent</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -327,8 +442,21 @@ function RosterTab({ businessId }: { businessId: string }) {
                       color: r.consent_received ? "#2E7D32" : "#92600A",
                     }}
                   >
-                    {r.consent_received ? "YES" : "PENDING"}
+                    {r.consent_received ? "GRANTED" : "PENDING"}
                   </Typography>
+                </td>
+                <td>
+                  {!r.consent_received && (
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      disabled={sendConsentMutation.isPending}
+                      onClick={() => sendConsentMutation.mutate(r)}
+                      sx={{ fontSize: 11, py: 0.25 }}
+                    >
+                      Request Consent
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}
