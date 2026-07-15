@@ -253,6 +253,89 @@ class LLMAdapter:
             f"[Transcribed from voice note]\n\n{transcript}"
         )
 
+    async def generate_brief_summary(
+        self,
+        *,
+        at_risk: int,
+        due_today: int,
+        proposed: int,
+        done_today: int,
+        total_active: int,
+    ) -> str:
+        """Generate a natural-language daily brief from commitment counts.
+
+        Returns a 2-3 sentence summary. Falls back to a static summary
+        if the LLM call fails for any reason.
+        """
+        brief_prompt, brief_hash = _load_prompt("daily_brief_v1.txt")
+
+        user_message = (
+            f"at_risk={at_risk}, due_today={due_today}, proposed={proposed}, "
+            f"done_today={done_today}, total_active={total_active}"
+        )
+
+        payload = {
+            "model": self._model,
+            "max_tokens": 256,
+            "system": brief_prompt,
+            "messages": [{"role": "user", "content": user_message}],
+        }
+
+        try:
+            response = await self._client.post("/v1/messages", json=payload)
+
+            if response.status_code != 200:
+                logger.warning(
+                    "brief_llm_error",
+                    status=response.status_code,
+                    body=response.text[:200],
+                )
+                return self._fallback_brief(
+                    at_risk=at_risk, due_today=due_today, total_active=total_active,
+                )
+
+            data = response.json()
+            # Extract plain text from the response content blocks
+            text_parts = [
+                block["text"]
+                for block in data.get("content", [])
+                if block.get("type") == "text"
+            ]
+            summary = " ".join(text_parts).strip()
+
+            if not summary:
+                return self._fallback_brief(
+                    at_risk=at_risk, due_today=due_today, total_active=total_active,
+                )
+
+            logger.info(
+                "brief_generated",
+                prompt_hash=brief_hash,
+                model_id=data.get("model", self._model),
+                summary_len=len(summary),
+            )
+            return summary
+
+        except Exception as e:
+            logger.warning("brief_llm_exception", error=str(e))
+            return self._fallback_brief(
+                at_risk=at_risk, due_today=due_today, total_active=total_active,
+            )
+
+    @staticmethod
+    def _fallback_brief(*, at_risk: int, due_today: int, total_active: int) -> str:
+        """Static fallback when LLM is unavailable."""
+        if total_active == 0:
+            return "Clear day — no commitments need attention."
+        parts: list[str] = []
+        if at_risk > 0:
+            parts.append(f"{at_risk} commitment{'s' if at_risk != 1 else ''} at risk.")
+        if due_today > 0:
+            parts.append(f"{due_today} due today.")
+        if not parts:
+            parts.append(f"{total_active} active commitment{'s' if total_active != 1 else ''}. Nothing urgent.")
+        return " ".join(parts)
+
     # ── Internal methods ──
 
     async def _extract_with_retry(

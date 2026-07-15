@@ -3,14 +3,15 @@
  *
  * DESIGN.md: at-risk count, due-today count, awaiting-action count.
  * No skeleton loaders — use dashes for loading state.
+ * Shows AI-generated summary when available.
  */
 
 import { View, Text } from "react-native";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCommitments } from "@/api/client";
+import { fetchCommitments, fetchBriefSummary } from "@/api/client";
 import { useAppStore } from "@/store/app";
 
-function StatBox({ label, value }: { label: string; value: string }) {
+function StatBox({ label, value, color }: { label: string; value: string; color?: string }) {
   return (
     <View className="flex-1 items-center py-sm">
       <Text
@@ -18,7 +19,7 @@ function StatBox({ label, value }: { label: string; value: string }) {
           fontFamily: "JetBrains Mono SemiBold",
           fontSize: 20,
           lineHeight: 28,
-          color: "#1A1814",
+          color: color ?? "#1A1814",
         }}
       >
         {value}
@@ -42,6 +43,12 @@ export function DailyBrief() {
   const { data, isLoading } = useQuery({
     queryKey: ["commitments", "brief"],
     queryFn: () => fetchCommitments({ principalId, limit: 100 }),
+  });
+
+  const { data: briefData } = useQuery({
+    queryKey: ["brief-summary"],
+    queryFn: () => fetchBriefSummary(principalId),
+    staleTime: 5 * 60 * 1000,
   });
 
   const items = data?.items ?? [];
@@ -69,8 +76,25 @@ export function DailyBrief() {
           DAILY BRIEF
         </Text>
       </View>
+
+      {/* AI Summary */}
+      {briefData?.summary ? (
+        <View className="px-md py-sm border-b border-border" style={{ borderLeftWidth: 3, borderLeftColor: "#1A4FBF" }}>
+          <Text
+            style={{
+              fontFamily: "DM Sans",
+              fontSize: 13,
+              lineHeight: 20,
+              color: "#1A1814",
+            }}
+          >
+            {briefData.summary}
+          </Text>
+        </View>
+      ) : null}
+
       <View className="flex-row">
-        <StatBox label="AT RISK" value={isLoading ? dash : String(atRisk)} />
+        <StatBox label="AT RISK" value={isLoading ? dash : String(atRisk)} color={atRisk > 0 ? "#92600A" : undefined} />
         <View className="w-[1px] bg-border" />
         <StatBox label="DUE TODAY" value={isLoading ? dash : String(dueToday)} />
         <View className="w-[1px] bg-border" />

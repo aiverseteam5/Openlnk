@@ -29,6 +29,7 @@ const CommitmentDetailPage = lazy(() => import("./pages/CommitmentDetailPage"));
 const ExtractionInboxPage = lazy(() => import("./pages/ExtractionInboxPage"));
 const ConsolePage = lazy(() => import("./pages/ConsolePage"));
 const ExtractPage = lazy(() => import("./pages/ExtractPage"));
+const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 
 const queryClient = new QueryClient({
@@ -43,6 +44,7 @@ const NAV_ITEMS = [
   { label: "Inbox", path: "/inbox" },
   { label: "Commitments", path: "/commitments" },
   { label: "Console", path: "/console" },
+  { label: "Settings", path: "/settings" },
 ];
 
 /** Context selector (OL-043): switch between household/business contexts. */
@@ -299,6 +301,7 @@ function AppShell() {
               <Route path="/inbox" element={<ExtractionInboxPage />} />
                   <Route path="/commitments" element={<CommitmentsPage />} />
               <Route path="/console" element={<ConsolePage />} />
+              <Route path="/settings" element={<SettingsPage />} />
                   <Route path="/commitments/new" element={<CreateCommitmentPage />} />
                   <Route path="/commitments/:id" element={<CommitmentDetailPage />} />
                 </Routes>

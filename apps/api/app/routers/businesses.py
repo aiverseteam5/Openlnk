@@ -7,6 +7,7 @@ Routers hold zero business logic (CLAUDE.md).
 
 import csv
 import io
+from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
 import structlog
@@ -161,10 +162,40 @@ async def get_dashboard(
     )
     counts["students"] = student_result.scalar() or 0
 
-    # ROI (OL-105)
+    # ROI (OL-105) — real queries
+    if context:
+        # fees recovered = sum(amount_paise) for done fee commitments this month
+        month_start = datetime.now(UTC).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        fees_result = await db.execute(
+            select(func.coalesce(func.sum(Commitment.amount_paise), 0)).where(
+                Commitment.context_id == context.id,
+                Commitment.class_ == "fee",
+                Commitment.state == CommitmentState.DONE.value,
+                Commitment.updated_at >= month_start,
+            )
+        )
+        fees_recovered = fees_result.scalar() or 0
+
+        # at-risk count
+        at_risk_result = await db.execute(
+            select(func.count(Commitment.id)).where(
+                Commitment.context_id == context.id,
+                Commitment.due_at < datetime.now(UTC),
+                Commitment.state.not_in([
+                    CommitmentState.DONE.value,
+                    CommitmentState.BROKEN.value,
+                    CommitmentState.CANCELLED.value,
+                ]),
+            )
+        )
+        counts["at_risk"] = at_risk_result.scalar() or 0
+    else:
+        fees_recovered = 0
+
+    # Subscription cost: fixed ₹1,500/month for now (OL-105 PRD §9)
     roi = {
-        "fees_recovered_paise": 0,
-        "subscription_cost_paise": 0,
+        "fees_recovered_paise": fees_recovered,
+        "subscription_cost_paise": 150000,
         "period": "current_month",
     }
 

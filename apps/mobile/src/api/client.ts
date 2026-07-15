@@ -123,6 +123,69 @@ export async function correctCommitment(
   return res.json() as Promise<Commitment>;
 }
 
+// ── Daily Brief ──
+
+export interface BriefCounts {
+  at_risk: number;
+  due_today: number;
+  proposed: number;
+  done_today: number;
+  total_active: number;
+}
+
+export interface BriefSummaryResponse {
+  summary: string;
+  counts: BriefCounts;
+  generated_at: string;
+}
+
+export async function fetchBriefSummary(
+  principalId: string,
+): Promise<BriefSummaryResponse> {
+  const res = await fetch(`${API_BASE}/v1/brief/summary`, {
+    headers: getAuthHeaders(principalId),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json() as Promise<BriefSummaryResponse>;
+}
+
+// ── Learning Profile ──
+
+export interface LearningProfile {
+  preferred_nudge_hour: number | null;
+  suggested_quiet_hours: { start_hour: number; end_hour: number } | null;
+  quiet_hours_start: string | null;
+  quiet_hours_end: string | null;
+  data_points: number;
+}
+
+export async function fetchLearningProfile(
+  principalId: string,
+): Promise<LearningProfile> {
+  const res = await fetch(`${API_BASE}/v1/me/learning-profile`, {
+    headers: getAuthHeaders(principalId),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json() as Promise<LearningProfile>;
+}
+
+export async function updateQuietHours(
+  principalId: string,
+  start: string,
+  end: string,
+): Promise<LearningProfile> {
+  const res = await fetch(`${API_BASE}/v1/me/quiet-hours`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeaders(principalId),
+    },
+    body: JSON.stringify({ start, end }),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json() as Promise<LearningProfile>;
+}
+
 export interface AuditEntry {
   id: number;
   at: string;
